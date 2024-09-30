@@ -134,6 +134,13 @@ public class MySQL_helper {
         }
     }
 
+    public static void deleteAutoById(int auto_id){
+        try (PreparedStatement ps = dbConnection.prepareStatement("DELETE FROM auto WHERE auto_id = ?")){
+            ps.setInt(1, auto_id);
+            ps.executeUpdate();
+        }catch (Exception e){e.printStackTrace();}
+    }
+
     public static void addAutoToDatabase(Auto_model auto){
     try(PreparedStatement statement = dbConnection.prepareStatement("INSERT INTO auto VALUES(NULL,?,?,?,?,?,?)")){
         statement.setInt(1, auto.getBrand());

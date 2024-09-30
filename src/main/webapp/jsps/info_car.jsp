@@ -26,6 +26,7 @@
             <img class = "myImage" src="icons/back.jpg" onclick="location.href='${pageContext.servletContext.contextPath}/user_cars?user_id=${car.getUser_id()}'">
         </c:if>
         <c:if test="${pravo}">
+            <img class="myImage2" src="icons/delete-1487-svgrepo-com.svg" onclick="location.href='${pageContext.servletContext.contextPath}/delete?auto_id=${car.getId()}&whereBack=${param.whereBack}'">
             <img class="myImage2" src="icons/settings-2-svgrepo-com.svg" onclick="location.href='${pageContext.servletContext.contextPath}/update?auto_id=${car.getId()}&whereBack=${param.whereBack}'">
         </c:if>
         <h1> Info about this car</h1>
@@ -61,6 +62,11 @@
                 <p><strong>Телефон для связи: </strong> ${phone}</p>
             </div>
         </div>
+    </div>
+    <div class="clear"></div>
+    <div id="footer">
+        <p class="fon"><strong>Телефон:<br> +7 953 015 62 18</strong> </p>
+        <p class="mail"><strong>E-mail<br>helloampro@gmail.com</strong></p>
     </div>
 
 </div>
