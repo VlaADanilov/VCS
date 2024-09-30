@@ -1,0 +1,119 @@
+body{
+    background: #d0d0d0; /* Меняется фон экрана, выбирается здесь */
+}
+
+#wrapper{ /* Оболочка страницы сайта */
+    width: 900px; /* Меняется ширина страницы */
+    margin: 0 auto;
+    background:#f2e8c9; /* Меняется задний фон страницы */
+}
+#header{
+    position:relative; /* Задаём блоку относительное позиционирование для того, чтобы затем размещать, в нём другие элементы и позиционировать относительно его границ поверх фоновой картинки и заголовка */
+    height: 50px; /* Высота шапки */
+    background-color: #ffffff; /* Фон шапки */
+    margin-bottom: 5px; /* Нижний отступ шапки от остального контента */
+    border-radius: 5px; /* Закругляются углы блока */
+    box-shadow: rgba(0,0,0,0.5) 0px 1px 3px; /* Тень. Визуально приподнимает блок над оболочкой */
+}
+.myImage{
+    opacity: 0.6;
+    float: left;
+    width: 25px;
+    height: 25px;
+    margin: 0 0 0 0;
+}
+.myImage:hover{
+    opacity: 1;
+}
+
+.list1a {
+    margin: 20px 0 0;
+    padding:0;
+    list-style: none;
+    counter-reset: li;
+}
+.list1a li {
+    border: 2px solid #337AB7;
+    background: #EBF3FA;
+    position: relative;
+    margin-bottom: 20px;
+    margin-left: 10px;
+    margin-right: 10px;
+    padding: 16px 10px;
+}
+.status{
+    position: absolute;
+    left: 11px;
+    top: 3px;
+    font-size: 12px;
+}
+.list1a li:hover {
+    z-index: 1;
+}
+.list1a li:before {
+    border: 2px solid #337AB7;
+    position: absolute;
+    top: -14px;
+    padding: 2px 10px;
+    font-size: 11px;
+    font-weight: bold;
+    color: #337AB7;
+    background: #F7FAFD;
+    counter-increment: li;
+    content: counter(li);
+    -webkit-transition-duration: 0.3s;
+    transition-duration: 0.3s;
+}
+.list1a li:hover:before {
+    background: #337AB7;
+    color: #FFF;
+    -webkit-transform: translate(-12px, 0);
+    -ms-transform: translate(-12px, 0);
+    -o-transform: translate(-12px, 0);
+    transform: translate(-12px, 0);
+}
+.list1a li:after {
+    content: "";
+    position: absolute;
+    -webkit-transition-duration: 0.4s;
+    transition-duration: 0.4s;
+    -webkit-transition-property: width;
+    transition-property: width;
+    z-index: -1;
+    background: #FFF;
+    height: 100%;
+    left: 0;
+    top: 0;
+    width: 0;
+}
+.list1a li:hover:after {
+    width: 100%;
+}
+.buttonw{
+    position: absolute;
+    right: 10px;
+    top: auto;
+    bottom: auto;
+}
+#footer{ /* Блок подвала */
+    height:80px; /* Высота блока подвала */
+    background-color: #ffffff; /* Фон блока подвала */
+    margin-bottom: 10px; /* Отступ снизу */
+    border-radius: 5px; /* Закруглённые углы */
+    box-shadow: rgba(0,0,0,0.5) 0px 1px 3px; /* Тень блока */
+}
+.clear{ /* Запрет наплывания. Устанавливается для того, чтобы блок контента, при заполнении текстом и изображениями не наплывал на подвал */
+    clear: both;
+}
+.fon{ /* Номер телефона */
+    float:left; /* Разрешаем другим элементам обтекать абзац справа */
+    margin:20px 0 0 20px;
+}
+.fax{ /* Номер факса */
+    float:left;
+    margin:20px 0 0 60px;
+}
+.mail{ /* Адрес E-mail */
+    float:left;
+    margin:20px 0 0 60px;
+}
