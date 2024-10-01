@@ -79,6 +79,75 @@ public class MySQL_helper {
             }
         }catch (Exception e){e.printStackTrace();}
         return list;
+    }
+
+    public static List<Auto_model> getFilterAuto(String brand_id, String model, String sort, String user_id){
+        List<Auto_model> list = new ArrayList<>();
+        try{
+            String str = "SELECT * FROM auto WHERE auto_model LIKE ? ";
+            PreparedStatement ps;
+            if (!brand_id.equals("0")){
+                str += "AND auto_brand_id = " + brand_id + " ";
+            }
+            if (user_id != null){
+                str += "AND user_id = " + user_id + " ";
+            }
+            switch (sort){
+                case "priceUp":
+                    str += "ORDER BY price";
+                    break;
+                case "priceDown":
+                    str += "ORDER BY price DESC";
+                    break;
+                case "yearUp":
+                    str += "ORDER BY year";
+                    break;
+                case "yearDown":
+                    str += "ORDER BY year DESC";
+                    break;
+                case "mileageUp":
+                    str += "ORDER BY mileage";
+                    break;
+                case "mileageDown":
+                    str += "ORDER BY mileage DESC";
+                    break;
+                default:
+            }
+            PreparedStatement pst = dbConnection.prepareStatement(str);
+            pst.setString(1, "%" + model + "%");
+            ResultSet rs = pst.executeQuery();
+            while(rs.next()){
+                Auto_model auto = new Auto_model();
+                auto.setId(rs.getInt("auto_id"));
+                auto.setBrand(rs.getInt("auto_brand_id"));
+                auto.setUser_id(rs.getInt("user_id"));
+                auto.setModel(rs.getString("auto_model"));
+                auto.setPrice(rs.getInt("price"));
+                auto.setYear(rs.getInt("year"));
+                auto.setMileage(rs.getInt("mileage"));
+                list.add(auto);
+            }
+        }catch (Exception e){e.printStackTrace();}
+        return list;
+    }
+
+    public static List<User> getAllUsers(String str){
+        List<User> list = new ArrayList<>();
+        try{
+            PreparedStatement ps = dbConnection.prepareStatement("SELECT * FROM user WHERE user_name LIKE ?");
+            ps.setString(1, "%"+str+"%");
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                User user = new User();
+                user.setId(rs.getInt("user_id"));
+                user.setName(rs.getString("user_name"));
+                user.setPassword(rs.getString("user_password"));
+                user.setStatus(rs.getString("user_status"));
+                user.setPhone(rs.getString("user_phone"));
+                list.add(user);
+            }
+        }catch (Exception e){e.printStackTrace();}
+        return list;
 
     }
 
@@ -299,4 +368,6 @@ public class MySQL_helper {
             statement.executeUpdate();
         }catch (Exception e){e.printStackTrace();}
     }
+
+
 }

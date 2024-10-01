@@ -9,8 +9,9 @@
 <%@ page isELIgnored="false" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <link rel="stylesheet" href="styles/w3.css">
-<html>
+<html lang="ru">
 <head>
+    <meta charset="utf-8" />
     <title>List of cars</title>
 </head>
 <body>
@@ -23,6 +24,40 @@
             <img class="myImage" src="icons/back.jpg" onclick="location.href='${pageContext.servletContext.contextPath}/'">
         </c:if>
         <h1>List of cars in autoservise</h1>
+    </div>
+    <div align="center">
+        <form action="${pageContext.servletContext.contextPath}/dispetcher" method="get">
+            <label for="brand_select">Марка:</label>
+            <select name="brand" id="brand_select">
+                <c:forEach var = "brand_id" items="${brands}" >
+                    <option value="${brand_id.getId()}">${brand_id.getName()}</option>
+                </c:forEach>
+            </select>
+            <label for="brand_select">Модель:</label>
+            <input type="text" name="car_model">
+            <label for="brand_select">Сортировка:</label>
+            <select name = "sort" id = "sort_select">
+                <option value="none">none</option>
+                <option value="priceUp">priceUp</option>
+                <option value="priceDown">priceDown</option>
+                <option value="yearUp">yearUp</option>
+                <option value="yearDown">yearDown</option>
+                <option value="mileageUp">milleageUp</option>
+                <option value="mileageDown">milleageDown</option>
+            </select>
+            <input type = "hidden" name="whereBack" value="${whereBack}">
+            <input type = "hidden" name="user_id" value="${param.user_id}">
+            <button type="submit">Поиск</button>
+        </form>
+        <c:if test="${whereBack.equals('user')}">
+            <button type="button" onclick="location.href='${pageContext.servletContext.contextPath}/user_cars?user_id=${param.user_id}'">Очистить фильтр</button>
+        </c:if>
+        <c:if test="${whereBack.equals('all')}">
+            <button type="button" onclick="location.href='${pageContext.servletContext.contextPath}/list'">Очистить фильтр</button>
+        </c:if>
+        <c:if test="${whereBack.equals('my')}">
+            <button type="button" onclick="location.href='${pageContext.servletContext.contextPath}/my_cars'">Очистить фильтр</button>
+        </c:if>
     </div>
     <div>
         <ul class = "list1a">

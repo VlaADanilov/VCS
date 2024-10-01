@@ -12,6 +12,7 @@
 <html>
 <head>
     <title>All users</title>
+    <meta charset="utf-8" />
 </head>
 <body>
 <div id = wrapper>
@@ -20,6 +21,15 @@
         <h1>List of users</h1>
     </div>
     <div>
+        <div align="center">
+            <form method="post">
+                <label>
+                    <input type="text" name = "filter" placeholder="Поиск">
+                </label>
+                    <button type="submit">Подтвердить</button>
+            </form>
+        </div>
+
         <ul class = "list1a">
             <c:forEach var = "user" items="${list}" >
                 <li>
@@ -27,11 +37,11 @@
                     <p>
                         <b>Имя: </b>
                         <c:out value="${user.getName()}" />
-                        <b> Пароль: </b>
-                        <c:out value="${user.getPassword()}" />
                         <b> Номер телефона: </b>
                         <c:out value="${user.getPhone()}" />
-                        <button type="button" onclick="window.location.href = `${pageContext.servletContext.contextPath}/doAdmin?user_id=${user.getId()}`;">Поменять статус</button>
+                        <c:if test="${sessionScope.get('status').equals('owner')}">
+                            <button type="button" onclick="window.location.href = `${pageContext.servletContext.contextPath}/doAdmin?user_id=${user.getId()}`;">Поменять статус</button>
+                        </c:if>
                         <button type="button" onclick="window.location.href = `${pageContext.servletContext.contextPath}/user_cars?user_id=${user.getId()}`;">Его обьявления</button>
                     </p>
                 </li>

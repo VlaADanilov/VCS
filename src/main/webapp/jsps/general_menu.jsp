@@ -66,9 +66,7 @@
         <c:if test="${sessionScope.get('username') != null}">
             <h3>Здравствуйте! ${sessionScope.get('username')}</h3>
             <p><img class="marcer" src="https://tracers.ru/wp-content/uploads/2020/05/icon_green_checkbox.png" width="10" height="10"><a href="${pageContext.servletContext.contextPath}/my_cars">Мои объявления</a></p>
-            <c:if test="${sessionScope.get('status').equals('admin')}">
-                <p><img class="marcer" src="https://tracers.ru/wp-content/uploads/2020/05/icon_green_checkbox.png" width="10" height="10"><a href="${pageContext.servletContext.contextPath}/all_users">Список пользователей</a></p>
-            </c:if>
+            <p><img class="marcer" src="https://tracers.ru/wp-content/uploads/2020/05/icon_green_checkbox.png" width="10" height="10"><a href="${pageContext.servletContext.contextPath}/all_users">Список пользователей</a></p>
             <form method="post" action="${pageContext.servletContext.contextPath}/exit">
                 <button type = submit>Выход</button>
             </form>

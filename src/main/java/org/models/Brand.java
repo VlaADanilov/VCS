@@ -41,4 +41,9 @@ public class Brand {
         this.name = name;
         this.country = country;
     }
+    public Brand(int id, String name, String country) {
+        this.name = name;
+        this.country = country;
+        this.id = id;
+    }
 }
