@@ -101,4 +101,10 @@ body{
     float:left;
     margin:20px 0 0 60px;
 }
+.logo_bottom{
+    float: right;
+    height: 100%;
+    width: auto;
+    margin: 0 0 0 0;
+}
 

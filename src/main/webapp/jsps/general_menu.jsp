@@ -25,7 +25,8 @@
         <!--Описание (телефон)-->
         <p class="nomer"> +7 953 015 62 18</p>
         <!--Фоновая картинка в шапке сайта-->
-        <img src="https://avatars.mds.yandex.net/get-altay/2433982/2a000001742b0ef9b257b2a6cec30fce101f/XXL">
+        <img class = "logo" src="icons/логотип-без-фона.png">
+        <img class = "fone" src="https://avatars.mds.yandex.net/get-altay/2433982/2a000001742b0ef9b257b2a6cec30fce101f/XXL">
     </div>
     <!--Сайдбар-->
     <div id="sidebar">
@@ -34,7 +35,7 @@
         <!--Картинки маркеров меню (галочки)-->
         <p><img class="marcer" src="https://tracers.ru/wp-content/uploads/2020/05/icon_green_checkbox.png" width="10" height="10"><a href="${pageContext.servletContext.contextPath}/list">Автомобили</a></p>
         <p><img class="marcer" src="https://tracers.ru/wp-content/uploads/2020/05/icon_green_checkbox.png" width="10" height="10"><a href="${pageContext.servletContext.contextPath}/add">Добавить авто</a></p>
-        <p><img class="marcer" src="https://tracers.ru/wp-content/uploads/2020/05/icon_green_checkbox.png" width="10" height="10">Сотрудники</p>
+        <p><img class="marcer" src="https://tracers.ru/wp-content/uploads/2020/05/icon_green_checkbox.png" width="10" height="10"><a href="${pageContext.servletContext.contextPath}/list_of_emp">Сотрудники</a></p>
         <!--Прямая синяя линия-->
         <hr width="50" color="#037FFC" size="5">
         <!--Общая информация в сайдбаре-->
@@ -115,7 +116,7 @@
     <div id="footer">
         <p class="fon"><strong>Телефон:<br> +7 953 015 62 18</strong> </p>
         <p class="mail"><strong>E-mail<br>helloampro@gmail.com</strong></p>
-
+        <img class = "logo_bottom" src="icons/логотип-без-фона.png">
     </div>
 </div>
 </body>

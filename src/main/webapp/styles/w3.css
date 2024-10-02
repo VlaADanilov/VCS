@@ -25,6 +25,16 @@ body{
 .myImage:hover{
     opacity: 1;
 }
+.myImage2{
+    opacity: 0.6;
+    float: right;
+    width: 25px;
+    height: 25px;
+    margin: 0 0 0 0;
+}
+.myImage2:hover{
+    opacity: 1;
+}
 
 .list1a {
     margin: 20px 0 0;
@@ -46,6 +56,12 @@ body{
     left: 11px;
     top: 3px;
     font-size: 12px;
+}
+.logo_bottom{
+    float: right;
+    height: 100%;
+    width: auto;
+    margin: 0 0 0 0;
 }
 .list1a li:hover {
     z-index: 1;

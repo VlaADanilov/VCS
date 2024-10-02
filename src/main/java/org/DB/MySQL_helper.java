@@ -2,6 +2,7 @@ package org.DB;
 
 import org.models.Auto_model;
 import org.models.Brand;
+import org.models.Employee;
 import org.models.User;
 
 import java.io.InputStream;
@@ -129,6 +130,37 @@ public class MySQL_helper {
             }
         }catch (Exception e){e.printStackTrace();}
         return list;
+    }
+
+    public static void addEmployee(Employee employee){
+        try(PreparedStatement statement = dbConnection.prepareStatement("INSERT INTO employee VALUES(NULL,?,?,?,?)")){
+            statement.setString(1, employee.getName());
+            statement.setString(2, employee.getProfession());
+            statement.setString(3, employee.getDescription());
+            statement.setInt(4, employee.getUser_id());
+            statement.executeUpdate();
+        }
+        catch(SQLException e){
+            e.printStackTrace();
+        }
+    }
+
+    public static List<Employee> getAllEmployees(){
+        List<Employee> list = new ArrayList<>();
+        try{
+            PreparedStatement ps = dbConnection.prepareStatement("SELECT * FROM employee JOIN user USING(user_id)");
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                Employee employee = new Employee();
+                employee.setName(rs.getString("employee_name"));
+                employee.setProfession(rs.getString("employee_profession"));
+                employee.setDescription(rs.getString("employee_description"));
+                employee.setPhone(rs.getString("user_phone"));
+                list.add(employee);
+            }
+        }catch (Exception e){e.printStackTrace();}
+        return list;
+
     }
 
     public static List<User> getAllUsers(String str){

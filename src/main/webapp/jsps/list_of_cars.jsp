@@ -38,12 +38,12 @@
             <label for="brand_select">Сортировка:</label>
             <select name = "sort" id = "sort_select">
                 <option value="none">none</option>
-                <option value="priceUp">priceUp</option>
-                <option value="priceDown">priceDown</option>
-                <option value="yearUp">yearUp</option>
-                <option value="yearDown">yearDown</option>
-                <option value="mileageUp">milleageUp</option>
-                <option value="mileageDown">milleageDown</option>
+                <option value="priceUp">По возрастанию цены</option>
+                <option value="priceDown">По убыванию цены</option>
+                <option value="yearUp">По возрастанию года выпуска</option>
+                <option value="yearDown">По убыванию года выпуска</option>
+                <option value="mileageUp">По возрастанию пробега</option>
+                <option value="mileageDown">По убыванию пробега</option>
             </select>
             <input type = "hidden" name="whereBack" value="${whereBack}">
             <input type = "hidden" name="user_id" value="${param.user_id}">
@@ -96,7 +96,7 @@
     <div id="footer">
         <p class="fon"><strong>Телефон:<br> +7 953 015 62 18</strong> </p>
         <p class="mail"><strong>E-mail<br>helloampro@gmail.com</strong></p>
-
+        <img class = "logo_bottom" src="icons/логотип-без-фона.png">
     </div>
 </div>
 

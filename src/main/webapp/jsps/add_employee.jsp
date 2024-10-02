@@ -1,47 +1,41 @@
 <%--
   Created by IntelliJ IDEA.
   User: User
-  Date: 23.09.2024
-  Time: 10:12
+  Date: 02.10.2024
+  Time: 9:45
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<link rel="stylesheet" href="styles/add.css">
 <%@ page isELIgnored="false" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<link rel="stylesheet" href="styles/add.css">
 <fmt:requestEncoding value="UTF-8"/>
 <html>
 <head>
-    <title>Add car</title>
+    <title>Add employee</title>
     <meta charset="UTF-8">
 </head>
 <body>
 <div id="wrapper">
     <div id = "header" align="center">
-        <img src="icons/back.jpg" class = "myImage" onclick="location.href='${pageContext.servletContext.contextPath}/'">
-        <h1>Добавление автомобиля</h1>
+        <img src="icons/back.jpg" class = "myImage" onclick="location.href='${pageContext.servletContext.contextPath}/list_of_emp'">
+        <h1>Добавление сотрудника</h1>
     </div>
     <div align="center">
-        <c:if test="${sessionScope.get('username') != null}">
+        <c:if test="${sessionScope.get('status').equals('owner')}">
             <form method="post">
-                <label for="brand_select">Марка:</label>
-                <select name="brand" id="brand_select">
-                    <c:forEach var = "brand_id" items="${list}" >
-                        <option value="${brand_id.getId()}">${brand_id.getName()}</option>
-                    </c:forEach>
-                </select>
-                <p><label> Модель автомобиля:
-                    <input type = "text" name = "car_model">
+                <p><label> ФИО:
+                    <input type = "text" name = "name">
                 </label></p>
-                <p><label> Год выпуска:
-                    <input type="number" name = "year">
+                <p><label> Специализация:
+                    <input type="text" name = "profession">
                 </label></p>
-                <p><label> Цена:
-                    <input type="number" name = "price">
+                <p><label> Описание:
+                    <input type="text" name = "desc" maxlength="200">
                 </label></p>
-                <p><label> Пробег:
-                    <input type="number" name = "mileage">
+                <p><label> UserName (создайте аккаунт, если его нет):
+                    <input type="text" name = "his_name" >
                 </label></p>
                 <p>
                     <button class = "but" type="submit">Подтвердить</button>
@@ -49,8 +43,8 @@
                 <p></p>
             </form>
         </c:if>
-        <c:if test="${sessionScope.get('username') == null}">
-            <p><strong>Сначала зарегистрируйтесь!</strong></p>
+        <c:if test="${!sessionScope.get('status').equals('owner')}">
+            <p><strong>Не имеете парава!</strong></p>
             <p><button class = "but" type="submit" onclick="location.href='${pageContext.servletContext.contextPath}/'">Вернуться в меню</button></p>
         </c:if>
     </div>
@@ -70,6 +64,5 @@
         <img class = "logo_bottom" src="icons/логотип-без-фона.png">
     </div>
 </div>
-
 </body>
 </html>

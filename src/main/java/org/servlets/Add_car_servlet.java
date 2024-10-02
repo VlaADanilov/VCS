@@ -38,6 +38,6 @@ public class Add_car_servlet extends HttpServlet {
 
         MySQL_helper.addAutoToDatabase(new Auto_model(brand,MySQL_helper.getUser(username).getId(),model,year,price, mileage));
         req.setAttribute("flag", "true");
-        doGet(req,resp);
+        resp.sendRedirect(req.getContextPath() + "/my_cars");
     }
 }
