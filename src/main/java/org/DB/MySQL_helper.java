@@ -38,6 +38,34 @@ public class MySQL_helper {
         }
     }
 
+    public static int getEmpIdByName(String name){
+        try{
+            PreparedStatement ps = dbConnection.prepareStatement("SELECT * FROM employee");
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                if(rs.getString("employee_name").equals(name)){
+                    return rs.getInt("employee_id");
+                }
+            }
+        }catch (Exception e){e.printStackTrace();}
+        return -1;
+    }
+
+    public static void addImageToThisEmp(InputStream is, int emp_id){
+
+        //нужно сделать проверку, что существует такое auto_id
+        try(PreparedStatement statement = dbConnection.prepareStatement("UPDATE employee SET image = ? WHERE employee_id = ?")){
+            if(is.available() == 0) return;
+            statement.setInt(2, emp_id);
+            statement.setBlob(1, is);
+            statement.executeUpdate();
+            System.out.println("Image added successfully");
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+
     public static List<byte[]> getImageFromThisAuto(int auto_id){
         List<byte[]> list = new ArrayList<>();
         try(Statement statement = dbConnection.createStatement()){
@@ -47,6 +75,20 @@ public class MySQL_helper {
             while(rs.next()){
                 Blob blob = rs.getBlob("image");
                 list.add(blob.getBytes(1, (int)blob.length()));
+            }
+        }catch (Exception e){e.printStackTrace();}
+        return list;
+    }
+
+    public static byte[] getImageFromThisEmp(int emp_id){
+        byte[] list = null;
+        try(Statement statement = dbConnection.createStatement()){
+            PreparedStatement ps = dbConnection.prepareStatement("SELECT * FROM employee WHERE employee_id=?");
+            ps.setInt(1, emp_id);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                Blob blob = rs.getBlob("image");
+                return blob.getBytes(1, (int)blob.length());
             }
         }catch (Exception e){e.printStackTrace();}
         return list;
@@ -133,7 +175,7 @@ public class MySQL_helper {
     }
 
     public static void addEmployee(Employee employee){
-        try(PreparedStatement statement = dbConnection.prepareStatement("INSERT INTO employee VALUES(NULL,?,?,?,?)")){
+        try(PreparedStatement statement = dbConnection.prepareStatement("INSERT INTO employee VALUES(NULL,?,?,?,?,NULL)")){
             statement.setString(1, employee.getName());
             statement.setString(2, employee.getProfession());
             statement.setString(3, employee.getDescription());
@@ -152,6 +194,7 @@ public class MySQL_helper {
             ResultSet rs = ps.executeQuery();
             while(rs.next()){
                 Employee employee = new Employee();
+                employee.setId(rs.getInt("employee_id"));
                 employee.setName(rs.getString("employee_name"));
                 employee.setProfession(rs.getString("employee_profession"));
                 employee.setDescription(rs.getString("employee_description"));

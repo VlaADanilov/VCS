@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page isELIgnored="false" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<link rel="stylesheet" href="styles/w3.css">
+<link rel="stylesheet" href="styles/w4.css">
 <html>
 <head>
     <title>List of emp</title>
@@ -26,14 +26,19 @@
         <ul class = "list1a">
             <c:forEach var = "emp" items="${list}" >
                 <li>
-                    <p>
-                        <b>ФИО: </b>
-                        <c:out value="${emp.getName()}" />
-                        <b> Профессия: </b>
-                        <c:out value="${emp.getProfession()}" />
-                        <b> Описание: </b>
-                        <c:out value="${emp.getDescription()}" />
-                    </p>
+                        <div id = "left" align="center">
+                            <img class = "listImage" src="jsps/getImageEmp.jsp?emp_id=${emp.getId()}">
+                        </div>
+                        <div id = "right">
+                            <p><strong>ФИО</strong>:
+                            <c:out value="${emp.getName()}" /></p>
+                            <p><strong>Профессия</strong>:
+                            <c:out value="${emp.getProfession()}" /></p>
+                            <p> <strong>Описание</strong>:
+                            <c:out value="${emp.getDescription()}" /></p>
+                            <p> <strong>Номер телефона</strong>:
+                                <c:out value="${emp.getPhone()}" /></p>
+                        </div>
                 </li>
             </c:forEach>
         </ul>

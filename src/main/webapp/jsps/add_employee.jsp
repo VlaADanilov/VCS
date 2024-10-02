@@ -23,7 +23,7 @@
         <h1>Добавление сотрудника</h1>
     </div>
     <div align="center">
-        <c:if test="${sessionScope.get('status').equals('owner')}">
+        <c:if test="${sessionScope.get('status').equals('owner') && flag == null}">
             <form method="post">
                 <p><label> ФИО:
                     <input type = "text" name = "name">
@@ -52,6 +52,13 @@
         <c:if test="${flag != null}">
             <c:if test="${flag.equals('true')}">
                 <p style="color:green"> Успешно</p>
+                <form action="${pageContext.servletContext.contextPath}/emp_image" method="post" enctype="multipart/form-data">
+                    <p><label> Фото:
+                        <input type="file" name="image"  accept="image/*"/><br/><br/>
+                    </label></p>
+                    <input type="hidden" value="${emp_id}" name="emp_id">
+                    <button type="submit"> Добавить фото </button>
+                </form>
             </c:if>
             <c:if test="${flag.equals('false')}">
                 <p style="color: red">Ошибка</p>

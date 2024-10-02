@@ -4,14 +4,18 @@ import org.DB.MySQL_helper;
 import org.models.Employee;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Random;
 
 @WebServlet("/add_employee")
+@MultipartConfig(maxFileSize = 16177216)
 public class Add_employee_servlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -34,12 +38,10 @@ public class Add_employee_servlet extends HttpServlet {
             employee.setDescription(req.getParameter("desc"));
             employee.setUser_id(MySQL_helper.getUser(username).getId());
             MySQL_helper.addEmployee(employee);
-            String status = "default";
-            if(MySQL_helper.getUser(username).getStatus().equals("default")) {
-                status = "admin";
-            }
+            String status = "admin";
             MySQL_helper.changeStatusThisUser(MySQL_helper.getUser(username).getId(), status);
             req.setAttribute("flag", "true");
+            req.setAttribute("emp_id", MySQL_helper.getEmpIdByName(employee.getName()));
         }
         doGet(req, resp);
     }
