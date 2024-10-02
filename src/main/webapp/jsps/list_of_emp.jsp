@@ -12,6 +12,7 @@
 <html>
 <head>
     <title>List of emp</title>
+    <script type="text/javascript" src="js/functionsForDelete.js"></script>
 </head>
 <body>
 <div id = wrapper>
@@ -39,6 +40,18 @@
                             <p> <strong>Номер телефона</strong>:
                                 <c:out value="${emp.getPhone()}" /></p>
                         </div>
+                    <c:if test="${sessionScope.get('status').equals('owner')}">
+                        <img name = "delete" id = "del" class="myImage2" src="icons/delete-1487-svgrepo-com.svg" onclick="openForm(${emp.getId()})">
+                        <div class="noner" id = "success${emp.getId()}">
+                            <p>Вы уверены?</p>
+                            <div align="center">
+                                <button onclick="location.href='${pageContext.servletContext.contextPath}/delete_emp?emp_id=${emp.getId()}'">Да</button>
+                                <button onclick="closeForm(${emp.getId()})">Нет</button>
+                            </div>
+
+                        </div>
+                    </c:if>
+
                 </li>
             </c:forEach>
         </ul>

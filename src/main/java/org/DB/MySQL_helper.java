@@ -51,6 +51,24 @@ public class MySQL_helper {
         return -1;
     }
 
+    public static Employee getEmpById(int emp_id){
+        try{
+            PreparedStatement ps = dbConnection.prepareStatement("SELECT * FROM employee WHERE employee_id=?");
+            ps.setInt(1, emp_id);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                Employee emp = new Employee();
+                emp.setId(rs.getInt("employee_id"));
+                emp.setName(rs.getString("employee_name"));
+                emp.setDescription(rs.getString("employee_description"));
+                emp.setProfession(rs.getString("employee_profession"));
+                emp.setUser_id(rs.getInt("user_id"));
+                return emp;
+            }
+        }catch (Exception e){e.printStackTrace();}
+        return null;
+    }
+
     public static void addImageToThisEmp(InputStream is, int emp_id){
 
         //нужно сделать проверку, что существует такое auto_id
@@ -187,6 +205,7 @@ public class MySQL_helper {
         }
     }
 
+
     public static List<Employee> getAllEmployees(){
         List<Employee> list = new ArrayList<>();
         try{
@@ -277,6 +296,15 @@ public class MySQL_helper {
             e.printStackTrace();
         }
     }
+
+    public static void deleteEmpById(int emp_id){
+        try (PreparedStatement ps = dbConnection.prepareStatement("DELETE FROM employee WHERE employee_id = ?")){
+            ps.setInt(1, emp_id);
+            ps.executeUpdate();
+        }catch (Exception e){e.printStackTrace();}
+    }
+
+
 
     public static void deleteAutoById(int auto_id){
         try (PreparedStatement ps = dbConnection.prepareStatement("DELETE FROM auto WHERE auto_id = ?")){

@@ -26,9 +26,8 @@ body{
     opacity: 1;
 }
 #right{
-    position: absolute;
     display: inline-block;
-    width: 60%;
+    width: 50%;
     height: auto;
 }
 #left{
@@ -40,6 +39,13 @@ body{
     height: 200px;
     width: auto;
 }
+.noner{
+    display: none;
+    position: absolute;
+    top: 45px;
+    right: 10px;
+    border: 1px solid black;
+}
 .myImage2{
     opacity: 0.6;
     float: right;
@@ -50,7 +56,6 @@ body{
 .myImage2:hover{
     opacity: 1;
 }
-
 .list1a {
     margin: 20px 0 0;
     padding:0;
