@@ -84,6 +84,27 @@ public class MySQL_helper {
         }
     }
 
+    public static void deleteImageById(int image_id){
+        try (PreparedStatement ps = dbConnection.prepareStatement("DELETE FROM auto_images WHERE image_id = ?")){
+            ps.setInt(1, image_id);
+            ps.executeUpdate();
+        }catch (Exception e){e.printStackTrace();}
+    }
+
+    public static int getImageIdFromThisAutoWithNumber(int auto_id, int number){
+        try(Statement statement = dbConnection.createStatement()){
+            PreparedStatement ps = dbConnection.prepareStatement("SELECT * FROM auto_images WHERE auto_id=?");
+            ps.setInt(1, auto_id);
+            ResultSet rs = ps.executeQuery();
+            int count = 0;
+            while(rs.next()){
+                count += 1;
+                if (count == number) return rs.getInt("image_id");
+            }
+        }catch (Exception e){e.printStackTrace();}
+        return -1;
+    }
+
     public static List<byte[]> getImageFromThisAuto(int auto_id){
         List<byte[]> list = new ArrayList<>();
         try(Statement statement = dbConnection.createStatement()){

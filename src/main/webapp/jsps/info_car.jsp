@@ -46,6 +46,7 @@
             <div align="center">
                 <c:if test="${pravo}">
                     <button type="button" onclick="location.href = '${pageContext.servletContext.contextPath}/image?auto_id=${car.getId()}&whereBack=${param.whereBack}'">Добавить картинку</button>
+                    <button type="button" onclick="location.href = '${pageContext.servletContext.contextPath}/delete_image?auto_id=${car.getId()}&whereBack=${param.whereBack}'">Удалить картинку</button>
                 </c:if>
             </div>
         </div>

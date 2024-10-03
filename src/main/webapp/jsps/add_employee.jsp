@@ -32,7 +32,7 @@
                     <input type="text" name = "profession">
                 </label></p>
                 <p><label> Описание:
-                    <input type="text" name = "desc" maxlength="200">
+                    <input type="text" name = "desc">
                 </label></p>
                 <p><label> UserName (создайте аккаунт, если его нет):
                     <input type="text" name = "his_name" >

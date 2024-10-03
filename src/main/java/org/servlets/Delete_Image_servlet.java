@@ -10,17 +10,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
-@WebServlet("/info")
-public class Info_car_servlet extends HttpServlet {
-    @Override
+@WebServlet("/delete_image")
+public class Delete_Image_servlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Auto_model auto = MySQL_helper.getAutoById(Integer.parseInt(req.getParameter("number")));
-        req.setAttribute("car", auto);
+        Auto_model auto = MySQL_helper.getAutoById(Integer.parseInt(req.getParameter("auto_id")));
         req.setAttribute("brand", MySQL_helper.getBrandById(auto.getBrand()));
         req.setAttribute("list", createList(auto));
         if (req.getSession().getAttribute("username") != null){
@@ -29,8 +25,8 @@ public class Info_car_servlet extends HttpServlet {
                     user.getStatus().equals("owner");
             req.setAttribute("pravo", flag);
         }
-        req.setAttribute("phone", MySQL_helper.getUserById(auto.getUser_id()).getPhone());
-        req.getRequestDispatcher("jsps/info_car.jsp").forward(req, resp);
+
+        req.getRequestDispatcher("jsps/list_for_delete_images.jsp").forward(req, resp);
     }
 
     private List<Integer> createList(Auto_model auto) {
@@ -39,5 +35,13 @@ public class Info_car_servlet extends HttpServlet {
             list.add(i);
         }
         return list;
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        int number = Integer.parseInt(req.getParameter("numbIm"));
+        int auto_id = Integer.parseInt(req.getParameter("auto_id"));
+        MySQL_helper.deleteImageById(MySQL_helper.getImageIdFromThisAutoWithNumber(auto_id, number));
+        doGet(req, resp);
     }
 }

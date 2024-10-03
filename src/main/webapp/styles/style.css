@@ -107,4 +107,10 @@ body{
     width: auto;
     margin: 0 0 0 0;
 }
+.delete_icon{
+    opacity: 0.6;
+}
+.delete_icon:hover{
+    opacity: 1;
+}
 
