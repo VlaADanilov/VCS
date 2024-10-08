@@ -4,12 +4,13 @@ import org.DB.MySQL_helper;
 
 public class Auto_model {
     private int id;
-    private int brand;
+    private String brand;
     private int user_id;
     private String model;
     private int year;
     private int price;
     private int mileage;
+    private String city;
 
     public int getId() {
         return id;
@@ -19,14 +20,19 @@ public class Auto_model {
         this.id = id;
     }
 
-    public String getUserName(){
-        return MySQL_helper.getUserById(user_id).getName();
+    public String getCity() {
+        return city;
     }
 
-    public Auto_model(int brand,int user_id, String model, int year, int price, int mileage) {
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public Auto_model(String brand, int user_id, String model, int year, int price, int mileage, String city) {
         this.brand = brand;
         this.user_id = user_id;
         this.model = model;
+        this.city=city;
         this.year = year;
         this.price = price;
         this.mileage = mileage;
@@ -69,15 +75,12 @@ public class Auto_model {
         return "Марка: " + brand + " Модель: " + model + " Год выпуска: " + year + " Цена: " + price + " руб.";
     }
 
-    public String getBrandName() {
-        return MySQL_helper.getBrandById(brand).getName();
-    }
 
-    public int getBrand() {
+    public String getBrand() {
         return brand;
     }
 
-    public void setBrand(int brand) {
+    public void setBrand(String brand) {
         this.brand = brand;
     }
 

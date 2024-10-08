@@ -12,24 +12,26 @@
 <html>
 <head>
     <title>Info about car</title>
+    <link rel="icon" href="pages/ico.png" type="image/png">
 </head>
 <body>
 <div id = "wrapper">
     <div id = "header" align="center">
-        <c:if test="${param.whereBack.equals('all')}">
-            <img class = "myImage" src="icons/back.jpg" onclick="location.href='${pageContext.servletContext.contextPath}/list'">
-        </c:if>
-        <c:if test="${param.whereBack.equals('my')}">
-            <img class = "myImage" src="icons/back.jpg" onclick="location.href='${pageContext.servletContext.contextPath}/my_cars'">
-        </c:if>
-        <c:if test="${param.whereBack.equals('user')}">
-            <img class = "myImage" src="icons/back.jpg" onclick="location.href='${pageContext.servletContext.contextPath}/user_cars?user_id=${car.getUser_id()}'">
-        </c:if>
+        <img class = "myImage" src="icons/back.jpg" onclick="location.href='${pageContext.servletContext.contextPath}/back_dispetcher?from=fromInfo&whereBack=${param.whereBack}&user_id=${car.getUser_id()}'">
         <c:if test="${pravo}">
             <img class="myImage2" src="icons/delete-1487-svgrepo-com.svg" onclick="location.href='${pageContext.servletContext.contextPath}/delete?auto_id=${car.getId()}&whereBack=${param.whereBack}'">
             <img class="myImage2" src="icons/settings-2-svgrepo-com.svg" onclick="location.href='${pageContext.servletContext.contextPath}/update?auto_id=${car.getId()}&whereBack=${param.whereBack}'">
         </c:if>
-        <h1> Info about this car</h1>
+        <c:if test="${sessionScope.get('username') != null}">
+            <c:if test="${!exist}">
+                <img class="myImage2" src="icons/heart-black.svg" onclick="location.href = '${pageContext.servletContext.contextPath}/setting_like?auto_id=${car.getId()}&whereBack=${param.whereBack}&do=add'">
+            </c:if>
+            <c:if test="${exist}">
+                <img class="myImage2" src="icons/heart-red.svg" onclick="location.href = '${pageContext.servletContext.contextPath}/setting_like?auto_id=${car.getId()}&whereBack=${param.whereBack}&do=delete'">
+            </c:if>
+            <img class="myImage2" src = "icons/report-among-us-online-game-svgrepo-com.svg" onclick="location.href = '${pageContext.servletContext.contextPath}/report?auto_id=${car.getId()}&whereBack=${param.whereBack}'">
+        </c:if>
+        <h1>Подробнее об автомобиле</h1>
     </div>
     <div id = "content">
         <div id = "left-content">
@@ -52,7 +54,7 @@
         </div>
         <div id = "right-pannel">
             <div id = "right-content">
-                <p><strong>Марка: </strong> ${car.getBrandName()}</p>
+                <p><strong>Марка: </strong> ${car.getBrand()}</p>
                 <p ><strong>Модель: </strong>${car.getModel()}</p>
                 <p><strong>Страна производства: </strong>${brand.getCountry()}</p>
                 <p><strong>Год выпуска: </strong>${car.getYear()}</p>
@@ -61,6 +63,8 @@
             </div>
             <div id = "bottom-content">
                 <p><strong>Телефон для связи: </strong> ${phone}</p>
+                <p><strong>Город: </strong> ${car.getCity()}</p>
+                <p><strong>Имя пользователя: </strong> ${pageContext.servletContext.getAttribute("database").getUserById(car.getUser_id()).getName()}</p>
             </div>
         </div>
     </div>

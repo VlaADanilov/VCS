@@ -11,8 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet("/list_of_emp")
-public class List_of_employees_servlet extends HttpServlet {
+@WebServlet("/setting_like")
+public class Setting_like_servlet extends HttpServlet {
     private DB_helper db_helper;
 
     @Override
@@ -22,7 +22,14 @@ public class List_of_employees_servlet extends HttpServlet {
     }
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setAttribute("list", db_helper.getAllEmployees());
-        req.getRequestDispatcher("jsps/list_of_emp.jsp").forward(req, resp);
+        int auto_id = Integer.parseInt(req.getParameter("auto_id"));
+        int user_id = db_helper.getUser((String) req.getSession().getAttribute("username")).getId();
+        if (req.getParameter("do").equals("delete")) {
+            db_helper.deleteLike(user_id, auto_id);
+        }
+        else{
+            db_helper.addLikeToDatabase(user_id, auto_id);
+        }
+        resp.sendRedirect(req.getContextPath() + "/info?number=" + auto_id + "&whereBack="  + req.getParameter("whereBack"));
     }
 }

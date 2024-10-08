@@ -13,12 +13,13 @@
 <head>
     <title>All users</title>
     <meta charset="utf-8" />
+    <link rel="icon" href="pages/ico.png" type="image/png">
 </head>
 <body>
 <div id = wrapper>
     <div id = "header" align="center">
         <img class="myImage" src="icons/back.jpg" onclick="location.href='${pageContext.servletContext.contextPath}/'">
-        <h1>List of users</h1>
+        <h1>Список пользователей</h1>
     </div>
     <div>
         <div align="center">

@@ -1,6 +1,7 @@
 <%@ page import="java.util.List" %>
 <%@ page import="org.DB.MySQL_helper" %>
 <%@ page import="java.io.OutputStream" %>
+<%@ page import="org.DB.DB_helper" %>
 <%--
   Created by IntelliJ IDEA.
   User: User
@@ -9,7 +10,8 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%
-    List<byte[]> list = MySQL_helper.getImageFromThisAuto(Integer.parseInt(request.getParameter("auto_id")));
+    DB_helper db_helper = (DB_helper) getServletConfig().getServletContext().getAttribute("database");
+    List<byte[]> list = db_helper.getImageFromThisAuto(Integer.parseInt(request.getParameter("auto_id")));
     int numb = Integer.parseInt(request.getParameter("number"));
     response.setContentType("image/*");
     OutputStream os = response.getOutputStream();

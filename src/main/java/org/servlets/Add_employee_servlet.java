@@ -1,8 +1,10 @@
 package org.servlets;
 
+import org.DB.DB_helper;
 import org.DB.MySQL_helper;
 import org.models.Employee;
 
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -17,6 +19,13 @@ import java.util.Random;
 @WebServlet("/add_employee")
 @MultipartConfig(maxFileSize = 16177216)
 public class Add_employee_servlet extends HttpServlet {
+    private DB_helper db_helper;
+
+    @Override
+    public void init(ServletConfig config) throws ServletException {
+        super.init(config);
+        db_helper = (DB_helper) config.getServletContext().getAttribute("database");
+    }
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.getRequestDispatcher("jsps/add_employee.jsp").forward(req, resp);
@@ -26,7 +35,7 @@ public class Add_employee_servlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding("UTF-8");
         String username = req.getParameter("his_name");
-        if (req.getParameter("his_name").isEmpty() || MySQL_helper.getUser(username) == null
+        if (req.getParameter("his_name").isEmpty() || db_helper.getUser(username) == null
         || req.getParameter("name").isEmpty() || req.getParameter("profession").isEmpty()
         || req.getParameter("desc").isEmpty()) {
             req.setAttribute("flag", "false");
@@ -36,12 +45,12 @@ public class Add_employee_servlet extends HttpServlet {
             employee.setName(req.getParameter("name"));
             employee.setProfession(req.getParameter("profession"));
             employee.setDescription(req.getParameter("desc"));
-            employee.setUser_id(MySQL_helper.getUser(username).getId());
-            MySQL_helper.addEmployee(employee);
+            employee.setUser_id(db_helper.getUser(username).getId());
+            db_helper.addEmployee(employee);
             String status = "admin";
-            MySQL_helper.changeStatusThisUser(MySQL_helper.getUser(username).getId(), status);
+            db_helper.changeStatusThisUser(db_helper.getUser(username).getId(), status);
             req.setAttribute("flag", "true");
-            req.setAttribute("emp_id", MySQL_helper.getEmpIdByName(employee.getName()));
+            req.setAttribute("emp_id", db_helper.getEmpIdByName(employee.getName()));
         }
         doGet(req, resp);
     }

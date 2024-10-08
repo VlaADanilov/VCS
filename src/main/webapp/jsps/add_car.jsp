@@ -13,6 +13,7 @@
 <fmt:requestEncoding value="UTF-8"/>
 <html>
 <head>
+    <link rel="icon" href="pages/ico.png" type="image/png">
     <title>Add car</title>
     <meta charset="UTF-8">
 </head>
@@ -20,7 +21,7 @@
 <div id="wrapper">
     <div id = "header" align="center">
         <img src="icons/back.jpg" class = "myImage" onclick="location.href='${pageContext.servletContext.contextPath}/'">
-        <h1>Добавление автомобиля</h1>
+        <h1>Добавление объявления</h1>
     </div>
     <div align="center">
         <c:if test="${sessionScope.get('username') != null}">
@@ -42,6 +43,9 @@
                 </label></p>
                 <p><label> Пробег:
                     <input type="number" name = "mileage">
+                </label></p>
+                <p><label> Город:
+                    <input type = "text" name = "city">
                 </label></p>
                 <p>
                     <button class = "but" type="submit">Подтвердить</button>

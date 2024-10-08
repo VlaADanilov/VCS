@@ -5,22 +5,26 @@
   Time: 8:40
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %><%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@page language="java"  contentType="text/html;charset=utf-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page isELIgnored="false" %>
 <link rel="stylesheet" href="styles/update.css">
-<html>
+<fmt:requestEncoding value="UTF-8"/>
+<html lang="ru">
 <head>
     <title>Update car</title>
-    <meta charset="utf-8" />
+    <link rel="icon" href="pages/ico.png" type="image/png">
+    <meta charset="UTF-8">
 </head>
 <body>
     <div id = "wrapper">
         <div id = "header" align="center">
             <img class="myImage" src="icons/back.jpg" onclick="location.href='${pageContext.servletContext.contextPath}/info?number=${param.auto_id}&whereBack=${param.whereBack}'">
-            <h1>Update car in autoservise</h1>
+            <h1>Обновить данные</h1>
         </div>
         <div id = "content" align="center">
-            <form method="post">
+            <form method="post" accept-charset="UTF-8">
                 <label for="brand_select">Марка:</label>
                 <select name="brand" id="brand_select">
                     <c:forEach var = "brand_id" items="${list}" >
@@ -38,6 +42,9 @@
                 </label></p>
                 <p><label> Пробег:
                     <input type="number" name = "mileage" placeholder="${car.getMileage()}">
+                </label></p>
+                <p><label> Город:
+                    <input type="text" name = "city" placeholder="${car.getCity()}">
                 </label></p>
                 <p>
                     <button class = "but" type="submit">Подтвердить</button>

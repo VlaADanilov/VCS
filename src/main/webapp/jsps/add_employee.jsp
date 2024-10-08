@@ -14,6 +14,7 @@
 <html>
 <head>
     <title>Add employee</title>
+    <link rel="icon" href="pages/ico.png" type="image/png">
     <meta charset="UTF-8">
 </head>
 <body>
@@ -51,7 +52,6 @@
     <div align="center">
         <c:if test="${flag != null}">
             <c:if test="${flag.equals('true')}">
-                <p style="color:green"> Успешно</p>
                 <form action="${pageContext.servletContext.contextPath}/emp_image" method="post" enctype="multipart/form-data">
                     <p><label> Фото:
                         <input type="file" name="image"  accept="image/*"/><br/><br/>

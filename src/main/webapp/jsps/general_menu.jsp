@@ -12,8 +12,9 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
+    <link rel="icon" href="pages/ico.png" type="image/png">
     <meta charset="utf-8" />
-    <title>Код блочного сайта</title>
+    <title>VladCarService</title>
     <script type="text/javascript" src="js/forMenu.js"></script>
 </head>
 <body>
@@ -21,21 +22,21 @@
     <!--Шапка сайта-->
     <div id="header">
         <!--Заголовок сайта-->
-        <h1>Автосервис</h1>
+        <h1>Автомаркет</h1>
         <!--Описание (телефон)-->
         <p class="nomer"> +7 953 015 62 18</p>
         <!--Фоновая картинка в шапке сайта-->
         <img class = "logo" src="icons/логотип-без-фона.png">
-        <img class = "fone" src="https://avatars.mds.yandex.net/get-altay/2433982/2a000001742b0ef9b257b2a6cec30fce101f/XXL">
+        <img class = "fone" src="pages/XXL.jpg">
     </div>
     <!--Сайдбар-->
     <div id="sidebar">
         <!--меню-->
         <h3>На нашем сайте</h3>
         <!--Картинки маркеров меню (галочки)-->
-        <p><img class="marcer" src="https://tracers.ru/wp-content/uploads/2020/05/icon_green_checkbox.png" width="10" height="10"><a href="${pageContext.servletContext.contextPath}/list">Автомобили</a></p>
-        <p><img class="marcer" src="https://tracers.ru/wp-content/uploads/2020/05/icon_green_checkbox.png" width="10" height="10"><a href="${pageContext.servletContext.contextPath}/add">Добавить авто</a></p>
-        <p><img class="marcer" src="https://tracers.ru/wp-content/uploads/2020/05/icon_green_checkbox.png" width="10" height="10"><a href="${pageContext.servletContext.contextPath}/list_of_emp">Сотрудники</a></p>
+        <p><img class="marcer" src="pages/icon_green_checkbox.png" width="10" height="10"><a href="${pageContext.servletContext.contextPath}/list">Автомобили</a></p>
+        <p><img class="marcer" src="pages/icon_green_checkbox.png" width="10" height="10"><a href="${pageContext.servletContext.contextPath}/all_users">Список пользователей</a></p>
+        <p><img class="marcer" src="pages/icon_green_checkbox.png" width="10" height="10"><a href="${pageContext.servletContext.contextPath}/list_of_emp">Сотрудники</a></p>
         <!--Прямая синяя линия-->
         <hr width="50" color="#037FFC" size="5">
         <!--Общая информация в сайдбаре-->
@@ -66,8 +67,12 @@
         </c:if>
         <c:if test="${sessionScope.get('username') != null}">
             <h3>Здравствуйте! ${sessionScope.get('username')}</h3>
-            <p><img class="marcer" src="https://tracers.ru/wp-content/uploads/2020/05/icon_green_checkbox.png" width="10" height="10"><a href="${pageContext.servletContext.contextPath}/my_cars">Мои объявления</a></p>
-            <p><img class="marcer" src="https://tracers.ru/wp-content/uploads/2020/05/icon_green_checkbox.png" width="10" height="10"><a href="${pageContext.servletContext.contextPath}/all_users">Список пользователей</a></p>
+            <p><img class="marcer" src="pages/icon_green_checkbox.png" width="10" height="10"><a href="${pageContext.servletContext.contextPath}/my_cars">Мои объявления</a></p>
+            <p><img class="marcer" src="pages/icon_green_checkbox.png" width="10" height="10"><a href="${pageContext.servletContext.contextPath}/my_likes">Избранные</a></p>
+            <p><img class="marcer" src="pages/icon_green_checkbox.png" width="10" height="10"><a href="${pageContext.servletContext.contextPath}/add">Добавить авто</a></p>
+            <c:if test="${!sessionScope.get('status').equals('default')}">
+                <p><img class="marcer" src="pages/icon_green_checkbox.png" width="10" height="10"><a href="${pageContext.servletContext.contextPath}/list_of_reports">Жалобы</a></p>
+            </c:if>
             <form method="post" action="${pageContext.servletContext.contextPath}/exit">
                 <button type = submit>Выход</button>
             </form>
@@ -78,37 +83,29 @@
     <!--Основной контент (статья)-->
     <div id="content">
         <!--Картинка слева-->
-        <img class="left" src="https://i.pinimg.com/736x/3e/51/56/3e51563a896f1698da8e7dad14a4510d.jpg">
+        <img class="left" src="pages/left_page.jpg">
         <!--Заголовок статьи-->
         <h3>О нашей работе</h3>
         <!--Текст статьи-->
-        <p>Какой-то рандомный текст</p>
-        <p>Мне 55 лет и я рад приветствовать Вас на своём сайте.
-            Этот сайт первый, который я разработал самостоятельно,
-            а до этого умел только входить в интернет.
-            Почему я решил его сделать?</p>
-        <p>За те 3 месяца, пока
-            разбирался в сайтостроении и создавал этот ресурс
-            обнаружилось, что авторы руководств по созданию
-            сайтов считают многие нюансы само собой разумеющимися
-            и не обращают на них внимание.</p>
-        <p>А мне, учитывая
-            возраст и «опыт», было не просто понять как раз эти
-            нюансы, они отнимали больше всего времени. И я решил
-            написать свой материал, так что-бы другим было легче
-            сориентироваться в потоке новой информации.</p>
-        <!--Картинка справа-->
-        <img class="right" src="https://avatars.mds.yandex.net/i?id=7f6cbd1f78687a51c619e5a8a769d2f6bea8dbd7-7760813-images-thumbs&n=13">
+        <p>
+            Добро пожаловать на сайт автосервиса VCS - вашего надежного партнера в мире подержанных автомобилей!
+        </p>
+        <p>
+            Наша команда профессионалов с многолетним опытом работы в автомобильной индустрии гордится тем, что предлагает вам широкий выбор качественных и проверенных б/у автомобилей. Мы тщательно отбираем каждый экземпляр, проводим всестороннюю диагностику и восстанавливаем их до безупречного состояния, чтобы вы могли быть уверены в безопасности и надежности своей покупки.
+        </p>
+        <p>
+            В нашем автосервисе вы найдете автомобили на любой вкус и бюджет - от компактных городских хэтчбеков до просторных семейных седанов и внедорожников. Мы гордимся тем, что предлагаем не только отличные цены, но и высокий уровень обслуживания, включая профессиональную консультацию, тест-драйв и помощь в оформлении документов.
+        </p>
+        <p>
+            Наша миссия - сделать процесс покупки подержанного автомобиля максимально комфортным и безопасным для наших клиентов. Мы верим, что каждый человек заслуживает возможность приобрести надежное и качественное транспортное средство по доступной цене. Именно поэтому мы тщательно отбираем и проверяем каждый автомобиль в нашем ассортименте, чтобы вы могли быть уверены в его исправности и долговечности.
+        </p>
 
-        <p>Здесь
-            «разжеваны» все мелочи сопровождающие создание сайта,
-            мимо которых обычно проскакивают другие авторы.
-            Если вам что-то будет непонятно, спрашивайте, для
-            меня нет «глупых» вопросов.
-            Читайе и создавайте свой сайт самостоятельно, каким
-            бы ни был Ваш возраст и стаж работы на компьютере.</p>
-        <p>Уверен, у Вас получится еще лучше и уж точно, в
-            несколько раз быстрее, чем у меня.</p>
+            <!--Картинка справа-->
+        <img class="right" src="pages/right_page.jpg">
+
+        <p>
+            Приглашаем вас посетить наш автосервис и убедиться в нашем профессионализме и внимательном отношении к каждому клиенту. Мы гарантируем, что вы найдете здесь именно тот автомобиль, который идеально подойдет вам по всем параметрам. Добро пожаловать в VCS - ваш надежный партнер в мире подержанных автомобилей!
+        </p>
     </div>
     <!--Запрет наплывания-->
     <div class="clear"></div>

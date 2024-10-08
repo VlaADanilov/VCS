@@ -13,17 +13,13 @@
 <head>
     <meta charset="utf-8" />
     <title>List of cars</title>
+    <link rel="icon" href="pages/ico.png" type="image/png">
 </head>
 <body>
 <div id = wrapper>
     <div id = "header" align="center">
-        <c:if test="${whereBack.equals('user')}">
-            <img class="myImage" src="icons/back.jpg" onclick="location.href='${pageContext.servletContext.contextPath}/all_users'">
-        </c:if>
-        <c:if test="${!whereBack.equals('user')}">
-            <img class="myImage" src="icons/back.jpg" onclick="location.href='${pageContext.servletContext.contextPath}/'">
-        </c:if>
-        <h1>List of cars in autoservise</h1>
+        <img class="myImage" src="icons/back.jpg" onclick="location.href='${pageContext.servletContext.contextPath}/back_dispetcher?whereBack=${whereBack}&from=list'">
+        <h1>Список объявлений</h1>
     </div>
     <div align="center">
         <form action="${pageContext.servletContext.contextPath}/dispetcher" method="get">
@@ -33,40 +29,41 @@
                     <option value="${brand_id.getId()}">${brand_id.getName()}</option>
                 </c:forEach>
             </select>
-            <label for="brand_select">Модель:</label>
+            <label>Модель:</label>
             <input type="text" name="car_model">
-            <label for="brand_select">Сортировка:</label>
-            <select name = "sort" id = "sort_select">
-                <option value="none">none</option>
-                <option value="priceUp">По возрастанию цены</option>
-                <option value="priceDown">По убыванию цены</option>
-                <option value="yearUp">По возрастанию года выпуска</option>
-                <option value="yearDown">По убыванию года выпуска</option>
-                <option value="mileageUp">По возрастанию пробега</option>
-                <option value="mileageDown">По убыванию пробега</option>
-            </select>
+            <p>
+                <label>Город:</label>
+                <input type="text" name="city">
+                <label for="brand_select">Сортировка:</label>
+                <select name = "sort" id = "sort_select">
+                    <option value="none">none</option>
+                    <option value="priceUp">По возрастанию цены</option>
+                    <option value="priceDown">По убыванию цены</option>
+                    <option value="yearUp">По возрастанию года выпуска</option>
+                    <option value="yearDown">По убыванию года выпуска</option>
+                    <option value="mileageUp">По возрастанию пробега</option>
+                    <option value="mileageDown">По убыванию пробега</option>
+                    <option value="cityUp">По алфавиту(город)</option>
+                    <option value="cityDown">Обратно алфавиту(город)</option>
+                </select>
+            </p>
+
             <input type = "hidden" name="whereBack" value="${whereBack}">
             <input type = "hidden" name="user_id" value="${param.user_id}">
-            <button type="submit">Поиск</button>
+            <p>
+                <button type="submit">Поиск</button>
+            </p>
         </form>
-        <c:if test="${whereBack.equals('user')}">
-            <button type="button" onclick="location.href='${pageContext.servletContext.contextPath}/user_cars?user_id=${param.user_id}'">Очистить фильтр</button>
-        </c:if>
-        <c:if test="${whereBack.equals('all')}">
-            <button type="button" onclick="location.href='${pageContext.servletContext.contextPath}/list'">Очистить фильтр</button>
-        </c:if>
-        <c:if test="${whereBack.equals('my')}">
-            <button type="button" onclick="location.href='${pageContext.servletContext.contextPath}/my_cars'">Очистить фильтр</button>
-        </c:if>
+        <button type="button" onclick="location.href='${pageContext.servletContext.contextPath}/back_dispetcher?from=filter&user_id=${param.user_id}&whereBack=${whereBack}'">Очистить фильтр</button>
     </div>
     <div>
         <ul class = "list1a">
             <c:forEach var = "car" items="${list}" >
                 <li>
-                    <p class="nameOfAuthor">${car.getUserName()}</p>
+                    <p class="nameOfAuthor">${pageContext.servletContext.getAttribute("database").getUserById(car.getUser_id()).getName()  }</p>
                     <p>
                         <b>Марка: </b>
-                        <c:out value="${car.getBrandName()}" />
+                        <c:out value="${car.getBrand()}" />
                         <b> Модель: </b>
                         <c:out value="${car.getModel()}" />
                         <b> Год выпуска: </b>
@@ -75,16 +72,9 @@
                         <c:out value="${car.getNicePrice()} руб." />
                         <b> Пробег: </b>
                         <c:out value="${car.getMileage()} км." />
-                        <c:if test="${whereBack.equals('all')}">
-                            <button class="buttonw" type="button" onclick="window.location.href = `${pageContext.servletContext.contextPath}/info?number=${car.getId()}&whereBack=all`;">Подробнее</button>
-                        </c:if>
-                        <c:if test="${whereBack.equals('my')}">
-                            <button class="buttonw" type="button" onclick="window.location.href = `${pageContext.servletContext.contextPath}/info?number=${car.getId()}&whereBack=my`;">Подробнее</button>
-                        </c:if>
-                        <c:if test="${whereBack.equals('user')}">
-                            <button class="buttonw" type="button" onclick="window.location.href = `${pageContext.servletContext.contextPath}/info?number=${car.getId()}&whereBack=user`;">Подробнее</button>
-                        </c:if>
+                        <button class="buttonw" type="button" onclick="window.location.href = '${pageContext.servletContext.contextPath}/back_dispetcher?from=toInfo&number=${car.getId()}&whereBack=${whereBack}'">Подробнее</button>
                     </p>
+                    <p class = "nameOfCity">${car.getCity()}</p>
                 </li>
             </c:forEach>
         </ul>

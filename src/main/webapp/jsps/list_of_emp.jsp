@@ -13,6 +13,7 @@
 <head>
     <title>List of emp</title>
     <script type="text/javascript" src="js/functionsForDelete.js"></script>
+    <link rel="icon" href="pages/ico.png" type="image/png">
 </head>
 <body>
 <div id = wrapper>
@@ -21,7 +22,7 @@
         <c:if test="${sessionScope.get('status').equals('owner')}">
             <img class="myImage2" src="icons/plus-svgrepo-com.svg" onclick="location.href='${pageContext.servletContext.contextPath}/add_employee'">
         </c:if>
-        <h1>List of employees in autoservise</h1>
+        <h1>Список сотрудников</h1>
     </div>
     <div>
         <ul class = "list1a">
@@ -37,6 +38,8 @@
                             <c:out value="${emp.getProfession()}" /></p>
                             <p> <strong>Описание</strong>:
                             <c:out value="${emp.getDescription()}" /></p>
+                            <p> <strong>Имя пользователя</strong>:
+                                <c:out value="${pageContext.servletContext.getAttribute('database').getUserById(emp.getUser_id()).getName()}" /></p>
                             <p> <strong>Номер телефона</strong>:
                                 <c:out value="${emp.getPhone()}" /></p>
                         </div>

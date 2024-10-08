@@ -12,12 +12,13 @@
 <html>
 <head>
     <title>List for delete images</title>
+    <link rel="icon" href="pages/ico.png" type="image/png">
 </head>
 <body>
 <div id = "wrapper">
     <div id = "header" align="center">
         <img class = "myImage" src="icons/back.jpg" onclick="location.href='${pageContext.servletContext.contextPath}/info?number=${param.auto_id}&whereBack=${param.whereBack}'">
-        <h1> Delete images from this car</h1>
+        <h1>Удаление фотографий с этого объявления</h1>
     </div>
     <c:if test="${pravo}">
         <div align="center" id = "content">

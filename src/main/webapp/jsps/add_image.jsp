@@ -12,23 +12,27 @@
 <html>
 <head>
     <title>Add image</title>
+    <link rel="icon" href="pages/ico.png" type="image/png">
 </head>
 <body>
     <div id = "wrapper">
         <div id="header" align="center">
-            <c:if test="${param.whereBack.equals('all')}">
-                <img class = "myImage" src="icons/back.jpg" onclick="location.href='${pageContext.servletContext.contextPath}/info?number=${param.auto_id}&whereBack=all'">
-            </c:if>
-            <c:if test="${param.whereBack.equals('my')}">
-                <img class = "myImage" src="icons/back.jpg" onclick="location.href='${pageContext.servletContext.contextPath}/info?number=${param.auto_id}&whereBack=my'">
-            </c:if>
-            <h1> Add image to this car</h1>
+            <img class = "myImage" src="icons/back.jpg" onclick="location.href='${pageContext.servletContext.contextPath}/back_dispetcher?from=toInfo&number=${param.auto_id}&whereBack=all'">
+            <h1>Добавить фотографию к объявлению</h1>
         </div>
         <div align="center">
             <form method="post" enctype="multipart/form-data">
                 <input type="file" name="image"  accept="image/*"/><br/><br/>
                 <input id = "sub" type="submit"/>
             </form>
+            <c:if test="${flag != null}">
+                <c:if test="${flag}">
+                    <p style="color: green">Успешно</p>
+                </c:if>
+                <c:if test="${!flag}">
+                    <p style="color: red">Ошибка</p>
+                </c:if>
+            </c:if>
         </div>
         <div id = "footer">
             <p class="fon"><strong>Телефон:<br> +7 953 015 62 18</strong> </p>

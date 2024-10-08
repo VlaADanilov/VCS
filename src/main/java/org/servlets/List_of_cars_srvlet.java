@@ -1,9 +1,10 @@
 package org.servlets;
 
-import org.DB.MySQL_helper;
+import org.DB.DB_helper;
 import org.models.Auto_model;
 import org.models.Brand;
 
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -16,22 +17,30 @@ import java.util.stream.Collectors;
 
 @WebServlet("/list")
 public class List_of_cars_srvlet extends HttpServlet {
+    private DB_helper db_helper;
+
+    @Override
+    public void init(ServletConfig config) throws ServletException {
+        super.init(config);
+        db_helper = (DB_helper) config.getServletContext().getAttribute("database");
+    }
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         List<Auto_model> list = null;
         String brand_id = req.getParameter("brand_id");
         String model = req.getParameter("model");
         String sort = req.getParameter("sort");
+        String city = req.getParameter("city");
         if (brand_id == null){
-            list = MySQL_helper.getAllAuto();
+            list = db_helper.getAllAuto();
         }
         else{
-            list = MySQL_helper.getFilterAuto(brand_id, model, sort, null);
+            list = db_helper.getFilterAuto(brand_id, model, sort, null, city);
         }
         req.setAttribute("list", list);
         List<Brand> brands = new ArrayList<>();
         brands.add(new Brand(0, "None","None"));
-        brands.addAll(MySQL_helper.getAllBrands());
+        brands.addAll(db_helper.getAllBrands());
         req.setAttribute("brands", brands);
         req.setAttribute("whereBack", "all");
         req.getRequestDispatcher("jsps/list_of_cars.jsp").forward(req, resp);
