@@ -29,7 +29,7 @@
             <c:forEach var = "emp" items="${list}" >
                 <li>
                         <div id = "left" align="center">
-                            <img class = "listImage" src="jsps/getImageEmp.jsp?emp_id=${emp.getId()}">
+                            <img class = "listImage" src="${pageContext.servletContext.contextPath}/getImageEmp?emp_id=${emp.getId()}">
                         </div>
                         <div id = "right">
                             <p><strong>ФИО</strong>:

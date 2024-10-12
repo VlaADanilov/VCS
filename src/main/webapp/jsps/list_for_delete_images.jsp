@@ -8,16 +8,16 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page isELIgnored="false" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<link rel="stylesheet" href="styles/style.css">
+<link rel="stylesheet" href="/styles/style.css">
 <html>
 <head>
     <title>List for delete images</title>
-    <link rel="icon" href="pages/ico.png" type="image/png">
+    <link rel="icon" href="/pages/ico.png" type="image/png">
 </head>
 <body>
 <div id = "wrapper">
     <div id = "header" align="center">
-        <img class = "myImage" src="icons/back.jpg" onclick="location.href='${pageContext.servletContext.contextPath}/info?number=${param.auto_id}&whereBack=${param.whereBack}'">
+        <img class = "myImage" src="/icons/back.jpg" onclick="location.href='${pageContext.servletContext.contextPath}${uri}'">
         <h1>Удаление фотографий с этого объявления</h1>
     </div>
     <c:if test="${pravo}">
@@ -27,7 +27,7 @@
                     <c:forEach var = "numb" items="${list}" >
                         <div align="center">
                             <p>
-                                <img class = "carImage" src="jsps/getImage.jsp?auto_id=${param.auto_id}&number=${numb}" width="400px">
+                                <img class = "carImage" src="/getImage?auto_id=${param.auto_id}&number=${numb}" width="400px">
                                 <form method="post">
                                     <input type="hidden" name = "numbIm" value="${numb}">
                                     <button type="submit">Удалить</button>
@@ -50,7 +50,7 @@
     <div id="footer">
         <p class="fon"><strong>Телефон:<br> +7 953 015 62 18</strong> </p>
         <p class="mail"><strong>E-mail<br>helloampro@gmail.com</strong></p>
-        <img class = "logo_bottom" src="icons/логотип-без-фона.png">
+        <img class = "logo_bottom" src="/icons/логотип-без-фона.png">
     </div>
 
 </div>

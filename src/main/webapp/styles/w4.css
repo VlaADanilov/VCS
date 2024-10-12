@@ -39,6 +39,7 @@ body{
 .listImage{
     height: 200px;
     width: auto;
+    max-width: 200px;
 }
 .noner{
     display: none;

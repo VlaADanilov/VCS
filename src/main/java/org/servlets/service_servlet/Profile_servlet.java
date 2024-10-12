@@ -1,7 +1,6 @@
-package org.servlets;
+package org.servlets.service_servlet;
 
 import org.DB.DB_helper;
-import org.DB.MySQL_helper;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;

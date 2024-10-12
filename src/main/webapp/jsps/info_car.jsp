@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page isELIgnored="false" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<link rel="stylesheet" href="styles/style.css">
+<link rel="stylesheet" href="/styles/style.css">
 <html>
 <head>
     <title>Info about car</title>
@@ -17,19 +17,19 @@
 <body>
 <div id = "wrapper">
     <div id = "header" align="center">
-        <img class = "myImage" src="icons/back.jpg" onclick="location.href='${pageContext.servletContext.contextPath}/back_dispetcher?from=fromInfo&whereBack=${param.whereBack}&user_id=${car.getUser_id()}'">
+        <img class = "myImage" src="/icons/back.jpg" onclick="location.href='${pageContext.servletContext.contextPath}${end}'">
         <c:if test="${pravo}">
-            <img class="myImage2" src="icons/delete-1487-svgrepo-com.svg" onclick="location.href='${pageContext.servletContext.contextPath}/delete?auto_id=${car.getId()}&whereBack=${param.whereBack}'">
-            <img class="myImage2" src="icons/settings-2-svgrepo-com.svg" onclick="location.href='${pageContext.servletContext.contextPath}/update?auto_id=${car.getId()}&whereBack=${param.whereBack}'">
+            <img class="myImage2" src="/icons/delete-1487-svgrepo-com.svg" onclick="location.href='${pageContext.servletContext.contextPath}${uri}/delete?auto_id=${car.getId()}'">
+            <img class="myImage2" src="/icons/settings-2-svgrepo-com.svg" onclick="location.href='${pageContext.servletContext.contextPath}${uri}/update?auto_id=${car.getId()}'">
         </c:if>
         <c:if test="${sessionScope.get('username') != null}">
             <c:if test="${!exist}">
-                <img class="myImage2" src="icons/heart-black.svg" onclick="location.href = '${pageContext.servletContext.contextPath}/setting_like?auto_id=${car.getId()}&whereBack=${param.whereBack}&do=add'">
+                <img class="myImage2" src="/icons/heart-black.svg" onclick="location.href = '${pageContext.servletContext.contextPath}${uri}/setting_like?auto_id=${car.getId()}&do=add'">
             </c:if>
             <c:if test="${exist}">
-                <img class="myImage2" src="icons/heart-red.svg" onclick="location.href = '${pageContext.servletContext.contextPath}/setting_like?auto_id=${car.getId()}&whereBack=${param.whereBack}&do=delete'">
+                <img class="myImage2" src="/icons/heart-red.svg" onclick="location.href = '${pageContext.servletContext.contextPath}${uri}/setting_like?auto_id=${car.getId()}&do=delete'">
             </c:if>
-            <img class="myImage2" src = "icons/report-among-us-online-game-svgrepo-com.svg" onclick="location.href = '${pageContext.servletContext.contextPath}/report?auto_id=${car.getId()}&whereBack=${param.whereBack}'">
+            <img class="myImage2" src = "/icons/report-among-us-online-game-svgrepo-com.svg" onclick="location.href = '${pageContext.servletContext.contextPath}${uri}/report?auto_id=${car.getId()}'">
         </c:if>
         <h1>Подробнее об автомобиле</h1>
     </div>
@@ -39,7 +39,8 @@
                 <c:forEach var = "numb" items="${list}" >
                     <div align="center">
                         <p>
-                            <img class = "carImage" src="jsps/getImage.jsp?auto_id=${car.getId()}&number=${numb}" width="400px">
+                            <!--<img class = "carImage" src="jsps/getImage.jsp?auto_id=${car.getId()}&number=${numb}" width="400px">-->
+                            <img class = "carImage" src="${pageContext.servletContext.contextPath}/getImage?auto_id=${car.getId()}&number=${numb}" width="400px">
                         </p>
                         <p></p>
                     </div>
@@ -47,8 +48,8 @@
             </ul>
             <div align="center">
                 <c:if test="${pravo}">
-                    <button type="button" onclick="location.href = '${pageContext.servletContext.contextPath}/image?auto_id=${car.getId()}&whereBack=${param.whereBack}'">Добавить картинку</button>
-                    <button type="button" onclick="location.href = '${pageContext.servletContext.contextPath}/delete_image?auto_id=${car.getId()}&whereBack=${param.whereBack}'">Удалить картинку</button>
+                    <button type="button" onclick="location.href = '${pageContext.servletContext.contextPath}${uri}/image?auto_id=${car.getId()}'">Добавить картинку</button>
+                    <button type="button" onclick="location.href = '${pageContext.servletContext.contextPath}${uri}/delete_image?auto_id=${car.getId()}'">Удалить картинку</button>
                 </c:if>
             </div>
         </div>
@@ -72,7 +73,7 @@
     <div id="footer">
         <p class="fon"><strong>Телефон:<br> +7 953 015 62 18</strong> </p>
         <p class="mail"><strong>E-mail<br>helloampro@gmail.com</strong></p>
-        <img class = "logo_bottom" src="icons/логотип-без-фона.png">
+        <img class = "logo_bottom" src="/icons/логотип-без-фона.png">
     </div>
 
 </div>

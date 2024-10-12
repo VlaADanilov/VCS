@@ -6,18 +6,18 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<link rel="stylesheet" href="styles/add_image.css">
+<link rel="stylesheet" href="/styles/add_image.css">
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page isELIgnored="false" %>
 <html>
 <head>
     <title>Add image</title>
-    <link rel="icon" href="pages/ico.png" type="image/png">
+    <link rel="icon" href="/pages/ico.png" type="image/png">
 </head>
 <body>
     <div id = "wrapper">
         <div id="header" align="center">
-            <img class = "myImage" src="icons/back.jpg" onclick="location.href='${pageContext.servletContext.contextPath}/back_dispetcher?from=toInfo&number=${param.auto_id}&whereBack=all'">
+            <img class = "myImage" src="/icons/back.jpg" onclick="location.href='${pageContext.servletContext.contextPath}${uri}'">
             <h1>Добавить фотографию к объявлению</h1>
         </div>
         <div align="center">
@@ -37,7 +37,7 @@
         <div id = "footer">
             <p class="fon"><strong>Телефон:<br> +7 953 015 62 18</strong> </p>
             <p class="mail"><strong>E-mail<br>helloampro@gmail.com</strong></p>
-            <img class = "logo_bottom" src="icons/логотип-без-фона.png">
+            <img class = "logo_bottom" src="/icons/логотип-без-фона.png">
         </div>
     </div>
 </body>

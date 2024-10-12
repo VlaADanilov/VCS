@@ -1,7 +1,6 @@
-package org.servlets;
+package org.servlets.add_servlets;
 
 import org.DB.DB_helper;
-import org.DB.MySQL_helper;
 import org.models.Auto_model;
 
 import javax.servlet.ServletConfig;

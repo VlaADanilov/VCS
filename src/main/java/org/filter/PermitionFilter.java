@@ -33,6 +33,7 @@ public class PermitionFilter implements Filter {
         }
         String check = list[list.length - 1];
         HttpServletResponse resp = (HttpServletResponse) servletResponse;
+
         if (Arrays.stream(pagesNeedUser).collect(Collectors.toList()).contains(check)) {
             if (req.getSession().getAttribute("username") == null) {
                 resp.sendRedirect(req.getContextPath() + "/");
@@ -67,4 +68,5 @@ public class PermitionFilter implements Filter {
         }
         filterChain.doFilter(servletRequest, servletResponse);
     }
+
 }

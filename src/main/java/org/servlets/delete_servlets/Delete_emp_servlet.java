@@ -1,22 +1,17 @@
-package org.servlets;
+package org.servlets.delete_servlets;
 
 import org.DB.DB_helper;
-import org.DB.MySQL_helper;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.Part;
 import java.io.IOException;
-import java.io.InputStream;
 
-@WebServlet("/emp_image")
-@MultipartConfig(maxFileSize = 16177216)
-public class Add_image_for_emp_servlet extends HttpServlet {
+@WebServlet("/delete_emp")
+public class Delete_emp_servlet extends HttpServlet {
     private DB_helper db_helper;
 
     @Override
@@ -25,15 +20,12 @@ public class Add_image_for_emp_servlet extends HttpServlet {
         db_helper = (DB_helper) config.getServletContext().getAttribute("database");
     }
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         int emp_id = Integer.parseInt(req.getParameter("emp_id"));
-        Part part = req.getPart("image");
-        if (part != null) {
-            InputStream is = part.getInputStream();
-            db_helper.addImageToThisEmp(is, emp_id);
-        } else{
-            System.out.println("Ошибка");
+        if(!db_helper.getUserById(db_helper.getEmpById(emp_id).getUser_id()).getStatus().equals("owner")){
+            db_helper.changeStatusThisUser(db_helper.getEmpById(emp_id).getUser_id(), "default");
         }
+        db_helper.deleteEmpById(emp_id);
         resp.sendRedirect(req.getContextPath() + "/list_of_emp");
     }
 }

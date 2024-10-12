@@ -37,6 +37,7 @@ public class List_Dispetcher_servlet extends HttpServlet {
         if (req.getParameter("user_id") != null && !req.getParameter("user_id").isEmpty()) {
             url += "&user_id=" + req.getParameter("user_id");
         }
-        req.getRequestDispatcher(url).forward(req, resp);
+        System.out.println(url);
+        resp.sendRedirect(req.getContextPath() + url);
     }
 }

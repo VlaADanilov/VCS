@@ -1,7 +1,6 @@
-package org.servlets;
+package org.servlets.add_servlets;
 
 import org.DB.DB_helper;
-import org.DB.MySQL_helper;
 import org.models.Employee;
 
 import javax.servlet.ServletConfig;
@@ -11,9 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.Part;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.Random;
 
 @WebServlet("/add_employee")
@@ -28,7 +25,7 @@ public class Add_employee_servlet extends HttpServlet {
     }
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("jsps/add_employee.jsp").forward(req, resp);
+        req.getRequestDispatcher("/jsps/add_employee.jsp").forward(req, resp);
     }
 
     @Override
@@ -47,8 +44,9 @@ public class Add_employee_servlet extends HttpServlet {
             employee.setDescription(req.getParameter("desc"));
             employee.setUser_id(db_helper.getUser(username).getId());
             db_helper.addEmployee(employee);
-            String status = "admin";
-            db_helper.changeStatusThisUser(db_helper.getUser(username).getId(), status);
+            if (!db_helper.getUser(username).getStatus().equals("owner")) {
+                db_helper.changeStatusThisUser(db_helper.getUser(username).getId(), "admin");
+            }
             req.setAttribute("flag", "true");
             req.setAttribute("emp_id", db_helper.getEmpIdByName(employee.getName()));
         }

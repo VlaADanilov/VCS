@@ -8,17 +8,17 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page isELIgnored="false" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<link rel="stylesheet" href="styles/w3.css">
+<link rel="stylesheet" href="/styles/w3.css">
 <html lang="ru">
 <head>
     <meta charset="utf-8" />
     <title>List of cars</title>
-    <link rel="icon" href="pages/ico.png" type="image/png">
+    <link rel="icon" href="/pages/ico.png" type="image/png">
 </head>
 <body>
 <div id = wrapper>
     <div id = "header" align="center">
-        <img class="myImage" src="icons/back.jpg" onclick="location.href='${pageContext.servletContext.contextPath}/back_dispetcher?whereBack=${whereBack}&from=list'">
+        <img class="myImage" src="/icons/back.jpg" onclick="location.href='${pageContext.servletContext.contextPath}/${back}'">
         <h1>Список объявлений</h1>
     </div>
     <div align="center">
@@ -54,7 +54,9 @@
                 <button type="submit">Поиск</button>
             </p>
         </form>
-        <button type="button" onclick="location.href='${pageContext.servletContext.contextPath}/back_dispetcher?from=filter&user_id=${param.user_id}&whereBack=${whereBack}'">Очистить фильтр</button>
+        <form method="get">
+            <button type="submit">Очистить фильтр</button>
+        </form>
     </div>
     <div>
         <ul class = "list1a">
@@ -72,7 +74,7 @@
                         <c:out value="${car.getNicePrice()} руб." />
                         <b> Пробег: </b>
                         <c:out value="${car.getMileage()} км." />
-                        <button class="buttonw" type="button" onclick="window.location.href = '${pageContext.servletContext.contextPath}/back_dispetcher?from=toInfo&number=${car.getId()}&whereBack=${whereBack}'">Подробнее</button>
+                        <button class="buttonw" type="button" onclick="window.location.href = '${pageContext.servletContext.contextPath}${uri}/info?number=${car.getId()}'">Подробнее</button>
                     </p>
                     <p class = "nameOfCity">${car.getCity()}</p>
                 </li>
@@ -86,7 +88,7 @@
     <div id="footer">
         <p class="fon"><strong>Телефон:<br> +7 953 015 62 18</strong> </p>
         <p class="mail"><strong>E-mail<br>helloampro@gmail.com</strong></p>
-        <img class = "logo_bottom" src="icons/логотип-без-фона.png">
+        <img class = "logo_bottom" src="/icons/логотип-без-фона.png">
     </div>
 </div>
 

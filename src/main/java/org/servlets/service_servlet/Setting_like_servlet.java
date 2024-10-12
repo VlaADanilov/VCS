@@ -1,7 +1,6 @@
-package org.servlets;
+package org.servlets.service_servlet;
 
 import org.DB.DB_helper;
-import org.DB.MySQL_helper;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -10,8 +9,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Arrays;
 
-@WebServlet("/setting_like")
+@WebServlet(urlPatterns = {"/list/info/setting_like","/my_cars/info/setting_like","/my_likes/info/setting_like","/user_cars/info/setting_like"})
 public class Setting_like_servlet extends HttpServlet {
     private DB_helper db_helper;
 
@@ -30,6 +30,19 @@ public class Setting_like_servlet extends HttpServlet {
         else{
             db_helper.addLikeToDatabase(user_id, auto_id);
         }
-        resp.sendRedirect(req.getContextPath() + "/info?number=" + auto_id + "&whereBack="  + req.getParameter("whereBack"));
+        resp.sendRedirect(req.getContextPath() + collectTheString(req.getRequestURI()) + "?number=" + auto_id);
+    }
+
+    private String collectTheString(String uri){
+        String[] arr = uri.split("/");
+        System.out.println(Arrays.toString(arr));
+        String rez = "/";
+        for (int i = 1; i < arr.length - 1; i++) {
+            rez += arr[i];
+            if (i != arr.length - 2) {
+                rez += "/";
+            }
+        }
+        return rez;
     }
 }

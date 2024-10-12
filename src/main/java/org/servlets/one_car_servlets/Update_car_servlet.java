@@ -1,7 +1,6 @@
-package org.servlets;
+package org.servlets.one_car_servlets;
 
 import org.DB.DB_helper;
-import org.DB.MySQL_helper;
 import org.models.Brand;
 
 import javax.servlet.ServletConfig;
@@ -11,11 +10,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
 import java.util.LinkedList;
 
-@WebServlet("/update")
+@WebServlet(urlPatterns = {"/list/info/update","/my_cars/info/update","/my_likes/info/update","/user_cars/info/update"})
 public class Update_car_servlet extends HttpServlet {
     private DB_helper db_helper;
 
@@ -28,12 +26,26 @@ public class Update_car_servlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Brand brand = new Brand("Не изменять", null);
         brand.setId(-1);
-        LinkedList<Brand> list = new LinkedList<Brand>();
+        LinkedList<Brand> list = new LinkedList<>();
         list.add(brand);
         list.addAll(db_helper.getAllBrands());
         req.setAttribute("list", list);
+        req.setAttribute("uri", collectTheString(req.getRequestURI()) + "?number=" + req.getParameter("auto_id"));
         req.setAttribute("car", db_helper.getAutoById(Integer.parseInt(req.getParameter("auto_id"))));
-        req.getRequestDispatcher("jsps/update_car.jsp").forward(req, resp);
+        req.getRequestDispatcher("/jsps/update_car.jsp").forward(req, resp);
+    }
+
+    private String collectTheString(String uri){
+        String[] arr = uri.split("/");
+        System.out.println(Arrays.toString(arr));
+        String rez = "/";
+        for (int i = 1; i < arr.length - 1; i++) {
+            rez += arr[i];
+            if (i != arr.length - 2) {
+                rez += "/";
+            }
+        }
+        return rez;
     }
 
     @Override
@@ -69,6 +81,6 @@ public class Update_car_servlet extends HttpServlet {
             System.out.println(req.getParameter("city"));
             db_helper.updateAutoById_city(Integer.parseInt(req.getParameter("auto_id")),req.getParameter("city"));
         }
-        resp.sendRedirect(req.getContextPath()+"/info?number="+req.getParameter("auto_id")+"&whereBack="+req.getParameter("whereBack"));
+        resp.sendRedirect(req.getContextPath()+collectTheString(req.getRequestURI()) + "?number=" + req.getParameter("auto_id"));
     }
 }

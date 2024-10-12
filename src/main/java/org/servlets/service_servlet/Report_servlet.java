@@ -1,4 +1,4 @@
-package org.servlets;
+package org.servlets.service_servlet;
 
 import org.DB.DB_helper;
 import org.models.Report;
@@ -10,9 +10,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Arrays;
 
-@WebServlet("/report")
-public class report_servlet extends HttpServlet {
+@WebServlet(urlPatterns = {"/list/info/report","/my_cars/info/report","/my_likes/info/report","/user_cars/info/report"})
+public class Report_servlet extends HttpServlet {
     private DB_helper db_helper;
 
     @Override
@@ -24,7 +25,21 @@ public class report_servlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding("UTF-8");
-        req.getRequestDispatcher("jsps/report_car.jsp").forward(req, resp);
+        req.setAttribute("uri", collectTheString(req.getRequestURI()));
+        req.getRequestDispatcher("/jsps/report_car.jsp").forward(req, resp);
+    }
+
+    private String collectTheString(String uri){
+        String[] arr = uri.split("/");
+        System.out.println(Arrays.toString(arr));
+        String rez = "/";
+        for (int i = 1; i < arr.length - 1; i++) {
+            rez += arr[i];
+            if (i != arr.length - 2) {
+                rez += "/";
+            }
+        }
+        return rez;
     }
 
     @Override
@@ -39,8 +54,8 @@ public class report_servlet extends HttpServlet {
         }
         else{
             db_helper.addReport(new Report(auto_id,text,user_id));
-            String whereBack = req.getParameter("whereBack");
-            resp.sendRedirect(req.getContextPath() + "/back_dispetcher?whereBack=" + whereBack + "&from=toInfo&number=" + auto_id);
+            System.out.println(req.getParameter("uri"));
+            resp.sendRedirect(req.getContextPath() + req.getParameter("uri") + "?number=" + auto_id);
         }
     }
 }

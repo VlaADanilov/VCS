@@ -1,7 +1,6 @@
-package org.servlets;
+package org.servlets.list_servlets;
 
 import org.DB.DB_helper;
-import org.DB.MySQL_helper;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -23,6 +22,6 @@ public class List_of_employees_servlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setAttribute("list", db_helper.getAllEmployees());
-        req.getRequestDispatcher("jsps/list_of_emp.jsp").forward(req, resp);
+        req.getRequestDispatcher("/jsps/list_of_emp.jsp").forward(req, resp);
     }
 }

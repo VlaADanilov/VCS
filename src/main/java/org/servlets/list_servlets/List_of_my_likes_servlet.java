@@ -1,9 +1,9 @@
-package org.servlets;
+package org.servlets.list_servlets;
 
 import org.DB.DB_helper;
-import org.DB.MySQL_helper;
 import org.models.Auto_model;
 import org.models.Brand;
+import org.models.User;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -15,8 +15,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-@WebServlet("/user_cars")
-public class User_cars_servlet extends HttpServlet {
+@WebServlet("/my_likes")
+public class List_of_my_likes_servlet extends HttpServlet {
     private DB_helper db_helper;
 
     @Override
@@ -26,24 +26,28 @@ public class User_cars_servlet extends HttpServlet {
     }
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String username = db_helper.getUserById(Integer.parseInt(req.getParameter("user_id"))).getName();
         List<Auto_model> list = null;
         String brand_id = req.getParameter("brand_id");
         String model = req.getParameter("model");
         String sort = req.getParameter("sort");
         String city = req.getParameter("city");
+        User user = db_helper.getUser((String) req.getSession().getAttribute("username"));
         if (brand_id == null){
-            list = db_helper.getAllAuto(username);
+            list = db_helper.getAutoByThisIds(db_helper.getAllLikes(user.getId()));
         }
         else{
-            list = db_helper.getFilterAuto(brand_id, model, sort, req.getParameter("user_id"),city);
+            list = db_helper.getFilterAutoLike(brand_id, model, sort, null, user.getId(),city);
         }
         req.setAttribute("list", list);
-        req.setAttribute("whereBack", "user");
         List<Brand> brands = new ArrayList<>();
         brands.add(new Brand(0, "None","None"));
         brands.addAll(db_helper.getAllBrands());
         req.setAttribute("brands", brands);
-        req.getRequestDispatcher("jsps/list_of_cars.jsp").forward(req, resp);
+        req.setAttribute("whereBack", "like");
+        String[] uris = req.getRequestURI().split("/");
+        String uri = uris[uris.length - 1];
+        req.setAttribute("uri", "/" + uri);
+        req.setAttribute("back", uris[uris.length - 2]);
+        req.getRequestDispatcher("/jsps/list_of_cars.jsp").forward(req, resp);
     }
 }
