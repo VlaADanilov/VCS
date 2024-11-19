@@ -3,11 +3,12 @@ package org.DB;
 import org.models.*;
 
 import java.io.InputStream;
-import java.sql.PreparedStatement;
 import java.util.List;
 
 public interface DB_helper {
     boolean addImageToThisAuto(InputStream is, int auto_id);
+
+    boolean deleteUserByName(String name);
 
     int getEmpIdByName(String name);
 
@@ -55,13 +56,13 @@ public interface DB_helper {
 
     boolean checkUsersPassword(String username, String password);
 
-    void addUserToDatabase(User user);
+    boolean addUserToDatabase(User user);
 
     void deleteEmpById(int emp_id);
 
-    void deleteAutoById(int auto_id);
+    boolean deleteAutoById(int auto_id);
 
-    void addAutoToDatabase(Auto_model auto);
+    boolean addAutoToDatabase(Auto_model auto);
 
     void addLikeToDatabase(int user_id, int auto_id);
 

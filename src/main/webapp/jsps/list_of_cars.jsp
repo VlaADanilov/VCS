@@ -22,7 +22,7 @@
         <h1>Список объявлений</h1>
     </div>
     <div align="center">
-        <form action="${pageContext.servletContext.contextPath}/dispetcher" method="get">
+        <form method="get">
             <label for="brand_select">Марка:</label>
             <select name="brand" id="brand_select">
                 <c:forEach var = "brand_id" items="${brands}" >
@@ -48,13 +48,15 @@
                 </select>
             </p>
 
-            <input type = "hidden" name="whereBack" value="${whereBack}">
             <input type = "hidden" name="user_id" value="${param.user_id}">
             <p>
                 <button type="submit">Поиск</button>
             </p>
         </form>
         <form method="get">
+            <c:if test="${back.equals('all_users')}">
+                <input type="hidden" value="${param.user_id}" name = "user_id">
+            </c:if>
             <button type="submit">Очистить фильтр</button>
         </form>
     </div>

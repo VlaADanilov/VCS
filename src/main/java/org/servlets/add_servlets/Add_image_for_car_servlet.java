@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
 
-@WebServlet(urlPatterns = {"/list/info/image","/my_cars/info/image","/my_likes/info/image","/user_cars/info/image"})
+@WebServlet(urlPatterns = {"/list/info/image","/my_cars/info/image","/my_likes/info/image","/user_cars/info/image","/list_of_reports/info/image","/image"})
 @MultipartConfig(maxFileSize = 16177216)
 public class Add_image_for_car_servlet extends HttpServlet {
     private DB_helper db_helper;

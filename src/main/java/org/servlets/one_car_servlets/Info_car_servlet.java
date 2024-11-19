@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-@WebServlet(urlPatterns = {"/list/info","/my_cars/info","/my_likes/info","/user_cars/info"})
+@WebServlet(urlPatterns = {"/list/info","/my_cars/info","/my_likes/info","/user_cars/info", "/list_of_reports/info"})
 public class Info_car_servlet extends HttpServlet {
     private DB_helper db_helper;
 
@@ -55,7 +55,6 @@ public class Info_car_servlet extends HttpServlet {
 
     private String collectTheString(String uri){
         String[] arr = uri.split("/");
-        System.out.println(Arrays.toString(arr));
         String rez = "/";
         for (int i = 1; i < arr.length - 1; i++) {
             rez += arr[i];

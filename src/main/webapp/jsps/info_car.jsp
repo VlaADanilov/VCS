@@ -12,7 +12,7 @@
 <html>
 <head>
     <title>Info about car</title>
-    <link rel="icon" href="pages/ico.png" type="image/png">
+    <link rel="icon" href="/pages/ico.png" type="image/png">
 </head>
 <body>
 <div id = "wrapper">

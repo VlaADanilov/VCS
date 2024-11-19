@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 @WebFilter("/*")
 public class PermitionFilter implements Filter {
     private DB_helper db_helper;
-    private String[] pagesNeedUser = {"add", "my_likes", "my_cars", "setting_like", "report"};
+    private String[] pagesNeedUser = {"add", "my_likes", "my_cars", "setting_like", "report","delete_my_account"};
     private String[] pagesNeedPermOwnmer = {"add_employee", "emp_image", "delete_emp", "doAdmin"};
     private String[] pagesNeedAuthor = { "image", "delete", "delete_image", "update"};
     private String[] pagesNeedAdmin = { "list_of_reports", "delete_report"};

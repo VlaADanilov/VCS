@@ -52,6 +52,6 @@ public class Add_car_servlet extends HttpServlet {
         db_helper.addAutoToDatabase(new Auto_model(db_helper.getBrandById(brand).getName(),db_helper.getUser(username).getId(),model,year,price, mileage, city));
         req.setAttribute("flag", "true");
         int auto_id = db_helper.getLastAutoFromThisUser((String)req.getSession().getAttribute("username"));
-        resp.sendRedirect(req.getContextPath() + "/image?auto_id=" + auto_id + "&whereBack=my");
+        resp.sendRedirect(req.getContextPath() + "/image?auto_id=" + auto_id);
     }
 }

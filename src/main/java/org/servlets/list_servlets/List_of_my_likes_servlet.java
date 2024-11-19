@@ -27,8 +27,8 @@ public class List_of_my_likes_servlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         List<Auto_model> list = null;
-        String brand_id = req.getParameter("brand_id");
-        String model = req.getParameter("model");
+        String brand_id = req.getParameter("brand");
+        String model = req.getParameter("car_model");
         String sort = req.getParameter("sort");
         String city = req.getParameter("city");
         User user = db_helper.getUser((String) req.getSession().getAttribute("username"));
@@ -43,7 +43,6 @@ public class List_of_my_likes_servlet extends HttpServlet {
         brands.add(new Brand(0, "None","None"));
         brands.addAll(db_helper.getAllBrands());
         req.setAttribute("brands", brands);
-        req.setAttribute("whereBack", "like");
         String[] uris = req.getRequestURI().split("/");
         String uri = uris[uris.length - 1];
         req.setAttribute("uri", "/" + uri);

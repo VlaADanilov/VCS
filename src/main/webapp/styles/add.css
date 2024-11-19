@@ -15,6 +15,14 @@ body{
     border-radius: 5px; /* Закругляются углы блока */
     box-shadow: rgba(0,0,0,0.5) 0px 1px 3px; /* Тень. Визуально приподнимает блок над оболочкой */
 }
+#content{
+    margin-bottom: 5px; /* Нижний отступ шапки от остального контента */
+    border-radius: 5px; /* Закругляются углы блока */
+    box-shadow: rgba(0,0,0,0.5) 0px 1px 3px; /* Тень. Визуально приподнимает блок над оболочкой */
+    width: calc(100%); /* Ширина блока */
+    margin-top: 10px;
+    background-color: #ffffff;
+}
 .myImage{
     opacity: 0.6;
     float: left;
@@ -26,6 +34,9 @@ body{
     opacity: 1;
 }
 .but{
+    margin-bottom: 15px;
+}
+#sub{
     margin-bottom: 15px;
 }
 #footer{ /* Блок подвала */
@@ -55,4 +66,10 @@ body{
     height: 100%;
     width: auto;
     margin: 0 0 0 0;
+}
+.delete_icon{
+    opacity: 0.6;
+}
+.delete_icon:hover{
+    opacity: 1;
 }

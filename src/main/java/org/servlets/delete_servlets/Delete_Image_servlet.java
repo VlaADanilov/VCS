@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-@WebServlet(urlPatterns = {"/list/info/delete_image","/my_cars/info/delete_image","/my_likes/info/delete_image","/user_cars/info/delete_image"})
+@WebServlet(urlPatterns = {"/list/info/delete_image","/my_cars/info/delete_image","/my_likes/info/delete_image","/user_cars/info/delete_image","/list_of_reports/info/delete_image"})
 public class Delete_Image_servlet extends HttpServlet {
     private DB_helper db_helper;
 

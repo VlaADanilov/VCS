@@ -8,14 +8,14 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page isELIgnored="false" %>
-<link rel="stylesheet" href="styles/menu.css">
+<link rel="stylesheet" href="/styles/menu.css">
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <link rel="icon" href="pages/ico.png" type="image/png">
+    <link rel="icon" href="/pages/ico.png" type="image/png">
     <meta charset="utf-8" />
     <title>VladCarService</title>
-    <script type="text/javascript" src="js/forMenu.js"></script>
+    <script type="text/javascript" src="/js/forMenu.js"></script>
 </head>
 <body>
 <div id="wrapper"> <!--Оболочка страницы-->
@@ -26,17 +26,17 @@
         <!--Описание (телефон)-->
         <p class="nomer"> +7 953 015 62 18</p>
         <!--Фоновая картинка в шапке сайта-->
-        <img class = "logo" src="icons/логотип-без-фона.png">
-        <img class = "fone" src="pages/XXL.jpg">
+        <img class = "logo" src="/icons/логотип-без-фона.png">
+        <img class = "fone" src="/pages/XXL.jpg">
     </div>
     <!--Сайдбар-->
     <div id="sidebar">
         <!--меню-->
         <h3>На нашем сайте</h3>
         <!--Картинки маркеров меню (галочки)-->
-        <p><img class="marcer" src="pages/icon_green_checkbox.png" width="10" height="10"><a href="${pageContext.servletContext.contextPath}/list">Автомобили</a></p>
-        <p><img class="marcer" src="pages/icon_green_checkbox.png" width="10" height="10"><a href="${pageContext.servletContext.contextPath}/all_users">Список пользователей</a></p>
-        <p><img class="marcer" src="pages/icon_green_checkbox.png" width="10" height="10"><a href="${pageContext.servletContext.contextPath}/list_of_emp">Сотрудники</a></p>
+        <p><img class="marcer" src="/pages/icon_green_checkbox.png" width="10" height="10"><a href="${pageContext.servletContext.contextPath}/list">Автомобили</a></p>
+        <p><img class="marcer" src="/pages/icon_green_checkbox.png" width="10" height="10"><a href="${pageContext.servletContext.contextPath}/all_users">Список пользователей</a></p>
+        <p><img class="marcer" src="/pages/icon_green_checkbox.png" width="10" height="10"><a href="${pageContext.servletContext.contextPath}/list_of_emp">Сотрудники</a></p>
         <!--Прямая синяя линия-->
         <hr width="50" color="#037FFC" size="5">
         <!--Общая информация в сайдбаре-->
@@ -66,12 +66,12 @@
             </div>
         </c:if>
         <c:if test="${sessionScope.get('username') != null}">
-            <h3>Здравствуйте! ${sessionScope.get('username')}</h3>
-            <p><img class="marcer" src="pages/icon_green_checkbox.png" width="10" height="10"><a href="${pageContext.servletContext.contextPath}/my_cars">Мои объявления</a></p>
-            <p><img class="marcer" src="pages/icon_green_checkbox.png" width="10" height="10"><a href="${pageContext.servletContext.contextPath}/my_likes">Избранные</a></p>
-            <p><img class="marcer" src="pages/icon_green_checkbox.png" width="10" height="10"><a href="${pageContext.servletContext.contextPath}/add">Добавить авто</a></p>
+            <h3>Здравствуйте! ${sessionScope.get('username')}<img src = "/icons/delete-1487-svgrepo-com.svg" id = 'delete_polz' onclick="location.href='${pageContext.servletContext.contextPath}/delete_my_account'"></h3>
+            <p><img class="marcer" src="/pages/icon_green_checkbox.png" width="10" height="10"><a href="${pageContext.servletContext.contextPath}/my_cars">Мои объявления</a></p>
+            <p><img class="marcer" src="/pages/icon_green_checkbox.png" width="10" height="10"><a href="${pageContext.servletContext.contextPath}/my_likes">Избранные</a></p>
+            <p><img class="marcer" src="/pages/icon_green_checkbox.png" width="10" height="10"><a href="${pageContext.servletContext.contextPath}/add">Добавить авто</a></p>
             <c:if test="${!sessionScope.get('status').equals('default')}">
-                <p><img class="marcer" src="pages/icon_green_checkbox.png" width="10" height="10"><a href="${pageContext.servletContext.contextPath}/list_of_reports">Жалобы</a></p>
+                <p><img class="marcer" src="/pages/icon_green_checkbox.png" width="10" height="10"><a href="${pageContext.servletContext.contextPath}/list_of_reports">Жалобы</a></p>
             </c:if>
             <form method="post" action="${pageContext.servletContext.contextPath}/exit">
                 <button type = submit>Выход</button>
@@ -83,7 +83,7 @@
     <!--Основной контент (статья)-->
     <div id="content">
         <!--Картинка слева-->
-        <img class="left" src="pages/left_page.jpg">
+        <img class="left" src="/pages/left_page.jpg">
         <!--Заголовок статьи-->
         <h3>О нашей работе</h3>
         <!--Текст статьи-->
@@ -101,7 +101,7 @@
         </p>
 
             <!--Картинка справа-->
-        <img class="right" src="pages/right_page.jpg">
+        <img class="right" src="/pages/right_page.jpg">
 
         <p>
             Приглашаем вас посетить наш автосервис и убедиться в нашем профессионализме и внимательном отношении к каждому клиенту. Мы гарантируем, что вы найдете здесь именно тот автомобиль, который идеально подойдет вам по всем параметрам. Добро пожаловать в VCS - ваш надежный партнер в мире подержанных автомобилей!
@@ -113,7 +113,7 @@
     <div id="footer">
         <p class="fon"><strong>Телефон:<br> +7 953 015 62 18</strong> </p>
         <p class="mail"><strong>E-mail<br>helloampro@gmail.com</strong></p>
-        <img class = "logo_bottom" src="icons/логотип-без-фона.png">
+        <img class = "logo_bottom" src="/icons/логотип-без-фона.png">
     </div>
 </div>
 </body>

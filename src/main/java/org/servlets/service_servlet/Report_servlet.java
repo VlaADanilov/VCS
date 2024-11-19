@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Arrays;
 
-@WebServlet(urlPatterns = {"/list/info/report","/my_cars/info/report","/my_likes/info/report","/user_cars/info/report"})
+@WebServlet(urlPatterns = {"/list/info/report","/my_cars/info/report","/my_likes/info/report","/user_cars/info/report","/list_of_reports/info/report"})
 public class Report_servlet extends HttpServlet {
     private DB_helper db_helper;
 
