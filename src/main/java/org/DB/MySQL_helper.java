@@ -29,49 +29,15 @@ public class MySQL_helper implements DB_helper{
     }
 
     public  int getEmpIdByName(String name){
-        try{
-            PreparedStatement ps = dbConnection.prepareStatement("SELECT * FROM employee");
-            ResultSet rs = ps.executeQuery();
-            while(rs.next()){
-                if(rs.getString("employee_name").equals(name)){
-                    return rs.getInt("employee_id");
-                }
-            }
-        }catch (Exception e){e.printStackTrace();}
-        return -1;
+        return Configuration.getEmployerDao().findByName(name).getId();
     }
 
     public  Employee getEmpById(int emp_id){
-        try{
-            PreparedStatement ps = dbConnection.prepareStatement("SELECT * FROM employee WHERE employee_id=?");
-            ps.setInt(1, emp_id);
-            ResultSet rs = ps.executeQuery();
-            while(rs.next()){
-                Employee emp = new Employee();
-                emp.setId(rs.getInt("employee_id"));
-                emp.setName(rs.getString("employee_name"));
-                emp.setDescription(rs.getString("employee_description"));
-                emp.setProfession(rs.getString("employee_profession"));
-                emp.setUser_id(rs.getInt("user_id"));
-                return emp;
-            }
-        }catch (Exception e){e.printStackTrace();}
-        return null;
+        return Configuration.getEmployerDao().findById(emp_id);
     }
 
-    public  void addImageToThisEmp(InputStream is, int emp_id){
-
-        //нужно сделать проверку, что существует такое auto_id
-        try(PreparedStatement statement = dbConnection.prepareStatement("UPDATE employee SET image = ? WHERE employee_id = ?")){
-            if(is.available() == 0) return;
-            statement.setInt(2, emp_id);
-            statement.setBlob(1, is);
-            statement.executeUpdate();
-            System.out.println("Image added successfully");
-        }
-        catch(Exception e){
-            e.printStackTrace();
-        }
+    public boolean addImageToThisEmp(InputStream is, int emp_id){
+        return Configuration.getEmployerDao().updateImage(is, emp_id);
     }
 
     public  void deleteImageById(int image_id){
@@ -231,41 +197,13 @@ public class MySQL_helper implements DB_helper{
         return str;
     }
 
-    public  void addEmployee(Employee employee){
-        try(PreparedStatement statement = dbConnection.prepareStatement("INSERT INTO employee VALUES(NULL,?,?,?,?,NULL)")){
-            statement.setString(1, employee.getName());
-            statement.setString(2, employee.getProfession());
-            statement.setString(3, employee.getDescription());
-            statement.setInt(4, employee.getUser_id());
-            statement.executeUpdate();
-        }
-        catch(SQLException e){
-            e.printStackTrace();
-        }
+    public boolean addEmployee(Employee employee){
+        return Configuration.getEmployerDao().save(employee);
     }
 
 
     public  List<Employee> getAllEmployees(){
-        List<Employee> list = new ArrayList<>();
-        try{
-            PreparedStatement ps = dbConnection.prepareStatement("SELECT * FROM employee JOIN user USING(user_id)");
-            ResultSet rs = ps.executeQuery();
-            while(rs.next()){
-                if (rs.getBlob("image") == null || rs.getBlob("image").length() == 0){
-                    deleteEmpById(rs.getInt("employee_id"));
-                    continue;
-                }
-                Employee employee = new Employee();
-                employee.setId(rs.getInt("employee_id"));
-                employee.setName(rs.getString("employee_name"));
-                employee.setProfession(rs.getString("employee_profession"));
-                employee.setDescription(rs.getString("employee_description"));
-                employee.setPhone(rs.getString("user_phone"));
-                employee.setUser_id(rs.getInt("user_id"));
-                list.add(employee);
-            }
-        }catch (Exception e){e.printStackTrace();}
-        return list;
+        return Configuration.getEmployerDao().findAll();
 
     }
 
@@ -350,27 +288,15 @@ public class MySQL_helper implements DB_helper{
     }
 
     public  boolean checkUsersPassword(String username, String password){
-        try(Statement statement = dbConnection.createStatement()){
-            PreparedStatement ps = dbConnection.prepareStatement("SELECT user_password FROM user WHERE user_name=?");
-            ps.setString(1, username);
-            ResultSet rs = ps.executeQuery();
-            while(rs.next()){
-                return password.equals(rs.getString("user_password"));
-            }
-        }catch (Exception e){e.printStackTrace();}
-        return false;
+        return Configuration.getUserDao().checkPassword(username, password);
     }
 
     public boolean addUserToDatabase(User user){
         return Configuration.getUserDao().save(user);
     }
 
-    public  void deleteEmpById(int emp_id){
-        try (PreparedStatement ps = dbConnection.prepareStatement("DELETE FROM employee WHERE employee_id = ?")){
-            ps.setInt(1, emp_id);
-            changeStatusThisUser(getEmpById(emp_id).getUser_id(), "default");
-            ps.executeUpdate();
-        }catch (Exception e){e.printStackTrace();}
+    public boolean deleteEmpById(int emp_id){
+        return Configuration.getEmployerDao().deleteById(emp_id);
     }
 
 
@@ -500,13 +426,8 @@ public class MySQL_helper implements DB_helper{
         return Configuration.getAutoModelDao().findById(id);
     }
 
-    public  void changeStatusThisUser(int user_id, String status){
-        try(PreparedStatement statement = dbConnection.prepareStatement("UPDATE user " +
-                "SET user_status = ? WHERE user_id = ?")){
-            statement.setString(1, status);
-            statement.setInt(2, user_id);
-            statement.executeUpdate();
-        }catch (Exception e){e.printStackTrace();}
+    public boolean changeStatusThisUser(int user_id, String status){
+        return Configuration.getUserDao().updateStatus(status, user_id);
     }
 
     public  void updateAutoById_brand(int auto_id, int brand_id){

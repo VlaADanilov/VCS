@@ -13,21 +13,21 @@ import java.util.List;
 public class UserDao extends AbstractDao<User> {
     private UserMapper mapper = new UserMapper();
     //language=sql
-    private final static String ADD_TO_DATABASE = "INSERT INTO user(user_name, user_password, user_status, user_phone) VALUES(?,?,?,?)";
-    @Override
-    public boolean save(User user) {
-        int result = 0;
-        try(PreparedStatement preparedStatement = getConnection().prepareStatement(ADD_TO_DATABASE)){
-            preparedStatement.setString(1, user.getName());
-            preparedStatement.setString(2, user.getPassword());
-            preparedStatement.setString(3, user.getStatus());
-            preparedStatement.setString(4, user.getPhone());
-            result = preparedStatement.executeUpdate();
-        }catch (SQLException e){
-            throw new RuntimeException(e);
+        private final static String ADD_TO_DATABASE = "INSERT INTO user(user_name, user_password, user_status, user_phone) VALUES(?,?,?,?)";
+        @Override
+        public boolean save(User user) {
+            int result = 0;
+            try(PreparedStatement preparedStatement = getConnection().prepareStatement(ADD_TO_DATABASE)){
+                preparedStatement.setString(1, user.getName());
+                preparedStatement.setString(2, user.getPassword());
+                preparedStatement.setString(3, user.getStatus());
+                preparedStatement.setString(4, user.getPhone());
+                result = preparedStatement.executeUpdate();
+            }catch (SQLException e){
+                throw new RuntimeException(e);
+            }
+            return result > 0;
         }
-        return result > 0;
-    }
 
     //language=sql
     private final static String DELETE_BY_ID= "DELETE FROM user WHERE user_id = ?";
@@ -113,5 +113,25 @@ public class UserDao extends AbstractDao<User> {
         }catch (Exception e){
             throw new RuntimeException(e);
         }
+    }
+
+    //language=sql
+    private final static String UPDATE_STATUS = "UPDATE user SET user_status = ? WHERE user_id = ?";
+    public boolean updateStatus(String status, int id) {
+        int result = 0;
+        try(PreparedStatement preparedStatement = getConnection().prepareStatement(UPDATE_STATUS)) {
+            preparedStatement.setString(1, status);
+            preparedStatement.setInt(2, id);
+            result = preparedStatement.executeUpdate();
+        }catch (Exception e){
+            throw new RuntimeException(e);
+        }
+        return result > 0;
+    }
+
+    //language=sql
+    public boolean checkPassword(String username, String password) {
+        User user = findByName(username);
+        return user.getPassword().equals(password);
     }
 }

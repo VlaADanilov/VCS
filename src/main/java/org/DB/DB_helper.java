@@ -14,7 +14,7 @@ public interface DB_helper {
 
     Employee getEmpById(int emp_id);
 
-    void addImageToThisEmp(InputStream is, int emp_id);
+    boolean addImageToThisEmp(InputStream is, int emp_id);
 
     void deleteImageById(int image_id);
 
@@ -34,7 +34,7 @@ public interface DB_helper {
 
     void updateAutoById_city(int auto_id, String city);
 
-    void addEmployee(Employee employee);
+    boolean addEmployee(Employee employee);
 
     List<Employee> getAllEmployees();
 
@@ -58,7 +58,7 @@ public interface DB_helper {
 
     boolean addUserToDatabase(User user);
 
-    void deleteEmpById(int emp_id);
+    boolean deleteEmpById(int emp_id);
 
     boolean deleteAutoById(int auto_id);
 
@@ -88,7 +88,7 @@ public interface DB_helper {
 
     Auto_model getAutoById(int id);
 
-    void changeStatusThisUser(int user_id, String status);
+    boolean changeStatusThisUser(int user_id, String status);
 
     void updateAutoById_brand(int auto_id, int brand_id);
 

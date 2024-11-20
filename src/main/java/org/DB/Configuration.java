@@ -2,6 +2,7 @@ package org.DB;
 
 
 import org.DB.dao.AutoModelDao;
+import org.DB.dao.EmployerDao;
 import org.DB.dao.UserDao;
 
 import java.sql.Connection;
@@ -21,6 +22,8 @@ public class Configuration {
     public static UserDao getUserDao() {
         return new UserDao();
     }
+
+    public static EmployerDao getEmployerDao() {return new EmployerDao();}
 
     public static Connection getConnection() throws SQLException {
         try{
