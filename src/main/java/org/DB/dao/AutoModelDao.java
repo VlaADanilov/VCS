@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AutoModelDao extends AbstractDao<Auto_model> {
-    private AutoModelMapper mapper = new AutoModelMapper();
+    private static final AutoModelMapper mapper = new AutoModelMapper();
     //language=sql
     private final static String ADD_TO_DATABASE = "INSERT INTO auto(auto_brand_id, user_id, auto_model, year, price, mileage, city, description) VALUES(?,?,?,?,?,?,?,?)";
     @Override
@@ -50,6 +50,7 @@ public class AutoModelDao extends AbstractDao<Auto_model> {
     @Override
     public Auto_model findById(int id) {
         try(PreparedStatement preparedStatement = getConnection().prepareStatement(GET_BY_ID)){
+            preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             resultSet.next();
             return mapper.mapRow(resultSet);
@@ -84,6 +85,9 @@ public class AutoModelDao extends AbstractDao<Auto_model> {
             else{
                 stringBuilder.append(")");
             }
+        }
+        if (stringBuilder.toString().equals(GET_ALL_BY_IDS)){
+            return new ArrayList<Auto_model>();
         }
         try(PreparedStatement preparedStatement = getConnection().prepareStatement(stringBuilder.toString())) {
             List<Auto_model> autoModels = new ArrayList<>();
@@ -166,6 +170,16 @@ public class AutoModelDao extends AbstractDao<Auto_model> {
     public  void updateAutoById_city(int auto_id, String city){
         try(PreparedStatement statement = getConnection().prepareStatement(UPDATE_MODEL)){
             statement.setString(1, city);
+            statement.setInt(2, auto_id);
+            statement.executeUpdate();
+        }catch (Exception e){e.printStackTrace();}
+    }
+    //language=sql
+    private final static String UPDATE_DESC= "UPDATE auto SET description = ? WHERE auto_id = ?";
+    public void updateAutoById_description(int auto_id, String description) {
+
+        try(PreparedStatement statement = getConnection().prepareStatement(UPDATE_DESC)){
+            statement.setString(1,description);
             statement.setInt(2, auto_id);
             statement.executeUpdate();
         }catch (Exception e){e.printStackTrace();}

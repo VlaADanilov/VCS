@@ -46,6 +46,9 @@
                 <p><label> Город:
                     <input type="text" name = "city" placeholder="${car.getCity()}">
                 </label></p>
+                <p><label> Описание:
+                    <input type="text" name = "description" placeholder="${car.getDescription()}">
+                </label></p>
                 <p>
                     <button class = "but" type="submit">Подтвердить</button>
                 </p>

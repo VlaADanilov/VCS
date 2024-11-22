@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserDao extends AbstractDao<User> {
-    private UserMapper mapper = new UserMapper();
+    private static final UserMapper mapper = new UserMapper();
     //language=sql
         private final static String ADD_TO_DATABASE = "INSERT INTO user(user_name, user_password, user_status, user_phone) VALUES(?,?,?,?)";
         @Override

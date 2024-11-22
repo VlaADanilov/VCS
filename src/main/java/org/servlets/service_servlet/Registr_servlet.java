@@ -27,7 +27,8 @@ public class Registr_servlet extends HttpServlet {
             String name = req.getParameter("nameReq");
             String password = req.getParameter("passwordReq");
             String phone = "+7" + req.getParameter("phoneReq");
-            if (db_helper.getUser(name) != null){
+
+            if (db_helper.checkUser(name)){
                 resp.sendRedirect(getServletContext().getContextPath()+"/");
                 return;
             }

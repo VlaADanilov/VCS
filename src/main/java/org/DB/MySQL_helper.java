@@ -2,10 +2,13 @@ package org.DB;
 
 import org.models.*;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class MySQL_helper implements DB_helper{
     public boolean deleteUserByName(String name){
@@ -14,18 +17,7 @@ public class MySQL_helper implements DB_helper{
 
     public  boolean addImageToThisAuto(InputStream is, int auto_id){
 
-        //нужно сделать проверку, что существует такое auto_id
-        try(PreparedStatement statement = dbConnection.prepareStatement("INSERT INTO auto_images VALUES(NULL,?,?)")){
-            if(is.available() == 0) return false;
-            statement.setInt(1, auto_id);
-            statement.setBlob(2, is);
-            statement.executeUpdate();
-            System.out.println("Image added successfully");
-            return true;
-        }
-        catch(Exception e){
-            return false;
-        }
+        return Configuration.getImageDao().save(new Image(is, auto_id));
     }
 
     public  int getEmpIdByName(String name){
@@ -40,66 +32,44 @@ public class MySQL_helper implements DB_helper{
         return Configuration.getEmployerDao().updateImage(is, emp_id);
     }
 
-    public  void deleteImageById(int image_id){
-        try (PreparedStatement ps = dbConnection.prepareStatement("DELETE FROM auto_images WHERE image_id = ?")){
-            ps.setInt(1, image_id);
-            ps.executeUpdate();
-        }catch (Exception e){e.printStackTrace();}
+    public boolean deleteImageById(int image_id){
+        return Configuration.getImageDao().deleteById(image_id);
     }
 
     public  int getImageIdFromThisAutoWithNumber(int auto_id, int number){
-        try(Statement statement = dbConnection.createStatement()){
-            PreparedStatement ps = dbConnection.prepareStatement("SELECT * FROM auto_images WHERE auto_id=?");
-            ps.setInt(1, auto_id);
-            ResultSet rs = ps.executeQuery();
-            int count = 0;
-            while(rs.next()){
-                count += 1;
-                if (count == number) return rs.getInt("image_id");
-            }
-        }catch (Exception e){e.printStackTrace();}
-        return -1;
+//        try(Statement statement = dbConnection.createStatement()){
+//            PreparedStatement ps = dbConnection.prepareStatement("SELECT * FROM auto_images WHERE auto_id=?");
+//            ps.setInt(1, auto_id);
+//            ResultSet rs = ps.executeQuery();
+//            int count = 0;
+//            while(rs.next()){
+//                count += 1;
+//                if (count == number) return rs.getInt("image_id");
+//            }
+//        }catch (Exception e){e.printStackTrace();}
+//        return -1;
+        return Configuration.getImageDao().findAll(auto_id).get(number-1).getId();
     }
 
     public  List<byte[]> getImageFromThisAuto(int auto_id){
-        List<byte[]> list = new ArrayList<>();
-        try(Statement statement = dbConnection.createStatement()){
-            PreparedStatement ps = dbConnection.prepareStatement("SELECT * FROM auto_images WHERE auto_id=?");
-            ps.setInt(1, auto_id);
-            ResultSet rs = ps.executeQuery();
-            while(rs.next()){
-                Blob blob = rs.getBlob("image");
-                list.add(blob.getBytes(1, (int)blob.length()));
+        List<Image> list = Configuration.getImageDao().findAll(auto_id);
+        List<byte[]> result = new ArrayList<>();
+        for(Image image : list){
+            try {
+                result.add(image.getImage().readAllBytes());
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
-        }catch (Exception e){e.printStackTrace();}
-        return list;
+        }
+        return result;
     }
 
     public  byte[] getImageFromThisEmp(int emp_id){
-        byte[] list = null;
-        try(Statement statement = dbConnection.createStatement()){
-            PreparedStatement ps = dbConnection.prepareStatement("SELECT * FROM employee WHERE employee_id=?");
-            ps.setInt(1, emp_id);
-            ResultSet rs = ps.executeQuery();
-            while(rs.next()){
-                Blob blob = rs.getBlob("image");
-                return blob.getBytes(1, (int)blob.length());
-            }
-        }catch (Exception e){e.printStackTrace();}
-        return list;
+        return Configuration.getEmployerDao().getImage(emp_id);
     }
 
     public  int getCountOfImageFromThisAuto(int auto_id){
-        int count = 0;
-        try(Statement statement = dbConnection.createStatement()){
-            PreparedStatement ps = dbConnection.prepareStatement("SELECT COUNT(*) FROM auto_images WHERE auto_id=?");
-            ps.setInt(1, auto_id);
-            ResultSet rs = ps.executeQuery();
-            while(rs.next()){
-                count = rs.getInt(1);
-            }
-        }catch (Exception e){e.printStackTrace();}
-        return count;
+        return Configuration.getImageDao().findAll(auto_id).size();
     }
 
     public  List<User> getAllUsers(){
@@ -112,8 +82,7 @@ public class MySQL_helper implements DB_helper{
             String str = "SELECT * FROM" + " (SELECT auto.auto_id, auto_brand_id, auto.user_id, auto_model, year, price, mileage, city" +
                     " FROM auto JOIN likes USING(auto_id) WHERE likes.user_id = ?) as abcd " + "WHERE auto_model LIKE ? AND city LIKE ?";
             String result = createStr(str, brand_id, model, sort, user_id);
-            System.out.println(result);
-            PreparedStatement pst = dbConnection.prepareStatement(result);
+            PreparedStatement pst = Configuration.getConnection().prepareStatement(result);
             pst.setInt(1, this_user_id);
             pst.setString(2, "%" + model + "%");
             pst.setString(3, "%" + city + "%");
@@ -121,7 +90,7 @@ public class MySQL_helper implements DB_helper{
             while(rs.next()){
                 Auto_model auto = new Auto_model();
                 auto.setId(rs.getInt("auto_id"));
-                auto.setBrand(getBrandById(rs.getInt("auto_brand_id")).getName());
+                auto.setBrand_id(rs.getInt("auto_brand_id"));
                 auto.setUser_id(rs.getInt("user_id"));
                 auto.setModel(rs.getString("auto_model"));
                 auto.setPrice(rs.getInt("price"));
@@ -140,14 +109,14 @@ public class MySQL_helper implements DB_helper{
             String str = "SELECT * FROM auto WHERE auto_model LIKE ? AND city LIKE ?";
             String result = createStr(str, brand_id, model, sort, user_id);
 
-            PreparedStatement pst = dbConnection.prepareStatement(result);
+            PreparedStatement pst = Configuration.getConnection().prepareStatement(result);
             pst.setString(1, "%" + model + "%");
             pst.setString(2, "%" + city + "%");
             ResultSet rs = pst.executeQuery();
             while(rs.next()){
                 Auto_model auto = new Auto_model();
                 auto.setId(rs.getInt("auto_id"));
-                auto.setBrand(getBrandById(rs.getInt("auto_brand_id")).getName());
+                auto.setBrand_id(rs.getInt("auto_brand_id"));
                 auto.setUser_id(rs.getInt("user_id"));
                 auto.setModel(rs.getString("auto_model"));
                 auto.setPrice(rs.getInt("price"));
@@ -156,7 +125,9 @@ public class MySQL_helper implements DB_helper{
                 auto.setCity(rs.getString("city"));
                 list.add(auto);
             }
-        }catch (Exception e){e.printStackTrace();}
+        }catch (Exception e){
+            throw new RuntimeException(e);
+        }
         return list;
     }
 
@@ -203,8 +174,9 @@ public class MySQL_helper implements DB_helper{
 
 
     public  List<Employee> getAllEmployees(){
-        return Configuration.getEmployerDao().findAll();
-
+        List<Employee> list = Configuration.getEmployerDao().findAll();
+        list.forEach((employee -> employee.setPhone(getUserById(employee.getUser_id()).getPhone())));
+        return list;
     }
 
     public  List<User> getAllUsers(String str){
@@ -214,19 +186,22 @@ public class MySQL_helper implements DB_helper{
     public  boolean checkUser(String username){
         try{
             Configuration.getUserDao().findById(getUser(username).getId());
-            return false;
-        }catch (Exception e){return true;}
+            return true;
+        }catch (Exception e){return false;}
     }
 
     public  User getUser(String username){
-        return Configuration.getUserDao().findByName(username);
+        try{
+            return Configuration.getUserDao().findByName(username);
+        }catch (Exception e){
+            return null;
+        }
     }
 
     @Override
     public boolean checkPermission(String username, int auto_id) {
-        try{
-            PreparedStatement ps = dbConnection.prepareStatement("SELECT user_name, auto_id FROM auto JOIN user USING (user_id) " +
-                    "WHERE user_name = ? AND auto_id = ?");
+        try(PreparedStatement ps = Configuration.getConnection().prepareStatement("SELECT user_name, auto_id FROM auto JOIN user USING (user_id) " +
+                "WHERE user_name = ? AND auto_id = ?");){
             ps.setString(1, username);
             ps.setInt(2, auto_id);
             ResultSet rs = ps.executeQuery();
@@ -234,14 +209,14 @@ public class MySQL_helper implements DB_helper{
                 return true;
             }
         }catch (Exception e){
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
         return false;
     }
 
     @Override
     public int getLastAutoFromThisUser(String username) {
-        try (PreparedStatement ps = dbConnection.prepareStatement("SELECT auto_id FROM auto JOIN user " +
+        try (PreparedStatement ps = Configuration.getConnection().prepareStatement("SELECT auto_id FROM auto JOIN user " +
                 "USING (user_id) WHERE user_name = ? ORDER BY 1 DESC")){
             ps.setString(1, username);
             ResultSet rs = ps.executeQuery();
@@ -253,41 +228,24 @@ public class MySQL_helper implements DB_helper{
     }
 
     @Override
-    public void addReport(Report report) {
-        try(PreparedStatement ps = dbConnection.prepareStatement("INSERT INTO report VALUES (NULL, ?,?,?)")) {
-            ps.setInt(1, report.getAuto_id());
-            ps.setInt(3, report.getUser_id());
-            ps.setString(2, report.getComment());
-            ps.executeUpdate();
-        }catch (Exception e){e.printStackTrace();}
+    public boolean addReport(Report report) {
+        return Configuration.getReportDao().save(report);
     }
 
     @Override
     public List<Report> getAllReports() {
-        List<Report> list = new ArrayList<>();
-        try(PreparedStatement ps = dbConnection.prepareStatement("SELECT * FROM report")){
-            ResultSet rs = ps.executeQuery();
-            while(rs.next()){
-                Report report = new Report();
-                report.setId(rs.getInt("report_id"));
-                report.setAuto_id(rs.getInt("auto_id"));
-                report.setUser_id(rs.getInt("user_id"));
-                report.setComment(rs.getString("comment"));
-                list.add(report);
-            }
-        }catch (Exception e){e.printStackTrace();}
-        return list;
+        return Configuration.getReportDao().findAll();
     }
 
     @Override
-    public void deleteReport(int rep_id) {
-        try(PreparedStatement ps = dbConnection.prepareStatement("DELETE FROM report WHERE report_id = ?")){
-            ps.setInt(1, rep_id);
-            ps.executeUpdate();
-        }catch (Exception e){e.printStackTrace();}
+    public boolean deleteReport(int rep_id) {
+        return Configuration.getReportDao().deleteById(rep_id);
     }
 
     public  boolean checkUsersPassword(String username, String password){
+        if(!checkUser(username)){
+            return false;
+        }
         return Configuration.getUserDao().checkPassword(username, password);
     }
 
@@ -310,76 +268,32 @@ public class MySQL_helper implements DB_helper{
     }
 
     public Brand getBrandByName(String brand_name){
-        try(Statement statement = dbConnection.createStatement()){
-            PreparedStatement ps = dbConnection.prepareStatement("SELECT * FROM brand WHERE auto_brand_name = ?");
-            ps.setString(1, brand_name);
-            ResultSet rs = ps.executeQuery();
-            while(rs.next()){
-                Brand brand = new Brand();
-                brand.setName(rs.getString("auto_brand_name"));
-                brand.setCountry(rs.getString("auto_brand_country"));
-                brand.setId(rs.getInt("auto_brand_id"));
-                return brand;
-            }
-        }catch (Exception e){e.printStackTrace();}
-        return null;
+        return Configuration.getBrandDao().findByName(brand_name);
     }
 
-    public  void addLikeToDatabase(int user_id, int auto_id){
-        try(PreparedStatement statement = dbConnection.prepareStatement("INSERT INTO likes VALUES(NULL,?,?)")){
-            statement.setInt(1, user_id);
-            statement.setInt(2, auto_id);
-            statement.executeUpdate();
-        }
-        catch(SQLException e){
-            e.printStackTrace();
-        }
+    public boolean addLikeToDatabase(int user_id, int auto_id){
+        return Configuration.getLikeDao().save(new Like(user_id,auto_id));
     }
 
     public  List<Integer> getAllLikes(int user_id){
-        List<Integer> list = new ArrayList<>();
-        try(PreparedStatement statement = dbConnection.prepareStatement("SELECT * FROM likes WHERE user_id = ?")){
-            statement.setInt(1, user_id);
-            ResultSet rs = statement.executeQuery();
-            while(rs.next()){
-                list.add(rs.getInt("auto_id"));
-            }
-        }catch (Exception e){e.printStackTrace();}
-        return list;
+        return Configuration.getLikeDao().findAll(user_id).stream().map(Like::getAutoId).collect(Collectors.toList());
     }
 
-    public  void deleteLike(int user_id, int auto_id){
-        try(PreparedStatement statement = dbConnection.prepareStatement("DELETE FROM likes WHERE user_id = ? AND auto_id = ?")){
-            statement.setInt(1, user_id);
-            statement.setInt(2, auto_id);
-            statement.executeUpdate();
-        }
-        catch(SQLException e){
-            e.printStackTrace();
-        }
+    public boolean deleteLike(int user_id, int auto_id){
+        return Configuration.getLikeDao().delete(user_id,auto_id);
     }
 
     public  boolean checkLike(int user_id, int auto_id){
-        try(PreparedStatement statement = dbConnection.prepareStatement("SELECT * FROM likes WHERE user_id = ? AND auto_id = ?")){
-            statement.setInt(1, user_id);
-            statement.setInt(2, auto_id);
-            ResultSet rs = statement.executeQuery();
-            while(rs.next()){
-                return true;
-            }
-        }catch (Exception e){e.printStackTrace();}
-        return false;
+        try{
+            Configuration.getLikeDao().find(user_id, auto_id);
+            return true;
+        }catch (Exception e){
+            return false;
+        }
     }
 
-    public  void addBrandToDatabase(Brand brand){
-        try(PreparedStatement statement = dbConnection.prepareStatement("INSERT INTO brand VALUES(NULL,?,?)")){
-            statement.setString(1, brand.getName());
-            statement.setString(2, brand.getCountry());
-            statement.executeUpdate();
-        }
-        catch(SQLException e){
-            e.printStackTrace();
-        }
+    public boolean addBrandToDatabase(Brand brand){
+        return Configuration.getBrandDao().save(brand);
     }
 
     public  List<Auto_model> getAllAuto(){
@@ -396,27 +310,11 @@ public class MySQL_helper implements DB_helper{
     }
 
     public  List<Brand> getAllBrands(){
-        List<Brand> list = new ArrayList<>();
-        try(Statement statement = dbConnection.createStatement()){
-            ResultSet rs = statement.executeQuery("SELECT * FROM brand");
-            while(rs.next()){
-                Brand brand = new Brand();
-                brand.setName(rs.getString("auto_brand_name"));
-                brand.setCountry(rs.getString("auto_brand_country"));
-                brand.setId(rs.getInt("auto_brand_id"));
-                list.add(brand);
-            }
-        }catch (Exception e){e.printStackTrace();}
-        return list;
+        return Configuration.getBrandDao().findAll();
     }
 
     public  Brand getBrandById(int id){
-        for(Brand brand : getAllBrands()){
-            if (brand.getId() == id){
-                return brand;
-            }
-        }
-        return null;
+        return Configuration.getBrandDao().findById(id);
     }
     public  User getUserById(int id){
         return Configuration.getUserDao().findById(id);
@@ -449,4 +347,8 @@ public class MySQL_helper implements DB_helper{
         Configuration.getAutoModelDao().updateAutoById_city(auto_id, city);
     }
 
+    @Override
+    public void updateAutoById_description(int auto_id, String description) {
+        Configuration.getAutoModelDao().updateAutoById_description(auto_id, description);
+    }
 }

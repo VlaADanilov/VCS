@@ -30,7 +30,6 @@ public class List_of_cars_srvlet extends HttpServlet {
         String model = req.getParameter("car_model");
         String sort = req.getParameter("sort");
         String city = req.getParameter("city");
-        System.out.println(brand_id);
         if (brand_id == null){
             list = db_helper.getAllAuto();
         }

@@ -15,6 +15,16 @@ public class Report {
     public Report() {
     }
 
+    @Override
+    public String toString() {
+        return "Report{" +
+                "id=" + id +
+                ", auto_id=" + auto_id +
+                ", comment='" + comment + '\'' +
+                ", user_id=" + user_id +
+                '}';
+    }
+
     public int getId() {
         return id;
     }

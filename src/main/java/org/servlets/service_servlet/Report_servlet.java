@@ -31,7 +31,6 @@ public class Report_servlet extends HttpServlet {
 
     private String collectTheString(String uri){
         String[] arr = uri.split("/");
-        System.out.println(Arrays.toString(arr));
         String rez = "/";
         for (int i = 1; i < arr.length - 1; i++) {
             rez += arr[i];

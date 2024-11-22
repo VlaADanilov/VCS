@@ -47,6 +47,9 @@
                 <p><label> Город:
                     <input type = "text" name = "city">
                 </label></p>
+                <p><label> Описание:
+                    <input type = "text" name = "description">
+                </label></p>
                 <p>
                     <button class = "but" type="submit">Подтвердить</button>
                 </p>

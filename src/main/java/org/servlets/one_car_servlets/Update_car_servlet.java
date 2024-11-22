@@ -54,7 +54,6 @@ public class Update_car_servlet extends HttpServlet {
             db_helper.updateAutoById_brand(Integer.parseInt(req.getParameter("auto_id")),Integer.parseInt(req.getParameter("brand")));
         }
         if (!req.getParameter("car_model").isEmpty()) {
-            System.out.println(req.getParameter("car_model"));
             db_helper.updateAutoById_model(Integer.parseInt(req.getParameter("auto_id")),req.getParameter("car_model"));
         }
         if (!req.getParameter("year").isEmpty()) {
@@ -76,9 +75,10 @@ public class Update_car_servlet extends HttpServlet {
             }
         }
         if (!req.getParameter("city").isEmpty()) {
-            System.out.println(req.getCharacterEncoding());
-            System.out.println(req.getParameter("city"));
             db_helper.updateAutoById_city(Integer.parseInt(req.getParameter("auto_id")),req.getParameter("city"));
+        }
+        if (!req.getParameter("description").isEmpty()) {
+            db_helper.updateAutoById_description(Integer.parseInt(req.getParameter("auto_id")),req.getParameter("description"));
         }
         resp.sendRedirect(req.getContextPath()+collectTheString(req.getRequestURI()) + "?number=" + req.getParameter("auto_id"));
     }

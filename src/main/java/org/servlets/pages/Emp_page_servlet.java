@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.Arrays;
 
 @WebServlet("/getImageEmp")
 public class Emp_page_servlet extends HttpServlet {

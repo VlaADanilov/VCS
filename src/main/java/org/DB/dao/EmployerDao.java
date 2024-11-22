@@ -5,6 +5,7 @@ import org.models.Employee;
 import org.models.User;
 
 import java.io.InputStream;
+import java.sql.Blob;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EmployerDao extends AbstractDao<Employee> {
-    private EmployeeMapper mapper = new EmployeeMapper();
+    private static final EmployeeMapper mapper = new EmployeeMapper();
 
     //language=sql
     private final static String ADD_TO_DATABASE = "INSERT INTO employee(employee_name, employee_profession, employee_description, user_id) VALUES(?,?,?,?)";
@@ -97,6 +98,18 @@ public class EmployerDao extends AbstractDao<Employee> {
             int result = preparedStatement.executeUpdate();
             return result > 0;
         }catch (Exception e){
+            throw new RuntimeException(e);
+        }
+    }
+
+    public byte[] getImage(int id) {
+        try(PreparedStatement preparedStatement = getConnection().prepareStatement(GET_BY_ID)){
+            preparedStatement.setInt(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            resultSet.next();
+            Blob blob = resultSet.getBlob("image");
+            return blob.getBytes(1, (int)blob.length());
+        }catch(Exception e){
             throw new RuntimeException(e);
         }
     }

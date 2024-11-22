@@ -25,7 +25,7 @@ public class Delete_Image_servlet extends HttpServlet {
     }
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Auto_model auto = db_helper.getAutoById(Integer.parseInt(req.getParameter("auto_id")));
-        req.setAttribute("brand", db_helper.getBrandByName(auto.getBrand()));
+        req.setAttribute("brand", db_helper.getBrandById(auto.getBrand_id()));
         req.setAttribute("list", createList(auto));
         if (req.getSession().getAttribute("username") != null){
             User user = db_helper.getUser((String) req.getSession().getAttribute("username"));
@@ -38,7 +38,6 @@ public class Delete_Image_servlet extends HttpServlet {
 
     private String collectTheString(String uri){
         String[] arr = uri.split("/");
-        System.out.println(Arrays.toString(arr));
         String rez = "/";
         for (int i = 1; i < arr.length - 1; i++) {
             rez += arr[i];

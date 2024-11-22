@@ -67,7 +67,7 @@
                     <p class="nameOfAuthor">${pageContext.servletContext.getAttribute("database").getUserById(car.getUser_id()).getName()  }</p>
                     <p>
                         <b>Марка: </b>
-                        <c:out value="${car.getBrand()}" />
+                        <c:out value="${pageContext.servletContext.getAttribute('database').getBrandById(car.getBrand_id()).getName() }" />
                         <b> Модель: </b>
                         <c:out value="${car.getModel()}" />
                         <b> Год выпуска: </b>

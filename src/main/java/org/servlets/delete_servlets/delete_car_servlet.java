@@ -28,8 +28,7 @@ public class delete_car_servlet extends HttpServlet {
 
     private String collectTheString(String uri){
         String[] arr = uri.split("/");
-        System.out.println(Arrays.toString(arr));
-        String rez = "/";
+                String rez = "/";
         for (int i = 1; i < arr.length - 1; i++) {
             rez += arr[i];
             if (i != arr.length - 2) {
@@ -53,7 +52,6 @@ public class delete_car_servlet extends HttpServlet {
 
     private String collectTheString2(String uri){
         String[] arr = uri.split("/");
-        System.out.println(Arrays.toString(arr));
         String rez = "/";
         for (int i = 1; i < arr.length - 2; i++) {
             rez += arr[i];

@@ -10,7 +10,7 @@ public class AutoModelMapper implements RowMapper<Auto_model> {
 
     @Override
     public Auto_model mapRow(ResultSet rs) throws SQLException {
-        return new Auto_model(
+        Auto_model autoModel = new Auto_model(
                 rs.getInt("auto_brand_id"),
                 rs.getInt("user_id"),
                 rs.getString("auto_model"),
@@ -20,5 +20,7 @@ public class AutoModelMapper implements RowMapper<Auto_model> {
                 rs.getString("city"),
                 rs.getString("description")
         );
+        autoModel.setId(rs.getInt("auto_id"));
+        return autoModel;
     }
 }

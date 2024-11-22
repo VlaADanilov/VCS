@@ -16,7 +16,7 @@ public interface DB_helper {
 
     boolean addImageToThisEmp(InputStream is, int emp_id);
 
-    void deleteImageById(int image_id);
+    boolean deleteImageById(int image_id);
 
     int getImageIdFromThisAutoWithNumber(int auto_id, int number);
 
@@ -48,11 +48,11 @@ public interface DB_helper {
 
     int getLastAutoFromThisUser(String username);
 
-    void addReport(Report report);
+    boolean addReport(Report report);
 
     List<Report> getAllReports();
 
-    void deleteReport(int rep_id);
+    boolean deleteReport(int rep_id);
 
     boolean checkUsersPassword(String username, String password);
 
@@ -64,15 +64,15 @@ public interface DB_helper {
 
     boolean addAutoToDatabase(Auto_model auto);
 
-    void addLikeToDatabase(int user_id, int auto_id);
+    boolean addLikeToDatabase(int user_id, int auto_id);
 
     List<Integer> getAllLikes(int user_id);
 
-    void deleteLike(int user_id, int auto_id);
+    boolean deleteLike(int user_id, int auto_id);
 
     boolean checkLike(int user_id, int auto_id);
 
-    void addBrandToDatabase(Brand brand);
+    boolean addBrandToDatabase(Brand brand);
 
     List<Auto_model> getAllAuto();
 
@@ -99,6 +99,8 @@ public interface DB_helper {
     void updateAutoById_price(int auto_id, int price);
 
     void updateAutoById_mileage(int auto_id, int mileage);
+
+    void updateAutoById_description(int auto_id, String description);
 
     Brand getBrandByName(String brand_name);
 }

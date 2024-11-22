@@ -43,13 +43,14 @@ public class Add_car_servlet extends HttpServlet {
         String username = (String) req.getSession().getAttribute("username");
         int mileage = Integer.parseInt(req.getParameter("mileage"));
         String city = req.getParameter("city");
+        String description = req.getParameter("description");
         if (year <= 1900 || price < 0 || mileage < 0 || city.trim().isEmpty()){
             req.setAttribute("flag", "false");
             doGet(req, resp);
             return;
         }
 
-        db_helper.addAutoToDatabase(new Auto_model(db_helper.getBrandById(brand).getName(),db_helper.getUser(username).getId(),model,year,price, mileage, city));
+        db_helper.addAutoToDatabase(new Auto_model(brand,db_helper.getUser(username).getId(),model,year,price, mileage, city,description));
         req.setAttribute("flag", "true");
         int auto_id = db_helper.getLastAutoFromThisUser((String)req.getSession().getAttribute("username"));
         resp.sendRedirect(req.getContextPath() + "/image?auto_id=" + auto_id);
