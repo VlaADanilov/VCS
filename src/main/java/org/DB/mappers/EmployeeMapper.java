@@ -1,7 +1,6 @@
 package org.DB.mappers;
 
 import org.models.Employee;
-import org.models.User;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

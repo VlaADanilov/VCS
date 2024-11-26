@@ -138,7 +138,7 @@ public class AutoModelDao extends AbstractDao<Auto_model> {
     //language=sql
     private final static String UPDATE_YEAR= "UPDATE auto SET year = ? WHERE auto_id = ?";
     public  void updateAutoById_year(int auto_id, int year){
-        try(PreparedStatement statement = getConnection().prepareStatement(UPDATE_BRAND)){
+        try(PreparedStatement statement = getConnection().prepareStatement(UPDATE_YEAR)){
             statement.setInt(1, year);
             statement.setInt(2, auto_id);
             statement.executeUpdate();
@@ -148,7 +148,7 @@ public class AutoModelDao extends AbstractDao<Auto_model> {
     //language=sql
     private final static String UPDATE_PRICE= "UPDATE auto SET price = ? WHERE auto_id = ?";
     public  void updateAutoById_price(int auto_id, int price){
-        try(PreparedStatement statement = getConnection().prepareStatement(UPDATE_BRAND)){
+        try(PreparedStatement statement = getConnection().prepareStatement(UPDATE_PRICE)){
             statement.setInt(1, price);
             statement.setInt(2, auto_id);
             statement.executeUpdate();
@@ -158,7 +158,7 @@ public class AutoModelDao extends AbstractDao<Auto_model> {
     //language=sql
     private final static String UPDATE_MILEAGE= "UPDATE auto SET mileage = ? WHERE auto_id = ?";
     public  void updateAutoById_mileage(int auto_id, int mileage){
-        try(PreparedStatement statement = getConnection().prepareStatement(UPDATE_BRAND)){
+        try(PreparedStatement statement = getConnection().prepareStatement(UPDATE_MILEAGE)){
             statement.setInt(1, mileage);
             statement.setInt(2, auto_id);
             statement.executeUpdate();
@@ -168,7 +168,7 @@ public class AutoModelDao extends AbstractDao<Auto_model> {
     //language=sql
     private final static String UPDATE_CITY= "UPDATE auto SET city = ? WHERE auto_id = ?";
     public  void updateAutoById_city(int auto_id, String city){
-        try(PreparedStatement statement = getConnection().prepareStatement(UPDATE_MODEL)){
+        try(PreparedStatement statement = getConnection().prepareStatement(UPDATE_CITY)){
             statement.setString(1, city);
             statement.setInt(2, auto_id);
             statement.executeUpdate();

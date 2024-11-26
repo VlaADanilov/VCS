@@ -1,8 +1,7 @@
 package org.DB.dao;
 
-import org.DB.mappers.LikeMapper;
-import org.models.Employee;
 import org.models.Like;
+import org.DB.mappers.LikeMapper;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

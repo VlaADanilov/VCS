@@ -2,7 +2,6 @@ package org.DB.dao;
 
 import org.DB.mappers.ImageMapper;
 import org.models.Image;
-import org.models.Report;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

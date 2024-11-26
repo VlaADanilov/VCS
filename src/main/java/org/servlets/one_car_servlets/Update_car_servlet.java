@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.LinkedList;
 
 @WebServlet(urlPatterns = {"/list/info/update","/my_cars/info/update","/my_likes/info/update","/user_cars/info/update","/list_of_reports/info/update"})

@@ -1,7 +1,6 @@
 package org.DB.dao;
 
 import org.DB.mappers.UserMapper;
-import org.models.Auto_model;
 import org.models.User;
 
 import java.sql.PreparedStatement;

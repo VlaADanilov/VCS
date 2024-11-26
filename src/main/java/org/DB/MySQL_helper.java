@@ -1,8 +1,8 @@
 package org.DB;
 
+
 import org.models.*;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.*;
@@ -24,7 +24,7 @@ public class MySQL_helper implements DB_helper{
         return Configuration.getEmployerDao().findByName(name).getId();
     }
 
-    public  Employee getEmpById(int emp_id){
+    public Employee getEmpById(int emp_id){
         return Configuration.getEmployerDao().findById(emp_id);
     }
 

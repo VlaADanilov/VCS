@@ -2,7 +2,6 @@ package org.DB.dao;
 
 import org.DB.mappers.EmployeeMapper;
 import org.models.Employee;
-import org.models.User;
 
 import java.io.InputStream;
 import java.sql.Blob;

@@ -1,7 +1,5 @@
 package org.models;
 
-import org.DB.MySQL_helper;
-
 public class Auto_model {
     private int id;
     private int brand_id;
