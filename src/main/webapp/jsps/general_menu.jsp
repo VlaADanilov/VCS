@@ -51,6 +51,11 @@
                 </label>
                 <input type="submit" value="Войти">
             </form>
+            <c:if test="${error != null}">
+                <p style="color: red">
+                    ${error}
+                </p>
+            </c:if>
             <button onclick='openForm()'>Регистрация</button>
             <div id='req'>
                 <form role="form" action="${pageContext.servletContext.contextPath}/registr" autocomplete="off" method="POST">
@@ -59,7 +64,7 @@
                     <label>Пароль:</label>
                     <input type="password" name="passwordReq">
                     <label>Номер телефона(Вводить без +7):</label>
-                    <input type="text" name="phoneReq" pattern="[7-9]{1}[0-9]{9}">
+                    <input type="text" name="phoneReq" pattern="[9]{1}[0-9]{9}">
                     <button type="submit" class="btn btn-success">Зарегистрироваться</button>
                 </form>
                 <button onclick='closeForm()'>Закрыть</button>
