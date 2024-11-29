@@ -1,21 +1,21 @@
 package org.DB;
-
 import org.models.*;
 
 import java.io.InputStream;
-import java.sql.PreparedStatement;
 import java.util.List;
 
 public interface DB_helper {
     boolean addImageToThisAuto(InputStream is, int auto_id);
 
+    boolean deleteUserByName(String name);
+
     int getEmpIdByName(String name);
 
     Employee getEmpById(int emp_id);
 
-    void addImageToThisEmp(InputStream is, int emp_id);
+    boolean addImageToThisEmp(InputStream is, int emp_id);
 
-    void deleteImageById(int image_id);
+    boolean deleteImageById(int image_id);
 
     int getImageIdFromThisAutoWithNumber(int auto_id, int number);
 
@@ -33,7 +33,7 @@ public interface DB_helper {
 
     void updateAutoById_city(int auto_id, String city);
 
-    void addEmployee(Employee employee);
+    boolean addEmployee(Employee employee);
 
     List<Employee> getAllEmployees();
 
@@ -47,31 +47,31 @@ public interface DB_helper {
 
     int getLastAutoFromThisUser(String username);
 
-    void addReport(Report report);
+    boolean addReport(Report report);
 
     List<Report> getAllReports();
 
-    void deleteReport(int rep_id);
+    boolean deleteReport(int rep_id);
 
     boolean checkUsersPassword(String username, String password);
 
-    void addUserToDatabase(User user);
+    boolean addUserToDatabase(User user);
 
-    void deleteEmpById(int emp_id);
+    boolean deleteEmpById(int emp_id);
 
-    void deleteAutoById(int auto_id);
+    boolean deleteAutoById(int auto_id);
 
-    void addAutoToDatabase(Auto_model auto);
+    boolean addAutoToDatabase(Auto_model auto);
 
-    void addLikeToDatabase(int user_id, int auto_id);
+    boolean addLikeToDatabase(int user_id, int auto_id);
 
     List<Integer> getAllLikes(int user_id);
 
-    void deleteLike(int user_id, int auto_id);
+    boolean deleteLike(int user_id, int auto_id);
 
     boolean checkLike(int user_id, int auto_id);
 
-    void addBrandToDatabase(Brand brand);
+    boolean addBrandToDatabase(Brand brand);
 
     List<Auto_model> getAllAuto();
 
@@ -87,7 +87,7 @@ public interface DB_helper {
 
     Auto_model getAutoById(int id);
 
-    void changeStatusThisUser(int user_id, String status);
+    boolean changeStatusThisUser(int user_id, String status);
 
     void updateAutoById_brand(int auto_id, int brand_id);
 
@@ -98,6 +98,8 @@ public interface DB_helper {
     void updateAutoById_price(int auto_id, int price);
 
     void updateAutoById_mileage(int auto_id, int mileage);
+
+    void updateAutoById_description(int auto_id, String description);
 
     Brand getBrandByName(String brand_name);
 }

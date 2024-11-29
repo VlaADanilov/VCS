@@ -1,4 +1,4 @@
-package org.servlets.delete_servlets;
+package org.servlets.service_servlet;
 
 import org.DB.DB_helper;
 
@@ -10,8 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet("/delete_report")
-public class Delete_report extends HttpServlet {
+@WebServlet("/delete_my_account")
+public class DelteMyAccountServlet extends HttpServlet {
     private DB_helper db_helper;
 
     @Override
@@ -19,11 +19,12 @@ public class Delete_report extends HttpServlet {
         super.init(config);
         db_helper = (DB_helper) config.getServletContext().getAttribute("database");
     }
-
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        System.out.println(req.getParameter("report_id"));
-        db_helper.deleteReport(Integer.parseInt(req.getParameter("report_id")));
-        resp.sendRedirect(req.getContextPath() + "/list_of_reports");
+        String username = req.getSession().getAttribute("username").toString();
+        db_helper.deleteUserByName(username);
+        req.getSession().removeAttribute("username");
+        req.getSession().removeAttribute("status");
+        resp.sendRedirect(req.getContextPath() + "/");
     }
 }

@@ -12,9 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Arrays;
 
-@WebServlet(urlPatterns = {"/list/info/image","/my_cars/info/image","/my_likes/info/image","/user_cars/info/image"})
+@WebServlet(urlPatterns = {"/list/info/image","/my_cars/info/image","/my_likes/info/image","/user_cars/info/image","/list_of_reports/info/image","/image"})
 @MultipartConfig(maxFileSize = 16177216)
 public class Add_image_for_car_servlet extends HttpServlet {
     private DB_helper db_helper;
@@ -26,13 +25,18 @@ public class Add_image_for_car_servlet extends HttpServlet {
     }
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setAttribute("uri", collectTheString(req.getRequestURI()) + "?number=" + req.getParameter("auto_id"));
+        String result;
+        if(collectTheString(req.getRequestURI()).equals("/")){
+            result = "/my_cars/info?number=" + req.getParameter("auto_id");
+        }else{
+            result = collectTheString(req.getRequestURI()) + "?number=" + req.getParameter("auto_id");
+        }
+        req.setAttribute("uri", result);
         req.getRequestDispatcher("/jsps/add_image.jsp").forward(req, resp);
     }
 
     private String collectTheString(String uri){
         String[] arr = uri.split("/");
-        System.out.println(Arrays.toString(arr));
         String rez = "/";
         for (int i = 1; i < arr.length - 1; i++) {
             rez += arr[i];
@@ -49,8 +53,13 @@ public class Add_image_for_car_servlet extends HttpServlet {
         Part part = req.getPart("image");
         if (part != null) {
             InputStream is = part.getInputStream();
-            boolean flag = db_helper.addImageToThisAuto(is, auto_id);
-            req.setAttribute("flag", flag);
+            if(is.available() == 0){
+                req.setAttribute("flag", "false");
+            }
+            else{
+                boolean flag = db_helper.addImageToThisAuto(is, auto_id);
+                req.setAttribute("flag", flag);
+            }
         } else{
             req.setAttribute("flag", "false");
         }

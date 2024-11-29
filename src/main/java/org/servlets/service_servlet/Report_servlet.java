@@ -1,7 +1,7 @@
 package org.servlets.service_servlet;
 
-import org.DB.DB_helper;
 import org.models.Report;
+import org.DB.DB_helper;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -10,9 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Arrays;
 
-@WebServlet(urlPatterns = {"/list/info/report","/my_cars/info/report","/my_likes/info/report","/user_cars/info/report"})
+@WebServlet(urlPatterns = {"/list/info/report","/my_cars/info/report","/my_likes/info/report","/user_cars/info/report","/list_of_reports/info/report"})
 public class Report_servlet extends HttpServlet {
     private DB_helper db_helper;
 
@@ -31,7 +30,6 @@ public class Report_servlet extends HttpServlet {
 
     private String collectTheString(String uri){
         String[] arr = uri.split("/");
-        System.out.println(Arrays.toString(arr));
         String rez = "/";
         for (int i = 1; i < arr.length - 1; i++) {
             rez += arr[i];

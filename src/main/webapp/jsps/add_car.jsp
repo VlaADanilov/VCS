@@ -9,7 +9,7 @@
 <%@ page isELIgnored="false" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<link rel="stylesheet" href="styles/add.css">
+<link rel="stylesheet" href="/styles/add.css">
 <fmt:requestEncoding value="UTF-8"/>
 <html>
 <head>
@@ -20,7 +20,7 @@
 <body>
 <div id="wrapper">
     <div id = "header" align="center">
-        <img src="icons/back.jpg" class = "myImage" onclick="location.href='${pageContext.servletContext.contextPath}/'">
+        <img src="/icons/back.jpg" class = "myImage" onclick="location.href='${pageContext.servletContext.contextPath}/'">
         <h1>Добавление объявления</h1>
     </div>
     <div align="center">
@@ -47,6 +47,9 @@
                 <p><label> Город:
                     <input type = "text" name = "city">
                 </label></p>
+                <p><label> Описание:
+                    <input type = "text" name = "description">
+                </label></p>
                 <p>
                     <button class = "but" type="submit">Подтвердить</button>
                 </p>
@@ -71,7 +74,7 @@
     <div id = "footer">
         <p class="fon"><strong>Телефон:<br> +7 953 015 62 18</strong> </p>
         <p class="mail"><strong>E-mail<br>helloampro@gmail.com</strong></p>
-        <img class = "logo_bottom" src="icons/логотип-без-фона.png">
+        <img class = "logo_bottom" src="/icons/логотип-без-фона.png">
     </div>
 </div>
 

@@ -8,19 +8,19 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page isELIgnored="false" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<link rel="stylesheet" href="styles/w4.css">
+<link rel="stylesheet" href="/styles/w4.css">
 <html>
 <head>
     <title>List of emp</title>
     <script type="text/javascript" src="js/functionsForDelete.js"></script>
-    <link rel="icon" href="pages/ico.png" type="image/png">
+    <link rel="icon" href="/pages/ico.png" type="image/png">
 </head>
 <body>
 <div id = wrapper>
     <div id = "header" align="center">
-        <img class="myImage" src="icons/back.jpg" onclick="location.href='${pageContext.servletContext.contextPath}/'">
+        <img class="myImage" src="/icons/back.jpg" onclick="location.href='${pageContext.servletContext.contextPath}/'">
         <c:if test="${sessionScope.get('status').equals('owner')}">
-            <img class="myImage2" src="icons/plus-svgrepo-com.svg" onclick="location.href='${pageContext.servletContext.contextPath}/add_employee'">
+            <img class="myImage2" src="/icons/plus-svgrepo-com.svg" onclick="location.href='${pageContext.servletContext.contextPath}/add_employee'">
         </c:if>
         <h1>Список сотрудников</h1>
     </div>
@@ -66,7 +66,7 @@
     <div id="footer">
         <p class="fon"><strong>Телефон:<br> +7 953 015 62 18</strong> </p>
         <p class="mail"><strong>E-mail<br>helloampro@gmail.com</strong></p>
-        <img class = "logo_bottom" src="icons/логотип-без-фона.png">
+        <img class = "logo_bottom" src="/icons/логотип-без-фона.png">
     </div>
 </div>
 </body>

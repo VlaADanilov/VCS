@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Arrays;
 
-@WebServlet(urlPatterns = {"/list/info/setting_like","/my_cars/info/setting_like","/my_likes/info/setting_like","/user_cars/info/setting_like"})
+@WebServlet(urlPatterns = {"/list/info/setting_like","/my_cars/info/setting_like","/my_likes/info/setting_like","/user_cars/info/setting_like","/list_of_reports/info/setting_like"})
 public class Setting_like_servlet extends HttpServlet {
     private DB_helper db_helper;
 

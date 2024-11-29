@@ -26,8 +26,8 @@ public class My_cars_servlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         List<Auto_model> list = null;
-        String brand_id = req.getParameter("brand_id");
-        String model = req.getParameter("model");
+        String brand_id = req.getParameter("brand");
+        String model = req.getParameter("car_model");
         String sort = req.getParameter("sort");
         String city = req.getParameter("city");
         if (brand_id == null){
@@ -41,7 +41,6 @@ public class My_cars_servlet extends HttpServlet {
         brands.add(new Brand(0, "None","None"));
         brands.addAll(db_helper.getAllBrands());
         req.setAttribute("brands", brands);
-        req.setAttribute("whereBack", "my");
         String[] uris = req.getRequestURI().split("/");
         String uri = uris[uris.length - 1];
         req.setAttribute("uri", "/" + uri);

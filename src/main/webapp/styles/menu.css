@@ -111,7 +111,7 @@ input[type="submit"]:hover {
     width: 30%;
     height: auto;
     float: right;
-    margin: -15px 0 7px 7px;
+    margin: -35px 0 7px 7px;
 }
 /* Подвал */
 
@@ -136,6 +136,14 @@ input[type="submit"]:hover {
 .mail{ /* Адрес E-mail */
     float:left;
     margin:20px 0 0 60px;
+}
+#delete_polz{
+    height: 10px;
+    width: 10px;
+    opacity: 0.6;
+}
+#delete_polz:hover{
+    opacity: 1;
 }
 #req {
     display: none;

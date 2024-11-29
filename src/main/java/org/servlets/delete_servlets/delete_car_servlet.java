@@ -9,9 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Arrays;
 
-@WebServlet(urlPatterns = {"/list/info/delete","/my_cars/info/delete","/my_likes/info/delete","/user_cars/info/delete"})
+@WebServlet(urlPatterns = {"/list/info/delete","/my_cars/info/delete","/my_likes/info/delete","/user_cars/info/delete","/list_of_reports/info/delete"})
 public class delete_car_servlet extends HttpServlet {
     private DB_helper db_helper;
 
@@ -28,8 +27,7 @@ public class delete_car_servlet extends HttpServlet {
 
     private String collectTheString(String uri){
         String[] arr = uri.split("/");
-        System.out.println(Arrays.toString(arr));
-        String rez = "/";
+                String rez = "/";
         for (int i = 1; i < arr.length - 1; i++) {
             rez += arr[i];
             if (i != arr.length - 2) {
@@ -53,7 +51,6 @@ public class delete_car_servlet extends HttpServlet {
 
     private String collectTheString2(String uri){
         String[] arr = uri.split("/");
-        System.out.println(Arrays.toString(arr));
         String rez = "/";
         for (int i = 1; i < arr.length - 2; i++) {
             rez += arr[i];

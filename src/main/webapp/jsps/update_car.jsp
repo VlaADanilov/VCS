@@ -9,7 +9,7 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page isELIgnored="false" %>
-<link rel="stylesheet" href="/styles/update.css">
+<link rel="stylesheet" href="/styles/add.css">
 <fmt:requestEncoding value="UTF-8"/>
 <html lang="ru">
 <head>
@@ -45,6 +45,9 @@
                 </label></p>
                 <p><label> Город:
                     <input type="text" name = "city" placeholder="${car.getCity()}">
+                </label></p>
+                <p><label> Описание:
+                    <input type="text" name = "description" placeholder="${car.getDescription()}">
                 </label></p>
                 <p>
                     <button class = "but" type="submit">Подтвердить</button>

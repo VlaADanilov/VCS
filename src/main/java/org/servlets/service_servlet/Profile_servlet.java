@@ -28,6 +28,8 @@ public class Profile_servlet extends HttpServlet {
             if (db_helper.checkUsersPassword(name,password)){
                 req.getSession().setAttribute("username",name);
                 req.getSession().setAttribute("status",db_helper.getUser(name).getStatus());
+            } else{
+                req.getSession().setAttribute("error","Неверные имя пользователя или пароль");
             }
         }
         resp.sendRedirect(getServletContext().getContextPath()+"/");

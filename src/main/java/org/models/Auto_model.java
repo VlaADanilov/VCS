@@ -1,16 +1,15 @@
 package org.models;
 
-import org.DB.MySQL_helper;
-
 public class Auto_model {
     private int id;
-    private String brand;
+    private int brand_id;
     private int user_id;
     private String model;
     private int year;
     private int price;
     private int mileage;
     private String city;
+    private String description;
 
     public int getId() {
         return id;
@@ -28,14 +27,15 @@ public class Auto_model {
         this.city = city;
     }
 
-    public Auto_model(String brand, int user_id, String model, int year, int price, int mileage, String city) {
-        this.brand = brand;
+    public Auto_model(int brand_id, int user_id, String model, int year, int price, int mileage, String city, String description) {
+        this.brand_id = brand_id;
         this.user_id = user_id;
         this.model = model;
         this.city=city;
         this.year = year;
         this.price = price;
         this.mileage = mileage;
+        this.description=description;
     }
 
     public int getMileage() {
@@ -72,17 +72,9 @@ public class Auto_model {
 
     @Override
     public String toString() {
-        return "Марка: " + brand + " Модель: " + model + " Год выпуска: " + year + " Цена: " + price + " руб.";
+        return "Марка: " + brand_id + " Модель: " + model + " Год выпуска: " + year + " Цена: " + price + " руб.";
     }
 
-
-    public String getBrand() {
-        return brand;
-    }
-
-    public void setBrand(String brand) {
-        this.brand = brand;
-    }
 
     public String getModel() {
         return model;
@@ -98,6 +90,22 @@ public class Auto_model {
 
     public void setYear(int year) {
         this.year = year;
+    }
+
+    public int getBrand_id() {
+        return brand_id;
+    }
+
+    public void setBrand_id(int brand_id) {
+        this.brand_id = brand_id;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getNicePrice(){

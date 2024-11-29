@@ -10,10 +10,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.LinkedList;
 
-@WebServlet(urlPatterns = {"/list/info/update","/my_cars/info/update","/my_likes/info/update","/user_cars/info/update"})
+@WebServlet(urlPatterns = {"/list/info/update","/my_cars/info/update","/my_likes/info/update","/user_cars/info/update","/list_of_reports/info/update"})
 public class Update_car_servlet extends HttpServlet {
     private DB_helper db_helper;
 
@@ -37,7 +36,6 @@ public class Update_car_servlet extends HttpServlet {
 
     private String collectTheString(String uri){
         String[] arr = uri.split("/");
-        System.out.println(Arrays.toString(arr));
         String rez = "/";
         for (int i = 1; i < arr.length - 1; i++) {
             rez += arr[i];
@@ -55,7 +53,6 @@ public class Update_car_servlet extends HttpServlet {
             db_helper.updateAutoById_brand(Integer.parseInt(req.getParameter("auto_id")),Integer.parseInt(req.getParameter("brand")));
         }
         if (!req.getParameter("car_model").isEmpty()) {
-            System.out.println(req.getParameter("car_model"));
             db_helper.updateAutoById_model(Integer.parseInt(req.getParameter("auto_id")),req.getParameter("car_model"));
         }
         if (!req.getParameter("year").isEmpty()) {
@@ -77,9 +74,10 @@ public class Update_car_servlet extends HttpServlet {
             }
         }
         if (!req.getParameter("city").isEmpty()) {
-            System.out.println(req.getCharacterEncoding());
-            System.out.println(req.getParameter("city"));
             db_helper.updateAutoById_city(Integer.parseInt(req.getParameter("auto_id")),req.getParameter("city"));
+        }
+        if (!req.getParameter("description").isEmpty()) {
+            db_helper.updateAutoById_description(Integer.parseInt(req.getParameter("auto_id")),req.getParameter("description"));
         }
         resp.sendRedirect(req.getContextPath()+collectTheString(req.getRequestURI()) + "?number=" + req.getParameter("auto_id"));
     }

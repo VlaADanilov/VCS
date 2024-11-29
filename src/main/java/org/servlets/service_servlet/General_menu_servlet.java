@@ -11,7 +11,12 @@ import java.io.IOException;
 public class General_menu_servlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        if(req.getSession().getAttribute("error") != null) {
+            req.setAttribute("error", req.getSession().getAttribute("error"));
+            req.getSession().removeAttribute("error");
+        }
         req.getRequestDispatcher("jsps/general_menu.jsp").forward(req, resp);
     }
+
 
 }

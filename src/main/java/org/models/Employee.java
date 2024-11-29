@@ -15,6 +15,14 @@ public class Employee {
         this.user_id = user_id;
     }
 
+    public Employee(int id, String name, String profession, String description, int user_id) {
+        this.id = id;
+        this.name = name;
+        this.profession = profession;
+        this.description = description;
+        this.user_id = user_id;
+    }
+
     public String getPhone() {
         return phone;
     }

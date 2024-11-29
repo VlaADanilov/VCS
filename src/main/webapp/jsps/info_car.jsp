@@ -12,7 +12,7 @@
 <html>
 <head>
     <title>Info about car</title>
-    <link rel="icon" href="pages/ico.png" type="image/png">
+    <link rel="icon" href="/pages/ico.png" type="image/png">
 </head>
 <body>
 <div id = "wrapper">
@@ -55,12 +55,13 @@
         </div>
         <div id = "right-pannel">
             <div id = "right-content">
-                <p><strong>Марка: </strong> ${car.getBrand()}</p>
+                <p><strong>Марка: </strong> ${pageContext.servletContext.getAttribute('database').getBrandById(car.getBrand_id()).getName() }</p>
                 <p ><strong>Модель: </strong>${car.getModel()}</p>
                 <p><strong>Страна производства: </strong>${brand.getCountry()}</p>
                 <p><strong>Год выпуска: </strong>${car.getYear()}</p>
                 <p><strong>Цена: </strong>${car.getNicePrice()} руб.</p>
                 <p><strong>Пробег: </strong>${car.getNiceMileage()} км.</p>
+                <p><strong>Описание: </strong>${car.getDescription()}</p>
             </div>
             <div id = "bottom-content">
                 <p><strong>Телефон для связи: </strong> ${phone}</p>

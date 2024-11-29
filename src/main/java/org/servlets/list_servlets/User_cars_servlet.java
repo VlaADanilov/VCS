@@ -27,8 +27,8 @@ public class User_cars_servlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String username = db_helper.getUserById(Integer.parseInt(req.getParameter("user_id"))).getName();
         List<Auto_model> list = null;
-        String brand_id = req.getParameter("brand_id");
-        String model = req.getParameter("model");
+        String brand_id = req.getParameter("brand");
+        String model = req.getParameter("car_model");
         String sort = req.getParameter("sort");
         String city = req.getParameter("city");
         if (brand_id == null){
@@ -38,7 +38,6 @@ public class User_cars_servlet extends HttpServlet {
             list = db_helper.getFilterAuto(brand_id, model, sort, req.getParameter("user_id"),city);
         }
         req.setAttribute("list", list);
-        req.setAttribute("whereBack", "user");
         List<Brand> brands = new ArrayList<>();
         brands.add(new Brand(0, "None","None"));
         brands.addAll(db_helper.getAllBrands());
