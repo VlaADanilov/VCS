@@ -39,6 +39,11 @@ public class EmployerDao extends AbstractDao<Employee> {
     private final static String DELETE_BY_ID= "DELETE FROM employee WHERE employee_id = ?";
     @Override
     public boolean deleteById(int id) {
+        String string = getImagePath(id);
+        File file = new File(path + "\\" +string);
+        if(file.exists()){
+            file.delete();
+        }
         int result = 0;
         try (PreparedStatement ps = getConnection().prepareStatement(DELETE_BY_ID)){
             ps.setInt(1, id);
@@ -105,7 +110,8 @@ public class EmployerDao extends AbstractDao<Employee> {
             }
             FileOutputStream fos = new FileOutputStream(file);
             fos.write(is.readAllBytes());
-            preparedStatement.setString(1, path+"\\" + string + i);
+            fos.close();
+            preparedStatement.setString(1, string + i);
             preparedStatement.setInt(2, id);
             int result = preparedStatement.executeUpdate();
             return result > 0;
@@ -120,16 +126,13 @@ public class EmployerDao extends AbstractDao<Employee> {
         StringBuilder sb = new StringBuilder();
 
         for (int i = 0; i < length; i++) {
-            int charType = random.nextInt(3); // 0 - буква, 1 - цифра, 2 - специальный символ
+            int charType = random.nextInt(2); // 0 - буква, 1 - цифра, 2 - специальный символ
             switch (charType) {
                 case 0:
                     sb.append((char) (random.nextInt(26) + 'a')); // Случайная буква в нижнем регистре
                     break;
                 case 1:
                     sb.append(random.nextInt(10)); // Случайная цифра
-                    break;
-                case 2:
-                    sb.append((char) (random.nextInt(15) + '!')); // Случайный специальный символ
                     break;
             }
         }
@@ -145,7 +148,20 @@ public class EmployerDao extends AbstractDao<Employee> {
             String string = resultSet.getString("image");
             File file = new File(path + "\\" + string);
             FileInputStream fileInputStream = new FileInputStream(file);
-            return fileInputStream.readAllBytes();
+            byte[] ret = fileInputStream.readAllBytes();
+            fileInputStream.close();
+            return ret;
+        }catch(Exception e){
+            throw new RuntimeException(e);
+        }
+    }
+
+    public String getImagePath(int id) {
+        try(PreparedStatement preparedStatement = getConnection().prepareStatement(GET_BY_ID)){
+            preparedStatement.setInt(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            resultSet.next();
+            return resultSet.getString("image");
         }catch(Exception e){
             throw new RuntimeException(e);
         }
