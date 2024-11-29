@@ -41,6 +41,11 @@
         <hr width="50" color="#037FFC" size="5">
         <!--Общая информация в сайдбаре-->
         <c:if test="${sessionScope.get('username') == null}">
+            <c:if test="${error != null}">
+                <p style="color: red">
+                        ${error}
+                </p>
+            </c:if>
             <h3>Аутентификация</h3>
             <form method="post" action="${pageContext.servletContext.contextPath}/profile">
                 <label for="name">Имя пользователя:
@@ -51,11 +56,6 @@
                 </label>
                 <input type="submit" value="Войти">
             </form>
-            <c:if test="${error != null}">
-                <p style="color: red">
-                    ${error}
-                </p>
-            </c:if>
             <button onclick='openForm()'>Регистрация</button>
             <div id='req'>
                 <form role="form" action="${pageContext.servletContext.contextPath}/registr" autocomplete="off" method="POST">
