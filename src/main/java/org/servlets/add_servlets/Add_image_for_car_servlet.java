@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Random;
 
 @WebServlet(urlPatterns = {"/list/info/image","/my_cars/info/image","/my_likes/info/image","/user_cars/info/image","/list_of_reports/info/image","/image"})
 @MultipartConfig(maxFileSize = 16177216)
@@ -57,12 +58,36 @@ public class Add_image_for_car_servlet extends HttpServlet {
                 req.setAttribute("flag", "false");
             }
             else{
-                boolean flag = db_helper.addImageToThisAuto(is, auto_id);
+                String str = generateStr();
+                boolean flag = db_helper.addImageToThisAuto(is, generateStr() ,auto_id);
                 req.setAttribute("flag", flag);
             }
         } else{
             req.setAttribute("flag", "false");
         }
         doGet(req,resp);
+    }
+
+    private String generateStr(){
+        Random random = new Random();
+        int length = random.nextInt(11) + 5; // Случайная длина от 5 до 15 символов
+        StringBuilder sb = new StringBuilder();
+
+        for (int i = 0; i < length; i++) {
+            int charType = random.nextInt(3); // 0 - буква, 1 - цифра, 2 - специальный символ
+            switch (charType) {
+                case 0:
+                    sb.append((char) (random.nextInt(26) + 'a')); // Случайная буква в нижнем регистре
+                    break;
+                case 1:
+                    sb.append(random.nextInt(10)); // Случайная цифра
+                    break;
+                case 2:
+                    sb.append((char) (random.nextInt(15) + '!')); // Случайный специальный символ
+                    break;
+            }
+        }
+
+        return sb.toString();
     }
 }

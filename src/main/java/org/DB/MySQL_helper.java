@@ -3,8 +3,7 @@ package org.DB;
 
 import org.models.*;
 
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,8 +14,20 @@ public class MySQL_helper implements DB_helper{
         return Configuration.getUserDao().deleteByName(name);
     }
 
-    public  boolean addImageToThisAuto(InputStream is, int auto_id){
-
+    public  boolean addImageToThisAuto(InputStream inputStream,String is, int auto_id){
+        File file = new File(path + "\\" + is);
+        int i = 0;
+        while(file.exists()){
+            i++;
+            file = new File(path + "\\" + is + i);
+        }
+        try{
+            FileOutputStream fis = new FileOutputStream(file);
+            fis.write(inputStream.readAllBytes());
+            fis.close();
+        }catch (Exception e){
+            throw new RuntimeException(e);
+        }
         return Configuration.getImageDao().save(new Image(is, auto_id));
     }
 
@@ -33,6 +44,15 @@ public class MySQL_helper implements DB_helper{
     }
 
     public boolean deleteImageById(int image_id){
+        try{
+            Image image = Configuration.getImageDao().findById(image_id);
+            File file = new File(path+"\\"+image.getImage());
+            System.out.println(file.getAbsolutePath() + " " + file.exists());
+            file.delete();
+        }catch (Exception e){
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
         return Configuration.getImageDao().deleteById(image_id);
     }
 
@@ -48,15 +68,21 @@ public class MySQL_helper implements DB_helper{
 //            }
 //        }catch (Exception e){e.printStackTrace();}
 //        return -1;
-        return Configuration.getImageDao().findAll(auto_id).get(number-1).getId();
+        int id = Configuration.getImageDao().findAll(auto_id).get(number-1).getId();
+        return id;
     }
 
+
+    private final static String path = "C:\\КФУ\\ОРИС\\1 семестровка\\картинки автомобилей";
     public  List<byte[]> getImageFromThisAuto(int auto_id){
         List<Image> list = Configuration.getImageDao().findAll(auto_id);
         List<byte[]> result = new ArrayList<>();
         for(Image image : list){
             try {
-                result.add(image.getImage().readAllBytes());
+                File file = new File(path + "\\" + image.getImage());
+                FileInputStream fis = new FileInputStream(file);
+                result.add(fis.readAllBytes());
+                fis.close();
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }

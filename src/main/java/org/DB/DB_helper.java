@@ -5,7 +5,7 @@ import java.io.InputStream;
 import java.util.List;
 
 public interface DB_helper {
-    boolean addImageToThisAuto(InputStream is, int auto_id);
+    boolean addImageToThisAuto(InputStream inputStream,String is, int auto_id);
 
     boolean deleteUserByName(String name);
 
