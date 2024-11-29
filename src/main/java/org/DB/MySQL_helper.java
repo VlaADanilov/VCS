@@ -15,8 +15,8 @@ public class MySQL_helper implements DB_helper{
     }
 
     public  boolean addImageToThisAuto(InputStream inputStream,String is, int auto_id){
-        File file = new File(path + "\\" + is);
         int i = 0;
+        File file = new File(path + "\\" + is + i);
         while(file.exists()){
             i++;
             file = new File(path + "\\" + is + i);
@@ -28,7 +28,7 @@ public class MySQL_helper implements DB_helper{
         }catch (Exception e){
             throw new RuntimeException(e);
         }
-        return Configuration.getImageDao().save(new Image(is, auto_id));
+        return Configuration.getImageDao().save(new Image(is + i, auto_id));
     }
 
     public  int getEmpIdByName(String name){
