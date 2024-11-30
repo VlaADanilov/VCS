@@ -15,7 +15,7 @@ public class General_menu_servlet extends HttpServlet {
             req.setAttribute("error", req.getSession().getAttribute("error"));
             req.getSession().removeAttribute("error");
         }
-        req.getRequestDispatcher("jsps/general_menu.jsp").forward(req, resp);
+        req.getRequestDispatcher("/WEB-INF/jsps/general_menu.jsp").forward(req, resp);
     }
 
 

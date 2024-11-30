@@ -25,7 +25,7 @@ public class Add_car_servlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setAttribute("list", db_helper.getAllBrands());
-        req.getRequestDispatcher("jsps/add_car.jsp").forward(req, resp);
+        req.getRequestDispatcher("/WEB-INF/jsps/add_car.jsp").forward(req, resp);
     }
 
     @Override
@@ -34,25 +34,27 @@ public class Add_car_servlet extends HttpServlet {
         if (req.getParameter("car_model").isEmpty() || req.getParameter("year").isEmpty()
         || req.getParameter("price").isEmpty() || req.getParameter("mileage").isEmpty()) {
             req.setAttribute("flag", "false");
-            doGet(req, resp);
         }
-        int brand = Integer.parseInt(req.getParameter("brand"));
-        String model = req.getParameter("car_model");
-        int year = Integer.parseInt(req.getParameter("year"));
-        int price = Integer.parseInt(req.getParameter("price"));
-        String username = (String) req.getSession().getAttribute("username");
-        int mileage = Integer.parseInt(req.getParameter("mileage"));
-        String city = req.getParameter("city");
-        String description = req.getParameter("description");
-        if (year <= 1900 || price < 0 || mileage < 0 || city.trim().isEmpty()){
-            req.setAttribute("flag", "false");
-            doGet(req, resp);
-            return;
+        else{
+            int brand = Integer.parseInt(req.getParameter("brand"));
+            String model = req.getParameter("car_model");
+            int year = Integer.parseInt(req.getParameter("year"));
+            int price = Integer.parseInt(req.getParameter("price"));
+            String username = (String) req.getSession().getAttribute("username");
+            int mileage = Integer.parseInt(req.getParameter("mileage"));
+            String city = req.getParameter("city");
+            String description = req.getParameter("description");
+            if (year <= 1900 || price < 0 || mileage < 0 || city.trim().isEmpty()){
+                req.setAttribute("flag", "false");
+            }
+            else{
+                db_helper.addAutoToDatabase(new Auto_model(brand,db_helper.getUser(username).getId(),model,year,price, mileage, city,description));
+                req.setAttribute("flag", "true");
+                int auto_id = db_helper.getLastAutoFromThisUser((String)req.getSession().getAttribute("username"));
+                resp.sendRedirect(req.getContextPath() + "/image?auto_id=" + auto_id);
+                return;
+            }
         }
-
-        db_helper.addAutoToDatabase(new Auto_model(brand,db_helper.getUser(username).getId(),model,year,price, mileage, city,description));
-        req.setAttribute("flag", "true");
-        int auto_id = db_helper.getLastAutoFromThisUser((String)req.getSession().getAttribute("username"));
-        resp.sendRedirect(req.getContextPath() + "/image?auto_id=" + auto_id);
+        doGet(req, resp);
     }
 }

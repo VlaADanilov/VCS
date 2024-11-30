@@ -25,7 +25,7 @@ public class Report_servlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding("UTF-8");
         req.setAttribute("uri", collectTheString(req.getRequestURI()));
-        req.getRequestDispatcher("/jsps/report_car.jsp").forward(req, resp);
+        req.getRequestDispatcher("/WEB-INF/jsps/report_car.jsp").forward(req, resp);
     }
 
     private String collectTheString(String uri){

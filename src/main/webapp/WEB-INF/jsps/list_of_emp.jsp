@@ -12,13 +12,13 @@
 <html>
 <head>
     <title>List of emp</title>
-    <script type="text/javascript" src="js/functionsForDelete.js"></script>
+    <script type="text/javascript" src="../../js/functionsForDelete.js"></script>
     <link rel="icon" href="/pages/ico.png" type="image/png">
 </head>
 <body>
 <div id = wrapper>
     <div id = "header" align="center">
-        <img class="myImage" src="/icons/back.jpg" onclick="location.href='${pageContext.servletContext.contextPath}/'">
+        <img class="myImage" src="/icons/back.jpg" onclick="location.href='../..'">
         <c:if test="${sessionScope.get('status').equals('owner')}">
             <img class="myImage2" src="/icons/plus-svgrepo-com.svg" onclick="location.href='${pageContext.servletContext.contextPath}/add_employee'">
         </c:if>
@@ -44,7 +44,7 @@
                                 <c:out value="${emp.getPhone()}" /></p>
                         </div>
                     <c:if test="${sessionScope.get('status').equals('owner')}">
-                        <img name = "delete" id = "del" class="myImage2" src="icons/delete-1487-svgrepo-com.svg" onclick="openForm(${emp.getId()})">
+                        <img name = "delete" id = "del" class="myImage2" src="../../icons/delete-1487-svgrepo-com.svg" onclick="openForm(${emp.getId()})">
                         <div class="noner" id = "success${emp.getId()}">
                             <p>Вы уверены?</p>
                             <div align="center">

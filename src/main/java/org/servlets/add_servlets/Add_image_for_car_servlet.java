@@ -33,7 +33,7 @@ public class Add_image_for_car_servlet extends HttpServlet {
             result = collectTheString(req.getRequestURI()) + "?number=" + req.getParameter("auto_id");
         }
         req.setAttribute("uri", result);
-        req.getRequestDispatcher("/jsps/add_image.jsp").forward(req, resp);
+        req.getRequestDispatcher("/WEB-INF/jsps/add_image.jsp").forward(req, resp);
     }
 
     private String collectTheString(String uri){
@@ -58,7 +58,6 @@ public class Add_image_for_car_servlet extends HttpServlet {
                 req.setAttribute("flag", "false");
             }
             else{
-                String str = generateStr();
                 boolean flag = db_helper.addImageToThisAuto(is, generateStr() ,auto_id);
                 req.setAttribute("flag", flag);
             }
@@ -74,16 +73,13 @@ public class Add_image_for_car_servlet extends HttpServlet {
         StringBuilder sb = new StringBuilder();
 
         for (int i = 0; i < length; i++) {
-            int charType = random.nextInt(3); // 0 - буква, 1 - цифра, 2 - специальный символ
+            int charType = random.nextInt(2); // 0 - буква, 1 - цифра, 2 - специальный символ
             switch (charType) {
                 case 0:
                     sb.append((char) (random.nextInt(26) + 'a')); // Случайная буква в нижнем регистре
                     break;
                 case 1:
                     sb.append(random.nextInt(10)); // Случайная цифра
-                    break;
-                case 2:
-                    sb.append((char) (random.nextInt(15) + '!')); // Случайный специальный символ
                     break;
             }
         }

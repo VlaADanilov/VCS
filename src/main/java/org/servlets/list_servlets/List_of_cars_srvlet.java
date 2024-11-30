@@ -25,7 +25,7 @@ public class List_of_cars_srvlet extends HttpServlet {
     }
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        List<Auto_model> list = null;
+        List<Auto_model> list;
         String brand_id = req.getParameter("brand");
         String model = req.getParameter("car_model");
         String sort = req.getParameter("sort");
@@ -45,6 +45,6 @@ public class List_of_cars_srvlet extends HttpServlet {
         String uri = uris[uris.length - 1];
         req.setAttribute("uri", "/" + uri);
         req.setAttribute("back", uris[uris.length - 2]);
-        req.getRequestDispatcher("/jsps/list_of_cars.jsp").forward(req, resp);
+        req.getRequestDispatcher("/WEB-INF/jsps/list_of_cars.jsp").forward(req, resp);
     }
 }

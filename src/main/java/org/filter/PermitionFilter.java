@@ -61,9 +61,10 @@ public class PermitionFilter implements Filter {
             if (!db_helper.checkPermission((String)req.getSession().getAttribute("username"), Integer.parseInt(req.getParameter("auto_id")))
             && db_helper.getUser((String) req.getSession().getAttribute("username")).getStatus().equals("default")
             ){
-                System.out.println(db_helper.getUser((String) req.getSession().getAttribute("username")).getStatus().equals("default"));
                 resp.sendRedirect(req.getContextPath() + "/");
                 return;
+            }else{
+                req.setAttribute("pravo", true);
             }
         }
         filterChain.doFilter(servletRequest, servletResponse);

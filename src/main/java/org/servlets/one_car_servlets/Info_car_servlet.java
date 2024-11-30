@@ -55,7 +55,7 @@ public class Info_car_servlet extends HttpServlet {
             end += "?user_id=" + auto.getUser_id();
         }
         req.setAttribute("end", end);
-        req.getRequestDispatcher("/jsps/info_car.jsp").forward(req, resp);
+        req.getRequestDispatcher("/WEB-INF/jsps/info_car.jsp").forward(req, resp);
     }
 
     private String collectTheString(String uri){

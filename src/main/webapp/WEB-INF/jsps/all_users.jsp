@@ -18,7 +18,7 @@
 <body>
 <div id = wrapper>
     <div id = "header" align="center">
-        <img class="myImage" src="/icons/back.jpg" onclick="location.href='${pageContext.servletContext.contextPath}/'">
+        <img class="myImage" src="/icons/back.jpg" onclick="location.href='../..'">
         <h1>Список пользователей</h1>
     </div>
     <div>

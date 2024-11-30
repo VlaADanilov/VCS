@@ -31,7 +31,7 @@ public class Update_car_servlet extends HttpServlet {
         req.setAttribute("list", list);
         req.setAttribute("uri", collectTheString(req.getRequestURI()) + "?number=" + req.getParameter("auto_id"));
         req.setAttribute("car", db_helper.getAutoById(Integer.parseInt(req.getParameter("auto_id"))));
-        req.getRequestDispatcher("/jsps/update_car.jsp").forward(req, resp);
+        req.getRequestDispatcher("/WEB-INF/jsps/update_car.jsp").forward(req, resp);
     }
 
     private String collectTheString(String uri){
