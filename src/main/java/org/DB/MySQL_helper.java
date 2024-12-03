@@ -1,6 +1,8 @@
 package org.DB;
 
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.models.*;
 
 import java.io.*;
@@ -10,6 +12,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class MySQL_helper implements DB_helper{
+    private final static Logger logger = LogManager.getLogger(MySQL_helper.class);
     public boolean deleteUserByName(String name){
         return Configuration.getUserDao().deleteByName(name);
     }
@@ -26,6 +29,7 @@ public class MySQL_helper implements DB_helper{
             fis.write(inputStream.readAllBytes());
             fis.close();
         }catch (Exception e){
+            logger.error(e);
             throw new RuntimeException(e);
         }
         return Configuration.getImageDao().save(new Image(is + i, auto_id));
@@ -51,6 +55,7 @@ public class MySQL_helper implements DB_helper{
             file.delete();
         }catch (Exception e){
             e.printStackTrace();
+            logger.error(e);
             throw new RuntimeException(e);
         }
         return Configuration.getImageDao().deleteById(image_id);
@@ -84,7 +89,8 @@ public class MySQL_helper implements DB_helper{
                 result.add(fis.readAllBytes());
                 fis.close();
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                logger.error(e);
+            throw new RuntimeException(e);
             }
         }
         return result;
@@ -152,6 +158,7 @@ public class MySQL_helper implements DB_helper{
                 list.add(auto);
             }
         }catch (Exception e){
+            logger.error(e);
             throw new RuntimeException(e);
         }
         return list;
@@ -235,6 +242,7 @@ public class MySQL_helper implements DB_helper{
                 return true;
             }
         }catch (Exception e){
+            logger.error(e);
             throw new RuntimeException(e);
         }
         return false;

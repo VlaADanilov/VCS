@@ -1,5 +1,8 @@
 package org.DB;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.util.ArrayDeque;
@@ -10,8 +13,9 @@ public class ConnectionsCreater {
     private static final String USERNAME = "root";
     private static final String PASSWORD = "root";
     private Deque<Connection> connections;
+    private final static Logger logger = LogManager.getLogger(ConnectionsCreater.class);
 
-    ConnectionsCreater(){
+    public ConnectionsCreater(){
         connections = new ArrayDeque<>();
         initConnections(10);
     }
@@ -23,7 +27,7 @@ public class ConnectionsCreater {
                 connections.add(DriverManager.getConnection(URL, USERNAME, PASSWORD));
             }
         }catch (Exception e){
-            throw new RuntimeException(e);
+            logger.error(e);
         }
     }
 
@@ -41,6 +45,7 @@ public class ConnectionsCreater {
                 return getConnection();
             }
         }catch (Exception e){
+            logger.error(e);
             throw new RuntimeException(e);
         }
     }
@@ -51,7 +56,7 @@ public class ConnectionsCreater {
                 connections.add(connection);
             }
         }catch (Exception e){
-            throw new RuntimeException(e);
+            logger.error(e);
         }
     }
 
