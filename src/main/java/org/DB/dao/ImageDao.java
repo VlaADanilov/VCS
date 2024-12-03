@@ -17,7 +17,7 @@ public class ImageDao extends AbstractDao<Image> {
     public boolean save(Image obj) {
         try(PreparedStatement preparedStatement = getConnection().prepareStatement(ADD_TO_DB)) {
             preparedStatement.setInt(1, obj.getAuto_id());
-            preparedStatement.setBlob(2, obj.getImage());
+            preparedStatement.setString(2, obj.getImage());
             return preparedStatement.executeUpdate() > 0;
         }catch (Exception e) {
             throw new RuntimeException(e);
@@ -37,7 +37,7 @@ public class ImageDao extends AbstractDao<Image> {
     }
 
     //language=sql
-    private final static String FIND_BY_ID = "SELECT * FROM auto_images WHERE auto_id = ?";
+    private final static String FIND_BY_ID = "SELECT * FROM auto_images WHERE image_id = ?";
     @Override
     public Image findById(int id) {
         try(PreparedStatement preparedStatement = getConnection().prepareStatement(FIND_BY_ID)) {

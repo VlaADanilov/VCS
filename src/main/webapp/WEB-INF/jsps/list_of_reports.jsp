@@ -12,13 +12,13 @@
 <html>
 <head>
     <title>List of reports</title>
-    <script type="text/javascript" src="js/functionsForDelete.js"></script>
+    <script type="text/javascript" src="../../js/functionsForDelete.js"></script>
     <link rel="icon" href="/pages/ico.png" type="image/png">
 </head>
 <body>
 <div id = wrapper>
     <div id = "header" align="center">
-        <img class="myImage" src="/icons/back.jpg" onclick="location.href='${pageContext.servletContext.contextPath}/'">
+        <img class="myImage" src="/icons/back.jpg" onclick="location.href='../..'">
         <h1>Список жалоб</h1>
     </div>
     <div>
@@ -28,7 +28,7 @@
                     <p class="nameOfAuthor">${pageContext.servletContext.getAttribute("database").getUserById(report.getUser_id()).getName()  }
                                             ${pageContext.servletContext.getAttribute("database").getUserById(report.getUser_id()).getPhone()}
                     </p>
-                    <img name = "delete" id = "del" class="myImage2" src="icons/delete-1487-svgrepo-com.svg" onclick="openForm(${report.getId()})">
+                    <img name = "delete" id = "del" class="myImage2" src="../../icons/delete-1487-svgrepo-com.svg" onclick="openForm(${report.getId()})">
                     <p>
                         <b>Номер объявления: </b>
                         <c:out value="${report.getAuto_id()}" />

@@ -13,14 +13,14 @@
 <fmt:requestEncoding value="UTF-8"/>
 <html>
 <head>
-    <link rel="icon" href="pages/ico.png" type="image/png">
+    <link rel="icon" href="../../pages/ico.png" type="image/png">
     <title>Add car</title>
     <meta charset="UTF-8">
 </head>
 <body>
 <div id="wrapper">
     <div id = "header" align="center">
-        <img src="/icons/back.jpg" class = "myImage" onclick="location.href='${pageContext.servletContext.contextPath}/'">
+        <img src="/icons/back.jpg" class = "myImage" onclick="location.href='../..'">
         <h1>Добавление объявления</h1>
     </div>
     <div align="center">
@@ -58,7 +58,7 @@
         </c:if>
         <c:if test="${sessionScope.get('username') == null}">
             <p><strong>Сначала зарегистрируйтесь!</strong></p>
-            <p><button class = "but" type="submit" onclick="location.href='${pageContext.servletContext.contextPath}/'">Вернуться в меню</button></p>
+            <p><button class = "but" type="submit" onclick="location.href='../..'">Вернуться в меню</button></p>
         </c:if>
     </div>
     <div align="center">

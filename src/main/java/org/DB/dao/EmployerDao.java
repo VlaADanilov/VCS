@@ -3,6 +3,9 @@ package org.DB.dao;
 import org.DB.mappers.EmployeeMapper;
 import org.models.Employee;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.sql.Blob;
 import java.sql.PreparedStatement;
@@ -10,6 +13,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class EmployerDao extends AbstractDao<Employee> {
     private static final EmployeeMapper mapper = new EmployeeMapper();
@@ -35,6 +39,11 @@ public class EmployerDao extends AbstractDao<Employee> {
     private final static String DELETE_BY_ID= "DELETE FROM employee WHERE employee_id = ?";
     @Override
     public boolean deleteById(int id) {
+        String string = getImagePath(id);
+        File file = new File(path + "\\" +string);
+        if(file.exists()){
+            file.delete();
+        }
         int result = 0;
         try (PreparedStatement ps = getConnection().prepareStatement(DELETE_BY_ID)){
             ps.setInt(1, id);
@@ -92,7 +101,17 @@ public class EmployerDao extends AbstractDao<Employee> {
     private final static String UPDATE_IMAGE_BY_ID = "UPDATE employee SET image = ? WHERE employee_id = ?";
     public boolean updateImage(InputStream is, int id) {
         try(PreparedStatement preparedStatement = getConnection().prepareStatement(UPDATE_IMAGE_BY_ID)){
-            preparedStatement.setBlob(1, is);
+            String string = generateStr();
+            int i = 0;
+            File file = new File(path + "\\" + string + i);
+            while(file.exists()){
+                i++;
+                file = new File(path + "\\" + string + i);
+            }
+            FileOutputStream fos = new FileOutputStream(file);
+            fos.write(is.readAllBytes());
+            fos.close();
+            preparedStatement.setString(1, string + i);
             preparedStatement.setInt(2, id);
             int result = preparedStatement.executeUpdate();
             return result > 0;
@@ -101,13 +120,48 @@ public class EmployerDao extends AbstractDao<Employee> {
         }
     }
 
+    private String generateStr(){
+        Random random = new Random();
+        int length = random.nextInt(11) + 5; // Случайная длина от 5 до 15 символов
+        StringBuilder sb = new StringBuilder();
+
+        for (int i = 0; i < length; i++) {
+            int charType = random.nextInt(2); // 0 - буква, 1 - цифра, 2 - специальный символ
+            switch (charType) {
+                case 0:
+                    sb.append((char) (random.nextInt(26) + 'a')); // Случайная буква в нижнем регистре
+                    break;
+                case 1:
+                    sb.append(random.nextInt(10)); // Случайная цифра
+                    break;
+            }
+        }
+
+        return sb.toString();
+    }
+    private static final String path = "C:\\КФУ\\ОРИС\\1 семестровка\\картинки сотрудников";
     public byte[] getImage(int id) {
         try(PreparedStatement preparedStatement = getConnection().prepareStatement(GET_BY_ID)){
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             resultSet.next();
-            Blob blob = resultSet.getBlob("image");
-            return blob.getBytes(1, (int)blob.length());
+            String string = resultSet.getString("image");
+            File file = new File(path + "\\" + string);
+            FileInputStream fileInputStream = new FileInputStream(file);
+            byte[] ret = fileInputStream.readAllBytes();
+            fileInputStream.close();
+            return ret;
+        }catch(Exception e){
+            throw new RuntimeException(e);
+        }
+    }
+
+    public String getImagePath(int id) {
+        try(PreparedStatement preparedStatement = getConnection().prepareStatement(GET_BY_ID)){
+            preparedStatement.setInt(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            resultSet.next();
+            return resultSet.getString("image");
         }catch(Exception e){
             throw new RuntimeException(e);
         }

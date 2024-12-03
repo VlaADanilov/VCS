@@ -12,7 +12,7 @@ public class ImageMapper implements RowMapper<Image> {
         return new Image(
                 rs.getInt("image_id"),
                 rs.getInt("auto_id"),
-                rs.getBlob("image").getBinaryStream()
+                rs.getString("image")
         );
     }
 }

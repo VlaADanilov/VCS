@@ -22,7 +22,7 @@ public class delete_car_servlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setAttribute("uri", collectTheString(req.getRequestURI()) + "?number=" + req.getParameter("auto_id"));
-        req.getRequestDispatcher("/jsps/delete.jsp").forward(req, resp);
+        req.getRequestDispatcher("/WEB-INF/jsps/delete.jsp").forward(req, resp);
     }
 
     private String collectTheString(String uri){

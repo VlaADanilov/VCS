@@ -22,6 +22,6 @@ public class List_of_employees_servlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setAttribute("list", db_helper.getAllEmployees());
-        req.getRequestDispatcher("/jsps/list_of_emp.jsp").forward(req, resp);
+        req.getRequestDispatcher("/WEB-INF/jsps/list_of_emp.jsp").forward(req, resp);
     }
 }

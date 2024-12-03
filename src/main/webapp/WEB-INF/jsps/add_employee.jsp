@@ -46,7 +46,7 @@
         </c:if>
         <c:if test="${!sessionScope.get('status').equals('owner')}">
             <p><strong>Не имеете парава!</strong></p>
-            <p><button class = "but" type="submit" onclick="location.href='${pageContext.servletContext.contextPath}/'">Вернуться в меню</button></p>
+            <p><button class = "but" type="submit" onclick="location.href='../..'">Вернуться в меню</button></p>
         </c:if>
     </div>
     <div align="center">

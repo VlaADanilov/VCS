@@ -27,7 +27,7 @@ public class All_users_servlet extends HttpServlet {
         List<User> list = db_helper.getAllUsers();
         list.removeIf(user -> user.getName().equals(req.getSession().getAttribute("username")));
         req.setAttribute("list", list);
-        req.getRequestDispatcher("/jsps/all_users.jsp").forward(req, resp);
+        req.getRequestDispatcher("/WEB-INF/jsps/all_users.jsp").forward(req, resp);
     }
 
     @Override
@@ -36,6 +36,6 @@ public class All_users_servlet extends HttpServlet {
         List<User> list = db_helper.getAllUsers(req.getParameter("filter"));
         list.removeIf(user -> user.getName().equals(req.getSession().getAttribute("username")));
         req.getSession().setAttribute("list", list);
-        req.getRequestDispatcher("/jsps/all_users.jsp").forward(req, resp);
+        req.getRequestDispatcher("/WEB-INF/jsps/all_users.jsp").forward(req, resp);
     }
 }

@@ -5,15 +5,15 @@ import java.io.InputStream;
 public class Image {
     private int id;
     private int auto_id;
-    private InputStream image;
+    private String image;
 
-    public Image(int id, int auto_id, InputStream image) {
+    public Image(int id, int auto_id, String image) {
         this.id = id;
         this.auto_id = auto_id;
         this.image = image;
     }
 
-    public Image(InputStream image, int auto_id) {
+    public Image(String image, int auto_id) {
         this.image = image;
         this.auto_id = auto_id;
     }
@@ -34,11 +34,11 @@ public class Image {
         this.auto_id = auto_id;
     }
 
-    public InputStream getImage() {
+    public String getImage() {
         return image;
     }
 
-    public void setImage(InputStream image) {
+    public void setImage(String image) {
         this.image = image;
     }
 }

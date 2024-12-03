@@ -26,13 +26,13 @@ public class Delete_Image_servlet extends HttpServlet {
         Auto_model auto = db_helper.getAutoById(Integer.parseInt(req.getParameter("auto_id")));
         req.setAttribute("brand", db_helper.getBrandById(auto.getBrand_id()));
         req.setAttribute("list", createList(auto));
-        if (req.getSession().getAttribute("username") != null){
-            User user = db_helper.getUser((String) req.getSession().getAttribute("username"));
-            boolean flag = db_helper.checkPermission(user.getName(), auto.getId()) || !user.getStatus().equals("default");
-            req.setAttribute("pravo", flag);
-        }
+//        if (req.getSession().getAttribute("username") != null){
+//            User user = db_helper.getUser((String) req.getSession().getAttribute("username"));
+//            boolean flag = db_helper.checkPermission(user.getName(), auto.getId()) || !user.getStatus().equals("default");
+//            req.setAttribute("pravo", flag);
+//        }
         req.setAttribute("uri", collectTheString(req.getRequestURI()) + "?number=" + req.getParameter("auto_id"));
-        req.getRequestDispatcher("/jsps/list_for_delete_images.jsp").forward(req, resp);
+        req.getRequestDispatcher("/WEB-INF/jsps/list_for_delete_images.jsp").forward(req, resp);
     }
 
     private String collectTheString(String uri){

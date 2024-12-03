@@ -23,6 +23,6 @@ public class List_of_reports  extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setAttribute("list", db_helper.getAllReports());
-        req.getRequestDispatcher("/jsps/list_of_reports.jsp").forward(req, resp);
+        req.getRequestDispatcher("/WEB-INF/jsps/list_of_reports.jsp").forward(req, resp);
     }
 }

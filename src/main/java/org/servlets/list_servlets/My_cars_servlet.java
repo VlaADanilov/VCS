@@ -45,6 +45,6 @@ public class My_cars_servlet extends HttpServlet {
         String uri = uris[uris.length - 1];
         req.setAttribute("uri", "/" + uri);
         req.setAttribute("back", uris[uris.length - 2]);
-        req.getRequestDispatcher("/jsps/list_of_cars.jsp").forward(req, resp);
+        req.getRequestDispatcher("/WEB-INF/jsps/list_of_cars.jsp").forward(req, resp);
     }
 }
