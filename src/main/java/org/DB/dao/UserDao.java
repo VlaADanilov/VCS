@@ -2,6 +2,7 @@ package org.DB.dao;
 
 import org.DB.mappers.UserMapper;
 import org.apache.logging.log4j.LogManager;
+import org.mindrot.jbcrypt.BCrypt;
 import org.models.User;
 
 import java.sql.PreparedStatement;
@@ -23,7 +24,8 @@ public class UserDao extends AbstractDao<User> {
             int result = 0;
             try(PreparedStatement preparedStatement = getConnection().prepareStatement(ADD_TO_DATABASE)){
                 preparedStatement.setString(1, user.getName());
-                preparedStatement.setString(2, user.getPassword());
+                String hash_password = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt(10));
+                preparedStatement.setString(2, hash_password);
                 preparedStatement.setString(3, user.getStatus());
                 preparedStatement.setString(4, user.getPhone());
                 result = preparedStatement.executeUpdate();
@@ -159,6 +161,6 @@ public class UserDao extends AbstractDao<User> {
     //language=sql
     public boolean checkPassword(String username, String password) {
         User user = findByName(username);
-        return user.getPassword().equals(password);
+        return BCrypt.checkpw(password, user.getPassword());
     }
 }
