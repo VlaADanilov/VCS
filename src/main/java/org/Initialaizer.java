@@ -1,6 +1,6 @@
 package org;
 
-import org.DB.MySQL_helper;
+import org.DB.MySQLHelper;
 import org.DB.Configuration;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -17,7 +17,7 @@ public class Initialaizer implements ServletContextListener {
         logger.info("Starting server");
         logger.info("Creating connections to DB...");
         Configuration.createConnections();
-        sce.getServletContext().setAttribute("database", new MySQL_helper());
+        sce.getServletContext().setAttribute("database", new MySQLHelper());
     }
 
     @Override

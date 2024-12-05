@@ -1,7 +1,7 @@
 package org.servlets.one_car_servlets;
 
-import org.DB.DB_helper;
-import org.models.Auto_model;
+import org.DB.DBHelper;
+import org.models.AutoModel;
 import org.models.User;
 
 import javax.servlet.ServletConfig;
@@ -15,17 +15,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet(urlPatterns = {"/list/info","/my_cars/info","/my_likes/info","/user_cars/info", "/list_of_reports/info"})
-public class Info_car_servlet extends HttpServlet {
-    private DB_helper db_helper;
+public class InfoCarServlet extends HttpServlet {
+    private DBHelper db_helper;
 
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
-        db_helper = (DB_helper) config.getServletContext().getAttribute("database");
+        db_helper = (DBHelper) config.getServletContext().getAttribute("database");
     }
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Auto_model auto;
+        AutoModel auto;
         try{
             auto = db_helper.getAutoById(Integer.parseInt(req.getParameter("number")));
         }catch (Exception e){
@@ -70,7 +70,7 @@ public class Info_car_servlet extends HttpServlet {
         return rez;
     }
 
-    private List<Integer> createList(Auto_model auto) {
+    private List<Integer> createList(AutoModel auto) {
         List<Integer> list = new ArrayList<>();
         for(int i = 1; i <= db_helper.getCountOfImageFromThisAuto(auto.getId()); i++) {
             list.add(i);

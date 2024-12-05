@@ -1,16 +1,16 @@
 package org.DB.mappers;
 
-import org.models.Auto_model;
+import org.models.AutoModel;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class AutoModelMapper implements RowMapper<Auto_model> {
+public class AutoModelMapper implements RowMapper<AutoModel> {
 
 
     @Override
-    public Auto_model mapRow(ResultSet rs) throws SQLException {
-        Auto_model autoModel = new Auto_model(
+    public AutoModel mapRow(ResultSet rs) throws SQLException {
+        AutoModel autoModel = new AutoModel(
                 rs.getInt("auto_brand_id"),
                 rs.getInt("user_id"),
                 rs.getString("auto_model"),

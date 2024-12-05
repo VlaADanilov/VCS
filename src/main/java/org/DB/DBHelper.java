@@ -4,7 +4,7 @@ import org.models.*;
 import java.io.InputStream;
 import java.util.List;
 
-public interface DB_helper {
+public interface DBHelper {
     boolean addImageToThisAuto(InputStream inputStream,String is, int auto_id);
 
     boolean deleteUserByName(String name);
@@ -27,9 +27,9 @@ public interface DB_helper {
 
     List<User> getAllUsers();
 
-    List<Auto_model> getFilterAutoLike(String brand_id, String model, String sort, String user_id, int this_user_id, String city);
+    List<AutoModel> getFilterAutoLike(String brand_id, String model, String sort, String user_id, int this_user_id, String city);
 
-    List<Auto_model> getFilterAuto(String brand_id, String model, String sort, String user_id, String city);
+    List<AutoModel> getFilterAuto(String brand_id, String model, String sort, String user_id, String city);
 
     void updateAutoById_city(int auto_id, String city);
 
@@ -61,7 +61,7 @@ public interface DB_helper {
 
     boolean deleteAutoById(int auto_id);
 
-    boolean addAutoToDatabase(Auto_model auto);
+    boolean addAutoToDatabase(AutoModel auto);
 
     boolean addLikeToDatabase(int user_id, int auto_id);
 
@@ -73,11 +73,11 @@ public interface DB_helper {
 
     boolean addBrandToDatabase(Brand brand);
 
-    List<Auto_model> getAllAuto();
+    List<AutoModel> getAllAuto();
 
-    List<Auto_model> getAutoByThisIds(List<Integer> ints);
+    List<AutoModel> getAutoByThisIds(List<Integer> ints);
 
-    List<Auto_model> getAllAuto(String username);
+    List<AutoModel> getAllAuto(String username);
 
     List<Brand> getAllBrands();
 
@@ -85,7 +85,7 @@ public interface DB_helper {
 
     User getUserById(int id);
 
-    Auto_model getAutoById(int id);
+    AutoModel getAutoById(int id);
 
     boolean changeStatusThisUser(int user_id, String status);
 

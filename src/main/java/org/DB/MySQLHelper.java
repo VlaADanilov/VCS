@@ -11,8 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class MySQL_helper implements DB_helper{
-    private final static Logger logger = LogManager.getLogger(MySQL_helper.class);
+public class MySQLHelper implements DBHelper {
+    private final static Logger logger = LogManager.getLogger(MySQLHelper.class);
     public boolean deleteUserByName(String name){
         return Configuration.getUserDao().deleteByName(name);
     }
@@ -108,8 +108,8 @@ public class MySQL_helper implements DB_helper{
         return Configuration.getUserDao().findAll();
     }
 
-    public  List<Auto_model> getFilterAutoLike(String brand_id, String model, String sort, String user_id, int this_user_id, String city){
-        List<Auto_model> list = new ArrayList<>();
+    public  List<AutoModel> getFilterAutoLike(String brand_id, String model, String sort, String user_id, int this_user_id, String city){
+        List<AutoModel> list = new ArrayList<>();
         try{
             String str = "SELECT * FROM" + " (SELECT auto.auto_id, auto_brand_id, auto.user_id, auto_model, year, price, mileage, city" +
                     " FROM auto JOIN likes USING(auto_id) WHERE likes.user_id = ?) as abcd " + "WHERE auto_model LIKE ? AND city LIKE ?";
@@ -120,7 +120,7 @@ public class MySQL_helper implements DB_helper{
             pst.setString(3, "%" + city + "%");
             ResultSet rs = pst.executeQuery();
             while(rs.next()){
-                Auto_model auto = new Auto_model();
+                AutoModel auto = new AutoModel();
                 auto.setId(rs.getInt("auto_id"));
                 auto.setBrand_id(rs.getInt("auto_brand_id"));
                 auto.setUser_id(rs.getInt("user_id"));
@@ -135,8 +135,8 @@ public class MySQL_helper implements DB_helper{
         return list;
     }
 
-    public  List<Auto_model> getFilterAuto(String brand_id, String model, String sort, String user_id, String city){
-        List<Auto_model> list = new ArrayList<>();
+    public  List<AutoModel> getFilterAuto(String brand_id, String model, String sort, String user_id, String city){
+        List<AutoModel> list = new ArrayList<>();
         try{
             String str = "SELECT * FROM auto WHERE auto_model LIKE ? AND city LIKE ?";
             String result = createStr(str, brand_id, model, sort, user_id);
@@ -146,7 +146,7 @@ public class MySQL_helper implements DB_helper{
             pst.setString(2, "%" + city + "%");
             ResultSet rs = pst.executeQuery();
             while(rs.next()){
-                Auto_model auto = new Auto_model();
+                AutoModel auto = new AutoModel();
                 auto.setId(rs.getInt("auto_id"));
                 auto.setBrand_id(rs.getInt("auto_brand_id"));
                 auto.setUser_id(rs.getInt("user_id"));
@@ -297,7 +297,7 @@ public class MySQL_helper implements DB_helper{
         return Configuration.getAutoModelDao().deleteById(auto_id);
     }
 
-    public boolean addAutoToDatabase(Auto_model auto){
+    public boolean addAutoToDatabase(AutoModel auto){
         return Configuration.getAutoModelDao().save(auto);
     }
 
@@ -330,15 +330,15 @@ public class MySQL_helper implements DB_helper{
         return Configuration.getBrandDao().save(brand);
     }
 
-    public  List<Auto_model> getAllAuto(){
+    public  List<AutoModel> getAllAuto(){
         return Configuration.getAutoModelDao().findAll();
     }
 
-    public  List<Auto_model> getAutoByThisIds(List<Integer> ints){
+    public  List<AutoModel> getAutoByThisIds(List<Integer> ints){
         return Configuration.getAutoModelDao().getAllByIds(ints);
     }
 
-    public  List<Auto_model> getAllAuto(String username){
+    public  List<AutoModel> getAllAuto(String username){
         int user_id = getUser(username).getId();
         return Configuration.getAutoModelDao().findAll(user_id);
     }
@@ -354,7 +354,7 @@ public class MySQL_helper implements DB_helper{
         return Configuration.getUserDao().findById(id);
     }
 
-    public  Auto_model getAutoById(int id){
+    public AutoModel getAutoById(int id){
         return Configuration.getAutoModelDao().findById(id);
     }
 

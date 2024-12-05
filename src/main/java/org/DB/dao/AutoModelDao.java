@@ -2,7 +2,7 @@ package org.DB.dao;
 
 import org.DB.mappers.AutoModelMapper;
 import org.apache.logging.log4j.LogManager;
-import org.models.Auto_model;
+import org.models.AutoModel;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -10,7 +10,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AutoModelDao extends AbstractDao<Auto_model> {
+public class AutoModelDao extends AbstractDao<AutoModel> {
     static{
         logger = LogManager.getLogger(AutoModelDao.class);
     }
@@ -18,7 +18,7 @@ public class AutoModelDao extends AbstractDao<Auto_model> {
     //language=sql
     private final static String ADD_TO_DATABASE = "INSERT INTO auto(auto_brand_id, user_id, auto_model, year, price, mileage, city, description) VALUES(?,?,?,?,?,?,?,?)";
     @Override
-    public boolean save(Auto_model auto) {
+    public boolean save(AutoModel auto) {
         int result = 0;
         logger.info("Saving " + auto + " to database" );
         try(PreparedStatement preparedStatement = getConnection().prepareStatement(ADD_TO_DATABASE)){
@@ -58,7 +58,7 @@ public class AutoModelDao extends AbstractDao<Auto_model> {
     //language=sql
     private final static String GET_BY_ID= "SELECT * FROM auto WHERE auto_id = ?";
     @Override
-    public Auto_model findById(int id) {
+    public AutoModel findById(int id) {
         logger.info("Finding auto model with id " + id );
         try(PreparedStatement preparedStatement = getConnection().prepareStatement(GET_BY_ID)){
             preparedStatement.setInt(1, id);
@@ -74,11 +74,11 @@ public class AutoModelDao extends AbstractDao<Auto_model> {
     //language=sql
     private final static String GET_ALL= "SELECT * FROM auto";
     @Override
-    public List<Auto_model> findAll() {
+    public List<AutoModel> findAll() {
         logger.info("Finding all auto models");
         try(PreparedStatement preparedStatement = getConnection().prepareStatement(GET_ALL)){
             ResultSet resultSet = preparedStatement.executeQuery();
-            List<Auto_model> autoModels = new ArrayList<>();
+            List<AutoModel> autoModels = new ArrayList<>();
             while(resultSet.next()){
                 autoModels.add(mapper.mapRow(resultSet));
             }
@@ -92,7 +92,7 @@ public class AutoModelDao extends AbstractDao<Auto_model> {
 
     //language=sql
     private final static String GET_ALL_BY_IDS= "SELECT * FROM auto WHERE auto_id IN ";
-    public List<Auto_model> getAllByIds(List<Integer> ids) {
+    public List<AutoModel> getAllByIds(List<Integer> ids) {
         logger.info("Finding all auto models by ids");
         StringBuilder stringBuilder = new StringBuilder(GET_ALL_BY_IDS);
         for(int i = 0; i<ids.size(); i++){
@@ -105,10 +105,10 @@ public class AutoModelDao extends AbstractDao<Auto_model> {
         }
         if (stringBuilder.toString().equals(GET_ALL_BY_IDS)){
             logger.info("Successfully found all auto models by ids");
-            return new ArrayList<Auto_model>();
+            return new ArrayList<AutoModel>();
         }
         try(PreparedStatement preparedStatement = getConnection().prepareStatement(stringBuilder.toString())) {
-            List<Auto_model> autoModels = new ArrayList<>();
+            List<AutoModel> autoModels = new ArrayList<>();
             ResultSet resultSet = preparedStatement.executeQuery();
             while(resultSet.next()){
                 autoModels.add(mapper.mapRow(resultSet));
@@ -123,12 +123,12 @@ public class AutoModelDao extends AbstractDao<Auto_model> {
 
     //language=sql
     private final static String GET_ALL_BY_USER_ID= "SELECT * FROM auto WHERE user_id = ?";
-    public List<Auto_model> findAll(int user_id) {
+    public List<AutoModel> findAll(int user_id) {
         logger.info("Finding all auto models from user " + user_id);
         try(PreparedStatement preparedStatement = getConnection().prepareStatement(GET_ALL_BY_USER_ID)){
             preparedStatement.setInt(1, user_id);
             ResultSet resultSet = preparedStatement.executeQuery();
-            List<Auto_model> autoModels = new ArrayList<>();
+            List<AutoModel> autoModels = new ArrayList<>();
             while(resultSet.next()){
                 autoModels.add(mapper.mapRow(resultSet));
             }

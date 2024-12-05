@@ -1,6 +1,6 @@
 package org.filter;
 
-import org.DB.DB_helper;
+import org.DB.DBHelper;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 
 @WebFilter("/*")
 public class PermitionFilter implements Filter {
-    private DB_helper db_helper;
+    private DBHelper db_helper;
     private String[] pagesNeedUser = {"add", "my_likes", "my_cars", "setting_like", "report","delete_my_account"};
     private String[] pagesNeedPermOwnmer = {"add_employee", "emp_image", "delete_emp", "doAdmin"};
     private String[] pagesNeedAuthor = { "image", "delete", "delete_image", "update"};
@@ -21,7 +21,7 @@ public class PermitionFilter implements Filter {
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
         Filter.super.init(filterConfig);
-        db_helper = (DB_helper) filterConfig.getServletContext().getAttribute("database");
+        db_helper = (DBHelper) filterConfig.getServletContext().getAttribute("database");
     }
 
     @Override

@@ -1,6 +1,6 @@
 package org.servlets.pages;
 
-import org.DB.DB_helper;
+import org.DB.DBHelper;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -12,13 +12,13 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 @WebServlet("/getImageEmp")
-public class Emp_page_servlet extends HttpServlet {
-    private DB_helper db_helper;
+public class EmpPageServlet extends HttpServlet {
+    private DBHelper db_helper;
 
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
-        db_helper = (DB_helper) config.getServletContext().getAttribute("database");
+        db_helper = (DBHelper) config.getServletContext().getAttribute("database");
     }
 
 

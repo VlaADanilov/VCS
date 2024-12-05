@@ -1,6 +1,6 @@
 package org.servlets.add_servlets;
 
-import org.DB.DB_helper;
+import org.DB.DBHelper;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -15,13 +15,13 @@ import java.io.InputStream;
 
 @WebServlet("/emp_image")
 @MultipartConfig(maxFileSize = 16177216)
-public class Add_image_for_emp_servlet extends HttpServlet {
-    private DB_helper db_helper;
+public class AddImageForEmpServlet extends HttpServlet {
+    private DBHelper db_helper;
 
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
-        db_helper = (DB_helper) config.getServletContext().getAttribute("database");
+        db_helper = (DBHelper) config.getServletContext().getAttribute("database");
     }
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

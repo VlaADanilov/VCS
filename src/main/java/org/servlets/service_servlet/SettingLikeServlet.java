@@ -1,6 +1,6 @@
 package org.servlets.service_servlet;
 
-import org.DB.DB_helper;
+import org.DB.DBHelper;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -12,13 +12,13 @@ import java.io.IOException;
 import java.util.Arrays;
 
 @WebServlet(urlPatterns = {"/list/info/setting_like","/my_cars/info/setting_like","/my_likes/info/setting_like","/user_cars/info/setting_like","/list_of_reports/info/setting_like"})
-public class Setting_like_servlet extends HttpServlet {
-    private DB_helper db_helper;
+public class SettingLikeServlet extends HttpServlet {
+    private DBHelper db_helper;
 
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
-        db_helper = (DB_helper) config.getServletContext().getAttribute("database");
+        db_helper = (DBHelper) config.getServletContext().getAttribute("database");
     }
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

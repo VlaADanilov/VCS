@@ -1,7 +1,7 @@
 package org.servlets.add_servlets;
 
-import org.DB.DB_helper;
-import org.models.Auto_model;
+import org.DB.DBHelper;
+import org.models.AutoModel;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -13,13 +13,13 @@ import java.io.IOException;
 
 
 @WebServlet("/add")
-public class Add_car_servlet extends HttpServlet {
-    private DB_helper db_helper;
+public class AddCarServlet extends HttpServlet {
+    private DBHelper db_helper;
 
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
-        db_helper = (DB_helper) config.getServletContext().getAttribute("database");
+        db_helper = (DBHelper) config.getServletContext().getAttribute("database");
     }
 
     @Override
@@ -48,7 +48,7 @@ public class Add_car_servlet extends HttpServlet {
                 req.setAttribute("flag", "false");
             }
             else{
-                db_helper.addAutoToDatabase(new Auto_model(brand,db_helper.getUser(username).getId(),model,year,price, mileage, city,description));
+                db_helper.addAutoToDatabase(new AutoModel(brand,db_helper.getUser(username).getId(),model,year,price, mileage, city,description));
                 req.setAttribute("flag", "true");
                 int auto_id = db_helper.getLastAutoFromThisUser((String)req.getSession().getAttribute("username"));
                 resp.sendRedirect(req.getContextPath() + "/image?auto_id=" + auto_id);
