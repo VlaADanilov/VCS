@@ -8,10 +8,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
-import java.sql.Blob;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -28,7 +25,8 @@ public class EmployerDao extends AbstractDao<Employee> {
     public boolean save(Employee employee) {
         logger.info("Save employee " + employee.toString());
         int result = 0;
-        try(PreparedStatement preparedStatement = getConnection().prepareStatement(ADD_TO_DATABASE)){
+        try(Connection connection = getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(ADD_TO_DATABASE)){
             preparedStatement.setString(1, employee.getName());
             preparedStatement.setString(2, employee.getProfession());
             preparedStatement.setString(3, employee.getDescription());
@@ -69,7 +67,8 @@ public class EmployerDao extends AbstractDao<Employee> {
     @Override
     public Employee findById(int id) {
         logger.info("Find employee " + id);
-        try(PreparedStatement preparedStatement = getConnection().prepareStatement(GET_BY_ID)){
+        try(Connection connection = getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(GET_BY_ID)){
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             resultSet.next();
@@ -86,7 +85,8 @@ public class EmployerDao extends AbstractDao<Employee> {
     @Override
     public List<Employee> findAll() {
         logger.info("Find all employees");
-        try(PreparedStatement preparedStatement = getConnection().prepareStatement(GET_ALL)){
+        try(Connection connection = getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(GET_ALL)){
             ResultSet resultSet = preparedStatement.executeQuery();
             List<Employee> employees = new ArrayList<>();
             while(resultSet.next()){
@@ -104,7 +104,8 @@ public class EmployerDao extends AbstractDao<Employee> {
     private final static String GET_BY_NAME= "SELECT * FROM employee WHERE employee_name = ?";
     public Employee findByName(String name) {
         logger.info("Find employee " + name);
-        try(PreparedStatement preparedStatement = getConnection().prepareStatement(GET_BY_NAME)){
+        try(Connection connection = getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(GET_BY_NAME)){
             preparedStatement.setString(1, name);
             ResultSet resultSet = preparedStatement.executeQuery();
             resultSet.next();
@@ -120,7 +121,8 @@ public class EmployerDao extends AbstractDao<Employee> {
     private final static String UPDATE_IMAGE_BY_ID = "UPDATE employee SET image = ? WHERE employee_id = ?";
     public boolean updateImage(InputStream is, int id) {
         logger.info("Update image employee" + id);
-        try(PreparedStatement preparedStatement = getConnection().prepareStatement(UPDATE_IMAGE_BY_ID)){
+        try(Connection connection = getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_IMAGE_BY_ID)){
             String string = generateStr();
             int i = 0;
             File file = new File(path + "\\" + string + i);
@@ -164,7 +166,8 @@ public class EmployerDao extends AbstractDao<Employee> {
     private static final String path = "C:\\КФУ\\ОРИС\\1 семестровка\\картинки сотрудников";
     public byte[] getImage(int id) {
         logger.info("Get image employee" + id);
-        try(PreparedStatement preparedStatement = getConnection().prepareStatement(GET_BY_ID)){
+        try(Connection connection = getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(GET_BY_ID)){
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             resultSet.next();
@@ -183,7 +186,7 @@ public class EmployerDao extends AbstractDao<Employee> {
 
     public String getImagePath(int id) {
         logger.info("Get image path employee" + id);
-        try(PreparedStatement preparedStatement = getConnection().prepareStatement(GET_BY_ID)){
+        try(Connection connection = getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(GET_BY_ID)){
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             resultSet.next();

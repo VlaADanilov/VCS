@@ -5,6 +5,7 @@ import org.apache.logging.log4j.LogManager;
 import org.mindrot.jbcrypt.BCrypt;
 import org.models.User;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -22,7 +23,8 @@ public class UserDao extends AbstractDao<User> {
         public boolean save(User user) {
             logger.info("Saving user: " + user);
             int result = 0;
-            try(PreparedStatement preparedStatement = getConnection().prepareStatement(ADD_TO_DATABASE)){
+            try(Connection connection = getConnection(); 
+            PreparedStatement preparedStatement = connection.prepareStatement(ADD_TO_DATABASE)){
                 preparedStatement.setString(1, user.getName());
                 String hash_password = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt(10));
                 preparedStatement.setString(2, hash_password);
@@ -75,7 +77,8 @@ public class UserDao extends AbstractDao<User> {
     @Override
     public User findById(int id) {
         logger.info("Finding user: " + id);
-        try(PreparedStatement preparedStatement = getConnection().prepareStatement(GET_BY_ID)){
+        try(Connection connection = getConnection(); 
+            PreparedStatement preparedStatement = connection.prepareStatement(GET_BY_ID)){
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             resultSet.next();
@@ -92,7 +95,8 @@ public class UserDao extends AbstractDao<User> {
     @Override
     public List<User> findAll() {
         logger.info("Finding all users");
-        try(PreparedStatement preparedStatement = getConnection().prepareStatement(GET_ALL)){
+        try(Connection connection = getConnection(); 
+            PreparedStatement preparedStatement = connection.prepareStatement(GET_ALL)){
             ResultSet resultSet = preparedStatement.executeQuery();
             List<User> users = new ArrayList<>();
             while(resultSet.next()){
@@ -110,7 +114,8 @@ public class UserDao extends AbstractDao<User> {
     private final static String GET_ALL_LIKE= "SELECT * FROM user WHERE user_name LIKE ?";
     public List<User> findAllLike(String str) {
         logger.info("Finding all users like " + str);
-        try(PreparedStatement preparedStatement = getConnection().prepareStatement(GET_ALL_LIKE)){
+        try(Connection connection = getConnection(); 
+            PreparedStatement preparedStatement = connection.prepareStatement(GET_ALL_LIKE)){
             preparedStatement.setString(1, "%"+str+"%");
             ResultSet resultSet = preparedStatement.executeQuery();
             List<User> users = new ArrayList<>();
@@ -129,7 +134,8 @@ public class UserDao extends AbstractDao<User> {
     private final static String GET_BY_NAME= "SELECT * FROM user WHERE user_name = ?";
     public User findByName(String username) {
         logger.info("Finding user: " + username);
-        try(PreparedStatement preparedStatement = getConnection().prepareStatement(GET_BY_NAME)){
+        try(Connection connection = getConnection(); 
+            PreparedStatement preparedStatement = connection.prepareStatement(GET_BY_NAME)){
             preparedStatement.setString(1, username);
             ResultSet resultSet = preparedStatement.executeQuery();
             resultSet.next();
@@ -146,7 +152,8 @@ public class UserDao extends AbstractDao<User> {
     public boolean updateStatus(String status, int id) {
         logger.info("Updating user " + id + " status: " + status);
         int result = 0;
-        try(PreparedStatement preparedStatement = getConnection().prepareStatement(UPDATE_STATUS)) {
+        try(Connection connection = getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_STATUS)) {
             preparedStatement.setString(1, status);
             preparedStatement.setInt(2, id);
             result = preparedStatement.executeUpdate();

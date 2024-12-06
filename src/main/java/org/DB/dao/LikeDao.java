@@ -4,6 +4,7 @@ import org.apache.logging.log4j.LogManager;
 import org.models.Like;
 import org.DB.mappers.LikeMapper;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -19,7 +20,8 @@ public class LikeDao extends AbstractDao<Like> {
     @Override
     public boolean save(Like obj) {
         logger.info("Saving like: " + obj);
-        try(PreparedStatement preparedStatement = getConnection().prepareStatement(ADD_TO_DB)){
+        try(Connection connection = getConnection(); 
+            PreparedStatement preparedStatement = connection.prepareStatement(ADD_TO_DB)){
             preparedStatement.setInt(1, obj.getUserId());
             preparedStatement.setInt(2, obj.getAutoId());
             int result = preparedStatement.executeUpdate();
@@ -36,7 +38,8 @@ public class LikeDao extends AbstractDao<Like> {
     @Override
     public boolean deleteById(int id) {
         logger.info("Deleting like: " + id);
-        try(PreparedStatement preparedStatement = getConnection().prepareStatement(DELETE_FROM_DB)){
+        try(Connection connection = getConnection(); 
+            PreparedStatement preparedStatement = connection.prepareStatement(DELETE_FROM_DB)){
             preparedStatement.setInt(1, id);
             int result = preparedStatement.executeUpdate();
             logger.info("Successfully deleted like: " + id);
@@ -52,7 +55,8 @@ public class LikeDao extends AbstractDao<Like> {
 
     public boolean delete(int user_id, int auto_id) {
         logger.info("Deleting like: " + user_id + " " + auto_id);
-        try(PreparedStatement preparedStatement = getConnection().prepareStatement(DELETE_FROM_DB_BY_UI_AI)){
+        try(Connection connection = getConnection(); 
+            PreparedStatement preparedStatement = connection.prepareStatement(DELETE_FROM_DB_BY_UI_AI)){
             preparedStatement.setInt(1, user_id);
             preparedStatement.setInt(2, auto_id);
             int result = preparedStatement.executeUpdate();
@@ -69,7 +73,8 @@ public class LikeDao extends AbstractDao<Like> {
     @Override
     public Like findById(int id) {
         logger.info("Finding like: " + id);
-        try(PreparedStatement preparedStatement = getConnection().prepareStatement(GET_FROM_DB_BY_ID)) {
+        try(Connection connection = getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(GET_FROM_DB_BY_ID)) {
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             resultSet.next();
@@ -84,7 +89,8 @@ public class LikeDao extends AbstractDao<Like> {
     private static final String GET_FROM_DB_BY_UI_AI = "SELECT * FROM likes WHERE user_id = ? AND auto_id = ?";
     public Like find(int user_id, int auto_id) {
         logger.info("Finding like: " + user_id + " " + auto_id);
-        try(PreparedStatement preparedStatement = getConnection().prepareStatement(GET_FROM_DB_BY_UI_AI)) {
+        try(Connection connection = getConnection(); 
+            PreparedStatement preparedStatement = connection.prepareStatement(GET_FROM_DB_BY_UI_AI)) {
             preparedStatement.setInt(1, user_id);
             preparedStatement.setInt(2, auto_id);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -102,7 +108,8 @@ public class LikeDao extends AbstractDao<Like> {
     @Override
     public List<Like> findAll() {
         logger.info("Finding all likes");
-        try(PreparedStatement preparedStatement = getConnection().prepareStatement(GET_ALL)){
+        try(Connection connection = getConnection(); 
+            PreparedStatement preparedStatement = connection.prepareStatement(GET_ALL)){
             ResultSet resultSet = preparedStatement.executeQuery();
             List<Like> likes = new ArrayList<>();
             while(resultSet.next()){
@@ -119,7 +126,8 @@ public class LikeDao extends AbstractDao<Like> {
     private final static String GET_ALL_BY_USER_ID= "SELECT * FROM likes WHERE user_id = ?";
     public List<Like> findAll(int user_id) {
         logger.info("Finding all likes by user_id: " + user_id);
-        try(PreparedStatement preparedStatement = getConnection().prepareStatement(GET_ALL_BY_USER_ID)){
+        try(Connection connection = getConnection(); 
+            PreparedStatement preparedStatement = connection.prepareStatement(GET_ALL_BY_USER_ID)){
             preparedStatement.setInt(1, user_id);
             ResultSet resultSet = preparedStatement.executeQuery();
             List<Like> likes = new ArrayList<>();

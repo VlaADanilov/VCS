@@ -4,6 +4,7 @@ import org.DB.mappers.ImageMapper;
 import org.apache.logging.log4j.LogManager;
 import org.models.Image;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -20,7 +21,8 @@ public class ImageDao extends AbstractDao<Image> {
     @Override
     public boolean save(Image obj) {
         logger.info("saving autoimage");
-        try(PreparedStatement preparedStatement = getConnection().prepareStatement(ADD_TO_DB)) {
+        try(Connection connection = getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(ADD_TO_DB)) {
             preparedStatement.setInt(1, obj.getAuto_id());
             preparedStatement.setString(2, obj.getImage());
             int result = preparedStatement.executeUpdate();
@@ -37,7 +39,8 @@ public class ImageDao extends AbstractDao<Image> {
     @Override
     public boolean deleteById(int id) {
         logger.info("deleting autoimage");
-        try(PreparedStatement preparedStatement = getConnection().prepareStatement(DELETE_BY_ID)) {
+        try(Connection connection = getConnection(); 
+            PreparedStatement preparedStatement = connection.prepareStatement(DELETE_BY_ID)) {
             preparedStatement.setInt(1, id);
             int result = preparedStatement.executeUpdate();
             logger.info("deleted autoimage");
@@ -53,7 +56,8 @@ public class ImageDao extends AbstractDao<Image> {
     @Override
     public Image findById(int id) {
         logger.info("finding autoimage");
-        try(PreparedStatement preparedStatement = getConnection().prepareStatement(FIND_BY_ID)) {
+        try(Connection connection = getConnection(); 
+            PreparedStatement preparedStatement = connection.prepareStatement(FIND_BY_ID)) {
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             resultSet.next();
@@ -70,7 +74,8 @@ public class ImageDao extends AbstractDao<Image> {
     @Override
     public List<Image> findAll() {
         logger.info("finding all autoimages");
-        try (PreparedStatement preparedStatement = getConnection().prepareStatement(GET_ALL)){
+        try (Connection connection = getConnection(); 
+            PreparedStatement preparedStatement = connection.prepareStatement(GET_ALL)){
             ResultSet resultSet = preparedStatement.executeQuery();
             List<Image> images = new ArrayList<>();
             while(resultSet.next()){
@@ -88,7 +93,8 @@ public class ImageDao extends AbstractDao<Image> {
     private final static String GET_ALL_BY_AUTO_ID = "SELECT * FROM auto_images WHERE auto_id = ?";
     public List<Image> findAll(int auto_id) {
         logger.info("finding all autoimages by auto_id");
-        try (PreparedStatement preparedStatement = getConnection().prepareStatement(GET_ALL_BY_AUTO_ID)){
+        try (Connection connection = getConnection(); 
+            PreparedStatement preparedStatement = connection.prepareStatement(GET_ALL_BY_AUTO_ID)){
             preparedStatement.setInt(1, auto_id);
             ResultSet resultSet = preparedStatement.executeQuery();
             List<Image> images = new ArrayList<>();

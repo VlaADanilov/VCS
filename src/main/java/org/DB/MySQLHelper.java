@@ -62,17 +62,7 @@ public class MySQLHelper implements DBHelper {
     }
 
     public  int getImageIdFromThisAutoWithNumber(int auto_id, int number){
-//        try(Statement statement = dbConnection.createStatement()){
-//            PreparedStatement ps = dbConnection.prepareStatement("SELECT * FROM auto_images WHERE auto_id=?");
-//            ps.setInt(1, auto_id);
-//            ResultSet rs = ps.executeQuery();
-//            int count = 0;
-//            while(rs.next()){
-//                count += 1;
-//                if (count == number) return rs.getInt("image_id");
-//            }
-//        }catch (Exception e){e.printStackTrace();}
-//        return -1;
+
         int id = Configuration.getImageDao().findAll(auto_id).get(number-1).getId();
         return id;
     }
@@ -109,97 +99,13 @@ public class MySQLHelper implements DBHelper {
     }
 
     public  List<AutoModel> getFilterAutoLike(String brand_id, String model, String sort, String user_id, int this_user_id, String city){
-        List<AutoModel> list = new ArrayList<>();
-        try{
-            String str = "SELECT * FROM" + " (SELECT auto.auto_id, auto_brand_id, auto.user_id, auto_model, year, price, mileage, city" +
-                    " FROM auto JOIN likes USING(auto_id) WHERE likes.user_id = ?) as abcd " + "WHERE auto_model LIKE ? AND city LIKE ?";
-            String result = createStr(str, brand_id, model, sort, user_id);
-            PreparedStatement pst = Configuration.getConnection().prepareStatement(result);
-            pst.setInt(1, this_user_id);
-            pst.setString(2, "%" + model + "%");
-            pst.setString(3, "%" + city + "%");
-            ResultSet rs = pst.executeQuery();
-            while(rs.next()){
-                AutoModel auto = new AutoModel();
-                auto.setId(rs.getInt("auto_id"));
-                auto.setBrand_id(rs.getInt("auto_brand_id"));
-                auto.setUser_id(rs.getInt("user_id"));
-                auto.setModel(rs.getString("auto_model"));
-                auto.setPrice(rs.getInt("price"));
-                auto.setYear(rs.getInt("year"));
-                auto.setMileage(rs.getInt("mileage"));
-                auto.setCity(rs.getString("city"));
-                list.add(auto);
-            }
-        }catch (Exception e){e.printStackTrace();}
-        return list;
+        return Configuration.getAutoModelDao().getFilterAutoLike(brand_id, model, sort, user_id, this_user_id, city);
     }
 
     public  List<AutoModel> getFilterAuto(String brand_id, String model, String sort, String user_id, String city){
-        List<AutoModel> list = new ArrayList<>();
-        try{
-            String str = "SELECT * FROM auto WHERE auto_model LIKE ? AND city LIKE ?";
-            String result = createStr(str, brand_id, model, sort, user_id);
-
-            PreparedStatement pst = Configuration.getConnection().prepareStatement(result);
-            pst.setString(1, "%" + model + "%");
-            pst.setString(2, "%" + city + "%");
-            ResultSet rs = pst.executeQuery();
-            while(rs.next()){
-                AutoModel auto = new AutoModel();
-                auto.setId(rs.getInt("auto_id"));
-                auto.setBrand_id(rs.getInt("auto_brand_id"));
-                auto.setUser_id(rs.getInt("user_id"));
-                auto.setModel(rs.getString("auto_model"));
-                auto.setPrice(rs.getInt("price"));
-                auto.setYear(rs.getInt("year"));
-                auto.setMileage(rs.getInt("mileage"));
-                auto.setCity(rs.getString("city"));
-                list.add(auto);
-            }
-        }catch (Exception e){
-            logger.error(e);
-            throw new RuntimeException(e);
-        }
-        return list;
+        return Configuration.getAutoModelDao().getFilterAuto(brand_id, model, sort, user_id, city);
     }
 
-    private  String createStr(String str1, String brand_id, String model, String sort, String user_id){
-        String str = str1 + "";
-        if (!brand_id.equals("0")){
-            str += "AND auto_brand_id = " + brand_id + " ";
-        }
-        if (user_id != null && !user_id.isEmpty()){
-            str += "AND user_id = " + user_id + " ";
-        }
-        switch (sort){
-            case "priceUp":
-                str += "ORDER BY price";
-                break;
-            case "priceDown":
-                str += "ORDER BY price DESC";
-                break;
-            case "yearUp":
-                str += "ORDER BY year";
-                break;
-            case "yearDown":
-                str += "ORDER BY year DESC";
-                break;
-            case "mileageUp":
-                str += "ORDER BY mileage";
-                break;
-            case "mileageDown":
-                str += "ORDER BY mileage DESC";
-                break;
-            case "cityUp":
-                str += "Order BY city";
-                break;
-            case "cityDown":
-                str += "Order BY city DESC";
-                break;
-        }
-        return str;
-    }
 
     public boolean addEmployee(Employee employee){
         return Configuration.getEmployerDao().save(employee);

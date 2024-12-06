@@ -4,6 +4,7 @@ import org.DB.mappers.ReportMapper;
 import org.apache.logging.log4j.LogManager;
 import org.models.Report;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -20,7 +21,8 @@ public class ReportDao extends AbstractDao<Report> {
     @Override
     public boolean save(Report obj) {
         logger.info("Saving report: " + obj.toString());
-        try(PreparedStatement preparedStatement = getConnection().prepareStatement(ADD_TO_DB)){
+        try(Connection connection = getConnection(); 
+            PreparedStatement preparedStatement = connection.prepareStatement(ADD_TO_DB)){
             preparedStatement.setInt(1, obj.getAuto_id());
             preparedStatement.setString(2, obj.getComment());
             preparedStatement.setInt(3, obj.getUser_id());
@@ -39,7 +41,8 @@ public class ReportDao extends AbstractDao<Report> {
     @Override
     public boolean deleteById(int id) {
         logger.info("Deleting report: " + id);
-        try(PreparedStatement preparedStatement = getConnection().prepareStatement(DELETE_BY_ID)){
+        try(Connection connection = getConnection(); 
+            PreparedStatement preparedStatement = connection.prepareStatement(DELETE_BY_ID)){
             preparedStatement.setInt(1, id);
             int result = preparedStatement.executeUpdate();
             logger.info("Report deleted to database: " + id);
@@ -55,7 +58,8 @@ public class ReportDao extends AbstractDao<Report> {
     @Override
     public Report findById(int id) {
         logger.info("Finding report: " + id);
-        try(PreparedStatement preparedStatement = getConnection().prepareStatement(FIND_BY_ID)){
+        try(Connection connection = getConnection(); 
+            PreparedStatement preparedStatement = connection.prepareStatement(FIND_BY_ID)){
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             resultSet.next();
@@ -72,7 +76,8 @@ public class ReportDao extends AbstractDao<Report> {
     @Override
     public List<Report> findAll() {
         logger.info("Finding all reports");
-        try (PreparedStatement preparedStatement = getConnection().prepareStatement(GET_ALL)){
+        try (Connection connection = getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(GET_ALL)){
             ResultSet resultSet = preparedStatement.executeQuery();
             List<Report> reports = new ArrayList<>();
             while(resultSet.next()){

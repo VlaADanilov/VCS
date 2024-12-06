@@ -4,6 +4,7 @@ import org.DB.mappers.BrandMapper;
 import org.apache.logging.log4j.LogManager;
 import org.models.Brand;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -20,7 +21,8 @@ public class BrandDao extends AbstractDao<Brand> {
     @Override
     public boolean save(Brand obj) {
         logger.info("Saving " + obj.toString());
-        try(PreparedStatement preparedStatement = getConnection().prepareStatement(ADD_TO_DB)) {
+        try(Connection connection = getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(ADD_TO_DB)) {
             preparedStatement.setString(1, obj.getName());
             preparedStatement.setString(2, obj.getCountry());
             int rezult = preparedStatement.executeUpdate();
@@ -37,7 +39,8 @@ public class BrandDao extends AbstractDao<Brand> {
     @Override
     public boolean deleteById(int id) {
         logger.info("Deleting brand " + id);
-        try(PreparedStatement preparedStatement = getConnection().prepareStatement(DELETE_FROM_DB)) {
+        try(Connection connection = getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(DELETE_FROM_DB)) {
             preparedStatement.setInt(1, id);
             int rezult = preparedStatement.executeUpdate();
             logger.info("Successfully brand deleted " + id);
@@ -53,7 +56,8 @@ public class BrandDao extends AbstractDao<Brand> {
     @Override
     public Brand findById(int id) {
         logger.info("Finding brand " + id);
-        try(PreparedStatement preparedStatement = getConnection().prepareStatement(FIND_BY_ID)){
+        try(Connection connection = getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(FIND_BY_ID)){
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             resultSet.next();
@@ -68,7 +72,8 @@ public class BrandDao extends AbstractDao<Brand> {
     private static final String FIND_BY_NAME = "SELECT * FROM brand WHERE auto_brand_name = ?";
     public Brand findByName(String name) {
         logger.info("Finding brand " + name);
-        try(PreparedStatement preparedStatement = getConnection().prepareStatement(FIND_BY_NAME)){
+        try(Connection connection = getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(FIND_BY_NAME)){
             preparedStatement.setString(1, name);
             ResultSet resultSet = preparedStatement.executeQuery();
             resultSet.next();
@@ -85,7 +90,8 @@ public class BrandDao extends AbstractDao<Brand> {
     @Override
     public List<Brand> findAll() {
         logger.info("Finding brands");
-        try (PreparedStatement preparedStatement = getConnection().prepareStatement(GET_ALL)){
+        try (Connection connection = getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(GET_ALL)){
             ResultSet resultSet = preparedStatement.executeQuery();
             List<Brand> brands = new ArrayList<>();
             while(resultSet.next()){
