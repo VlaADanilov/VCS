@@ -29,7 +29,6 @@ public class AddEmployeeServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setCharacterEncoding("UTF-8");
         String username = req.getParameter("his_name");
         if (req.getParameter("his_name").isEmpty() || db_helper.getUser(username) == null
         || req.getParameter("name").isEmpty() || req.getParameter("profession").isEmpty()

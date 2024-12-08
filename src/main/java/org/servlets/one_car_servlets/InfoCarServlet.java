@@ -35,11 +35,6 @@ public class InfoCarServlet extends HttpServlet {
         req.setAttribute("car", auto);
         req.setAttribute("brand", db_helper.getBrandById(auto.getBrand_id()));
         req.setAttribute("list", createList(auto));
-        if (req.getSession().getAttribute("username") != null){
-            User user = db_helper.getUser((String) req.getSession().getAttribute("username"));
-            boolean flag = db_helper.checkPermission(user.getName(), auto.getId()) || !user.getStatus().equals("default");
-            req.setAttribute("pravo", flag);
-        }
         req.setAttribute("phone", db_helper.getUserById(auto.getUser_id()).getPhone());
 
         // узнать, у пользователя есть ли в избранных машина

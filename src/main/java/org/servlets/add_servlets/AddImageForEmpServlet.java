@@ -1,6 +1,8 @@
 package org.servlets.add_servlets;
 
 import org.DB.DBHelper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -16,6 +18,8 @@ import java.io.InputStream;
 @WebServlet("/emp_image")
 @MultipartConfig(maxFileSize = 16177216)
 public class AddImageForEmpServlet extends HttpServlet {
+
+    private static final Logger log = LoggerFactory.getLogger(AddImageForEmpServlet.class);
     private DBHelper db_helper;
 
     @Override
@@ -31,7 +35,7 @@ public class AddImageForEmpServlet extends HttpServlet {
             InputStream is = part.getInputStream();
             db_helper.addImageToThisEmp(is, emp_id);
         } else{
-            System.out.println("Ошибка");
+            log.error("Ошибка получения картинки от пользователя");
         }
         resp.sendRedirect(req.getContextPath() + "/list_of_emp");
     }
