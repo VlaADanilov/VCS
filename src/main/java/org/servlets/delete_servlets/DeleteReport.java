@@ -1,6 +1,6 @@
-package org.servlets.list_servlets;
+package org.servlets.delete_servlets;
 
-import org.DB.DB_helper;
+import org.DB.DBHelper;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -10,19 +10,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet("/list_of_reports")
-public class List_of_reports  extends HttpServlet {
-    private DB_helper db_helper;
+@WebServlet("/delete_report")
+public class DeleteReport extends HttpServlet {
+    private DBHelper db_helper;
 
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
-        db_helper = (DB_helper) config.getServletContext().getAttribute("database");
+        db_helper = (DBHelper) config.getServletContext().getAttribute("database");
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setAttribute("list", db_helper.getAllReports());
-        req.getRequestDispatcher("/WEB-INF/jsps/list_of_reports.jsp").forward(req, resp);
+        System.out.println(req.getParameter("report_id"));
+        db_helper.deleteReport(Integer.parseInt(req.getParameter("report_id")));
+        resp.sendRedirect(req.getContextPath() + "/list_of_reports");
     }
 }

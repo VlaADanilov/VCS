@@ -1,6 +1,6 @@
 package org.models;
 
-public class Auto_model {
+public class AutoModel {
     private int id;
     private int brand_id;
     private int user_id;
@@ -27,7 +27,7 @@ public class Auto_model {
         this.city = city;
     }
 
-    public Auto_model(int brand_id, int user_id, String model, int year, int price, int mileage, String city, String description) {
+    public AutoModel(int brand_id, int user_id, String model, int year, int price, int mileage, String city, String description) {
         this.brand_id = brand_id;
         this.user_id = user_id;
         this.model = model;
@@ -59,7 +59,7 @@ public class Auto_model {
         this.mileage = mileage;
     }
 
-    public Auto_model() {
+    public AutoModel() {
     }
 
     public int getUser_id() {

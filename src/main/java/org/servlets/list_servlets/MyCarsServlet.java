@@ -1,7 +1,7 @@
 package org.servlets.list_servlets;
 
-import org.DB.DB_helper;
-import org.models.Auto_model;
+import org.DB.DBHelper;
+import org.models.AutoModel;
 import org.models.Brand;
 
 import javax.servlet.ServletConfig;
@@ -15,17 +15,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet("/my_cars")
-public class My_cars_servlet extends HttpServlet {
-    private DB_helper db_helper;
+public class MyCarsServlet extends HttpServlet {
+    private DBHelper db_helper;
 
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
-        db_helper = (DB_helper) config.getServletContext().getAttribute("database");
+        db_helper = (DBHelper) config.getServletContext().getAttribute("database");
     }
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        List<Auto_model> list = null;
+        List<AutoModel> list = null;
         String brand_id = req.getParameter("brand");
         String model = req.getParameter("car_model");
         String sort = req.getParameter("sort");

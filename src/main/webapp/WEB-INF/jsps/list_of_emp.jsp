@@ -19,7 +19,7 @@
 <div id = wrapper>
     <div id = "header" align="center">
         <img class="myImage" src="/icons/back.jpg" onclick="location.href='../..'">
-        <c:if test="${sessionScope.get('status').equals('owner')}">
+        <c:if test="${pravo}">
             <img class="myImage2" src="/icons/plus-svgrepo-com.svg" onclick="location.href='${pageContext.servletContext.contextPath}/add_employee'">
         </c:if>
         <h1>Список сотрудников</h1>

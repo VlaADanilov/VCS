@@ -1,6 +1,6 @@
 package org.servlets.one_car_servlets;
 
-import org.DB.DB_helper;
+import org.DB.DBHelper;
 import org.models.Brand;
 
 import javax.servlet.ServletConfig;
@@ -13,13 +13,13 @@ import java.io.IOException;
 import java.util.LinkedList;
 
 @WebServlet(urlPatterns = {"/list/info/update","/my_cars/info/update","/my_likes/info/update","/user_cars/info/update","/list_of_reports/info/update"})
-public class Update_car_servlet extends HttpServlet {
-    private DB_helper db_helper;
+public class UpdateCarServlet extends HttpServlet {
+    private DBHelper db_helper;
 
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
-        db_helper = (DB_helper) config.getServletContext().getAttribute("database");
+        db_helper = (DBHelper) config.getServletContext().getAttribute("database");
     }
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
