@@ -1,5 +1,6 @@
 package org.DB.dao;
 
+import org.DB.Configuration;
 import org.DB.mappers.EmployeeMapper;
 import org.apache.logging.log4j.LogManager;
 import org.models.Employee;
@@ -14,10 +15,13 @@ import java.util.List;
 import java.util.Random;
 
 public class EmployerDao extends AbstractDao<Employee> {
-    static{
+    private final EmployeeMapper mapper;
+
+    public EmployerDao(Configuration configuration) {
+        super(configuration);
         logger = LogManager.getLogger(EmployerDao.class);
+        mapper = new EmployeeMapper();
     }
-    private static final EmployeeMapper mapper = new EmployeeMapper();
 
     //language=sql
     private final static String ADD_TO_DATABASE = "INSERT INTO employee(employee_name, employee_profession, employee_description, user_id) VALUES(?,?,?,?)";

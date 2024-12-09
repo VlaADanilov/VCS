@@ -1,5 +1,6 @@
 package org.DB.dao;
 
+import org.DB.Configuration;
 import org.DB.mappers.UserMapper;
 import org.apache.logging.log4j.LogManager;
 import org.mindrot.jbcrypt.BCrypt;
@@ -13,10 +14,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserDao extends AbstractDao<User> {
-    static {
+
+    public UserDao(Configuration configuration) {
+        super(configuration);
+        mapper = new UserMapper();
         logger = LogManager.getLogger(UserDao.class);
     }
-    private static final UserMapper mapper = new UserMapper();
+
+    private final UserMapper mapper;
     //language=sql
         private final static String ADD_TO_DATABASE = "INSERT INTO user(user_name, user_password, user_status, user_phone) VALUES(?,?,?,?)";
         @Override

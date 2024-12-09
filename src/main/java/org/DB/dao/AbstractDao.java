@@ -8,7 +8,13 @@ import java.sql.Connection;
 import java.util.List;
 
 public abstract class AbstractDao<T> {
-    protected static Logger logger = LogManager.getLogger(AbstractDao.class);
+    protected Configuration config;
+
+    public AbstractDao(Configuration config) {
+        this.config = config;
+    }
+
+    protected Logger logger = LogManager.getLogger(AbstractDao.class);
     public abstract boolean save(T obj);
 
     public abstract boolean deleteById(int id);
@@ -19,7 +25,7 @@ public abstract class AbstractDao<T> {
 
     protected Connection getConnection() {
         try{
-            return Configuration.getConnection();
+            return config.getConnection();
         }catch(Exception e){
             logger.error(e);
             throw new RuntimeException(e);

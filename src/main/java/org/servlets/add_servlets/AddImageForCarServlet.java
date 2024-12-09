@@ -27,6 +27,12 @@ public class AddImageForCarServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String result;
+        if(req.getSession().getAttribute("flag") != null){
+            boolean flag = (boolean) req.getSession().getAttribute("flag");
+            req.getSession().removeAttribute("flag");
+            req.setAttribute("flag", flag);
+        }
+
         if(collectTheString(req.getRequestURI()).equals("/")){
             result = "/my_cars/info?number=" + req.getParameter("auto_id");
         }else{
@@ -52,19 +58,21 @@ public class AddImageForCarServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         int auto_id = Integer.parseInt(req.getParameter("auto_id"));
         Part part = req.getPart("image");
+        boolean fl;
         if (part != null) {
             InputStream is = part.getInputStream();
             if(is.available() == 0){
-                req.setAttribute("flag", "false");
+                fl = false;
             }
             else{
                 boolean flag = db_helper.addImageToThisAuto(is, generateStr() ,auto_id);
-                req.setAttribute("flag", flag);
+                fl = flag;
             }
         } else{
-            req.setAttribute("flag", "false");
+            fl = false;
         }
-        doGet(req,resp);
+        req.getSession().setAttribute("flag", fl);
+        resp.sendRedirect(req.getContextPath() + req.getRequestURI() + "?auto_id=" + auto_id);
     }
 
     private String generateStr(){

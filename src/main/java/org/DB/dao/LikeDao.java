@@ -1,5 +1,6 @@
 package org.DB.dao;
 
+import org.DB.Configuration;
 import org.apache.logging.log4j.LogManager;
 import org.models.Like;
 import org.DB.mappers.LikeMapper;
@@ -11,10 +12,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LikeDao extends AbstractDao<Like> {
-    static {
+    private final LikeMapper mapper;
+
+    public LikeDao(Configuration configuration) {
+        super(configuration);
+        mapper = new LikeMapper();
         logger = LogManager.getLogger(LikeDao.class);
     }
-    private static final LikeMapper mapper = new LikeMapper();
+
     //language=sql
     private static final String ADD_TO_DB = "INSERT INTO likes (user_id, auto_id) VALUES (?, ?)";
     @Override

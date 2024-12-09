@@ -25,6 +25,10 @@ public class AddCarServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setAttribute("list", db_helper.getAllBrands());
+        if(req.getSession().getAttribute("flag") != null){
+            req.setAttribute("flag", req.getSession().getAttribute("flag"));
+            req.getSession().removeAttribute("flag");
+        }
         req.getRequestDispatcher("/WEB-INF/jsps/add_car.jsp").forward(req, resp);
     }
 
@@ -33,7 +37,8 @@ public class AddCarServlet extends HttpServlet {
         req.setCharacterEncoding("UTF-8");
         if (req.getParameter("car_model").isEmpty() || req.getParameter("year").isEmpty()
         || req.getParameter("price").isEmpty() || req.getParameter("mileage").isEmpty()) {
-            req.setAttribute("flag", "false");
+            req.getSession().setAttribute("flag", false);
+            resp.sendRedirect(req.getContextPath() + req.getRequestURI());
         }
         else{
             int brand = Integer.parseInt(req.getParameter("brand"));
@@ -45,16 +50,15 @@ public class AddCarServlet extends HttpServlet {
             String city = req.getParameter("city");
             String description = req.getParameter("description");
             if (year <= 1900 || price < 0 || mileage < 0 || city.trim().isEmpty()){
-                req.setAttribute("flag", "false");
+                req.getSession().setAttribute("flag", false);
+                resp.sendRedirect(req.getContextPath() + req.getRequestURI());
             }
             else{
                 db_helper.addAutoToDatabase(new AutoModel(brand,db_helper.getUser(username).getId(),model,year,price, mileage, city,description));
                 req.setAttribute("flag", "true");
                 int auto_id = db_helper.getLastAutoFromThisUser((String)req.getSession().getAttribute("username"));
                 resp.sendRedirect(req.getContextPath() + "/image?auto_id=" + auto_id);
-                return;
             }
         }
-        doGet(req, resp);
     }
 }

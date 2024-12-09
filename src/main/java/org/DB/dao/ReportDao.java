@@ -1,5 +1,6 @@
 package org.DB.dao;
 
+import org.DB.Configuration;
 import org.DB.mappers.ReportMapper;
 import org.apache.logging.log4j.LogManager;
 import org.models.Report;
@@ -11,10 +12,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ReportDao extends AbstractDao<Report> {
-    static {
+    private final ReportMapper mapper;
+
+    public ReportDao(Configuration configuration) {
+        super(configuration);
+        mapper = new ReportMapper();
         logger = LogManager.getLogger(ReportDao.class);
     }
-    private static final ReportMapper mapper = new ReportMapper();
 
     //language=sql
     private static final String ADD_TO_DB = "INSERT INTO report(auto_id, comment, user_id) VALUES (?,?,?)";

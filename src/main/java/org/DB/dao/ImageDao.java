@@ -1,5 +1,6 @@
 package org.DB.dao;
 
+import org.DB.Configuration;
 import org.DB.mappers.ImageMapper;
 import org.apache.logging.log4j.LogManager;
 import org.models.Image;
@@ -12,9 +13,15 @@ import java.util.List;
 
 public class ImageDao extends AbstractDao<Image> {
     static{
-        logger = LogManager.getLogger(ImageDao.class);
+
     }
-    private static final ImageMapper mapper = new ImageMapper();
+    private final ImageMapper mapper;
+
+    public ImageDao(Configuration configuration) {
+        super(configuration);
+        logger = LogManager.getLogger(ImageDao.class);
+        mapper = new ImageMapper();
+    }
 
     //language=sql
     private final static String ADD_TO_DB = "INSERT INTO auto_images(auto_id, image) VALUES (?,?)";
