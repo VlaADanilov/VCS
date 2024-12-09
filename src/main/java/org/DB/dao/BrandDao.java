@@ -1,5 +1,6 @@
 package org.DB.dao;
 
+import org.DB.Configuration;
 import org.DB.mappers.BrandMapper;
 import org.apache.logging.log4j.LogManager;
 import org.models.Brand;
@@ -11,10 +12,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BrandDao extends AbstractDao<Brand> {
-    static{
+
+    private final BrandMapper mapper;
+
+    public BrandDao(Configuration configuration) {
+        super(configuration);
         logger = LogManager.getLogger(BrandDao.class);
+        mapper = new BrandMapper();
     }
-    private static final BrandMapper mapper = new BrandMapper();
 
     //language=sql
     private static final String ADD_TO_DB = "INSERT INTO brand(auto_brand_name, auto_brand_country) VALUES (?,?)";

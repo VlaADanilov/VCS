@@ -63,10 +63,10 @@
     </div>
     <div align="center">
         <c:if test="${flag != null}">
-            <c:if test="${flag.equals('true')}">
+            <c:if test="${flag}">
                 <p style="color:green"> Успешно</p>
             </c:if>
-            <c:if test="${flag.equals('false')}">
+            <c:if test="${!flag}">
                 <p style="color: red">Ошибка</p>
             </c:if>
         </c:if>

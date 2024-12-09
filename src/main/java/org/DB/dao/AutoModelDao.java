@@ -1,5 +1,6 @@
 package org.DB.dao;
 
+import org.DB.Configuration;
 import org.DB.mappers.AutoModelMapper;
 import org.apache.logging.log4j.LogManager;
 import org.models.AutoModel;
@@ -12,10 +13,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AutoModelDao extends AbstractDao<AutoModel> {
-    static{
+
+
+    public AutoModelDao(Configuration configuration) {
+        super(configuration);
         logger = LogManager.getLogger(AutoModelDao.class);
+        mapper = new AutoModelMapper();
     }
-    private static final AutoModelMapper mapper = new AutoModelMapper();
+
+    private final AutoModelMapper mapper;
     //language=sql
     private final static String ADD_TO_DATABASE = "INSERT INTO auto(auto_brand_id, user_id, auto_model, year, price, mileage, city, description) VALUES(?,?,?,?,?,?,?,?)";
     @Override

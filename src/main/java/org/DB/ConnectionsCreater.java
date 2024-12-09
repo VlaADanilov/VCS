@@ -33,7 +33,7 @@ public class ConnectionsCreater {
         hikariConfig.setMaximumPoolSize(1000);
     }
 
-    public Connection getConnection(){
+    public synchronized Connection getConnection(){
         try{
             return dataSource.getConnection();
         }catch(SQLException e){

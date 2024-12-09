@@ -24,6 +24,10 @@ public class AddEmployeeServlet extends HttpServlet {
     }
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        if(req.getSession().getAttribute("flag") != null){
+            req.setAttribute("flag", req.getSession().getAttribute("flag"));
+            req.getSession().removeAttribute("flag");
+        }
         req.getRequestDispatcher("/WEB-INF/jsps/add_employee.jsp").forward(req, resp);
     }
 
@@ -33,7 +37,7 @@ public class AddEmployeeServlet extends HttpServlet {
         if (req.getParameter("his_name").isEmpty() || db_helper.getUser(username) == null
         || req.getParameter("name").isEmpty() || req.getParameter("profession").isEmpty()
         || req.getParameter("desc").isEmpty()) {
-            req.setAttribute("flag", "false");
+            req.getSession().setAttribute("flag", false);
         }
         else{
             Employee employee = new Employee();
@@ -45,9 +49,9 @@ public class AddEmployeeServlet extends HttpServlet {
             if (!db_helper.getUser(username).getStatus().equals("owner")) {
                 db_helper.changeStatusThisUser(db_helper.getUser(username).getId(), "admin");
             }
-            req.setAttribute("flag", "true");
+            req.getSession().setAttribute("flag", true);
             req.setAttribute("emp_id", db_helper.getEmpIdByName(employee.getName()));
         }
-        doGet(req, resp);
+        resp.sendRedirect(req.getContextPath() + req.getRequestURI());
     }
 }

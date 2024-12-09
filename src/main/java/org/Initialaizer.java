@@ -11,18 +11,20 @@ import javax.servlet.annotation.WebListener;
 
 @WebListener
 public class Initialaizer implements ServletContextListener {
-    private final static Logger logger = LogManager.getLogger(Initialaizer.class);
+    private final Logger logger = LogManager.getLogger(Initialaizer.class);
     @Override
     public void contextInitialized(ServletContextEvent sce) {
         logger.info("Starting server");
         logger.info("Creating connections to DB...");
-        Configuration.createConnections();
-        sce.getServletContext().setAttribute("database", new MySQLHelper());
+        Configuration config = new Configuration();
+        config.createConnections();
+        sce.getServletContext().setAttribute("database", new MySQLHelper(config));
     }
 
     @Override
     public void contextDestroyed(ServletContextEvent sce) {
-        Configuration.closeConnections();
+        MySQLHelper database = (MySQLHelper) sce.getServletContext().getAttribute("database");
+        database.getConfiguration().closeConnections();
         logger.info("Stopping server");
     }
 }

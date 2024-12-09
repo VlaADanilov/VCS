@@ -51,7 +51,7 @@
     </div>
     <div align="center">
         <c:if test="${flag != null}">
-            <c:if test="${flag.equals('true')}">
+            <c:if test="${flag}">
                 <form action="${pageContext.servletContext.contextPath}/emp_image" method="post" enctype="multipart/form-data">
                     <p><label> Фото:
                         <input type="file" name="image"  accept="image/*"/><br/><br/>
@@ -60,7 +60,7 @@
                     <button type="submit"> Добавить фото </button>
                 </form>
             </c:if>
-            <c:if test="${flag.equals('false')}">
+            <c:if test="${!flag}">
                 <p style="color: red">Ошибка</p>
             </c:if>
         </c:if>

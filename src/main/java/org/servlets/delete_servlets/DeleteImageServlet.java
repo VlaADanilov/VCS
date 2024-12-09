@@ -54,6 +54,6 @@ public class DeleteImageServlet extends HttpServlet {
         int number = Integer.parseInt(req.getParameter("numbIm"));
         int auto_id = Integer.parseInt(req.getParameter("auto_id"));
         db_helper.deleteImageById(db_helper.getImageIdFromThisAutoWithNumber(auto_id, number));
-        doGet(req, resp);
+        resp.sendRedirect(req.getContextPath() + req.getRequestURI() + "?auto_id=" + auto_id);
     }
 }
